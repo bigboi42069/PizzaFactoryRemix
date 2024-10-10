@@ -1,4 +1,4 @@
--- CSWC REMIX 9/10/24
+-- CSWC REMIX 10/10/24
 getupvalues = getupvalues or debug.getupvalues
 setupvalue = setupvalue or debug.setupvalue
 
@@ -21,13 +21,11 @@ else
     h:Destroy()
 end
 
--- Continue the original script content
--- CSWC REMIX 9/10/24
 getupvalues = getupvalues or debug.getupvalues
 setupvalue = setupvalue or debug.setupvalue
 if not (getrawmetatable and getupvalues and setupvalue and (getreg or debug.getregistry)) then
 	local h = Instance.new("Hint",workspace)
-	h.Text = "Level 8 Executor Required."
+	h.Text = "Executor Failure."
 	wait(3)
 	h:Destroy()
 	return
