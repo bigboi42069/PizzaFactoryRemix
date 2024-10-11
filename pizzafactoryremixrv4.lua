@@ -3,7 +3,7 @@ getupvalues = getupvalues or debug.getupvalues
 setupvalue = setupvalue or debug.setupvalue
 if not (getrawmetatable and getupvalues and setupvalue and (getreg or debug.getregistry)) then
 	local h = Instance.new("Hint",workspace)
-	h.Text = "Level 8 Executor Required."
+	h.Text = "Executor Error."
 	wait(3)
 	h:Destroy()
 	return
