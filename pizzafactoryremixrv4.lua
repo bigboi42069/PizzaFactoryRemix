@@ -13,7 +13,6 @@ local doCashier,doBoxer,doCook,doSupplier,doDelivery = false,false,false,false,f
 if readfile then
 	pcall(function()
 		local new = game:GetService("HttpService"):JSONDecode(readfile("PizzaFarm.txt"))
-		--corruption?
 		local doOverwrite=false
 		for k,v in pairs(new) do
 			if settings[k]==nil then
@@ -27,7 +26,6 @@ if readfile then
 				new[k]=v
 			end
 		end
-		--use input
 		if doOverwrite then
 			warn("Settings overwritten")
 			writefile("PizzaFarm.txt",game:GetService("HttpService"):JSONEncode(new))
@@ -79,7 +77,7 @@ do
 	end
 end
 assert(network,"failed to find network")
---//gui
+
 Create = function(class,parent,props)
 	local new = Instance.new(class)
 	for k,v in next,props do
@@ -309,7 +307,6 @@ rightCamBtn.MouseButton1Click:Connect(function()
 	end
 end)
 
---//subroutines
 local supplyCounts = {TomatoSauce=99,Cheese=99,Sausage=99,Pepperoni=99,Dough=99,Box=99,Dew=99}
 for name in pairs(supplyCounts) do
 	local lbl = workspace.SupplyCounters.Model[name=="Dew" and "CounterMountainDew" or "Counter"..name].a.SG.Counter
@@ -397,10 +394,8 @@ local function getOrders()
 		local o = orderDict[children[i].SG.ImageLabel.Image:match("%d+$")]
 		if o then
 			if tempCookingDict[o]>0 then
-				--ignores oven pizzas, so new orders are priority
 				tempCookingDict[o]=tempCookingDict[o]-1
 			elseif (o=="Dew" and #workspace.AllMountainDew:GetChildren()>0) or (supplyCounts[o]>0 and supplyCounts.TomatoSauce>0 and supplyCounts.Cheese>0) then
-				--need supplies
 				orders[#orders+1]=o
 			end
 		end
@@ -428,7 +423,7 @@ end
 local function FindDoughAndWithout(str)
 	local goodraw,p,raw,trash
 	local children = workspace.AllDough:GetChildren()
-	for i = #children, 2, -1 do --shuffle
+	for i = #children, 2, -1 do
 		local j = RNG:NextInteger(1, i)
 		children[j], children[i] = children[i], children[j]
 	end
@@ -442,7 +437,6 @@ local function FindDoughAndWithout(str)
 			elseif p==nil and d.BrickColor.Name=="Bright orange" then
 				p=d
 			elseif goodraw==nil and d.Position.X<55 and d.BrickColor.Name=="Brick yellow" and ((str and not ffc(d.SG.Frame,str)) or (str==nil and ffc(d.SG.Frame,"Sausage")==nil and ffc(d.SG.Frame,"Pepperoni")==nil)) then
-				--prefers flat
 				if d.Mesh.Scale.Y<1.1 then
 					goodraw=d
 				else
@@ -544,7 +538,6 @@ local function tryCook()
 		local badD = FindBadDew()
 		local raw,cookP,trash
 		if topping then
-			--pepperoni order avoids sausage dough and vice verca
 			raw,cookP,trash = FindDoughAndWithout(topping=="Pepperoni" and "Sausage" or "Pepperoni")
 		else
 			raw,cookP,trash = FindDoughAndWithout()
@@ -555,13 +548,12 @@ local function tryCook()
 				table.remove(ovens,i)
 			end
 		end
-		for i = #ovens, 2, -1 do --shuffle
+		for i = #ovens, 2, -1 do
 			local j = RNG:NextInteger(1, i)
 			ovens[j], ovens[i] = ovens[i], ovens[j]
 		end
 		if doCook then
 			local didsomething=false
-			--move final pizza
 			if cookP and tick()-cookPtick>0.8 then
 				local oven = getOvenNear(cookP.Position)
 				if oven==nil or oven.IsOpen.Value then
@@ -572,14 +564,15 @@ local function tryCook()
 				end
 			end
 			if order then
+				-- Separate Items.
 				if order=="Dew" and cookD and tick()-cookDtick>0.8 then
-					--move dew if ordered
+					-- Dew.
 					cookDtick=tick()
 					didsomething=true
 					if (root.Position-Vector3.new(36.64, 3.80, 54.11)).magnitude>9 then  smoothTP(CFrame.new(36.64, 3.80, 54.11)) wait(.02) end
 					network:FireServer("UpdateProperty", cookD, "CFrame", CFrame.new(53,4.68,36.5))
 				elseif order~="Dew" and raw and raw.Parent and supplyCounts[order]>0 and supplyCounts.TomatoSauce>0 and supplyCounts.Cheese>0 then
-					--make pizza
+					-- Pizza.
 					if raw.Mesh.Scale.Y>1.5 then
 						if (root.Position-Vector3.new(36.64, 3.80, 54.11)).magnitude>9 then  smoothTP(CFrame.new(36.64, 3.80, 54.11)) wait(.04) end
 						didsomething=true
@@ -587,14 +580,12 @@ local function tryCook()
 						wait()
 						network:FireServer("SquishDough", raw)
 					else
-						--make sure it will have an oven
 						local oven
 						for _,o in ipairs(ovens) do
 							if isFullyOpen(o) then
 								local other = getDoughNear(o.Bottom.Position)
 								if other==nil or not (other.BrickColor.Name=="Bright orange" and ffc(other.SG.Frame,"TomatoSauce") and ffc(other.SG.Frame,"MeltedCheese")) then
 									if other then
-										--replace mistaken dough
 										didsomething=true
 										if (root.Position-Vector3.new(36.64, 3.80, 54.11)).magnitude>9 then  smoothTP(CFrame.new(36.64, 3.80, 54.11)) wait(.02) end
 										network:FireServer("UpdateProperty", other, "CFrame", CFrame.new(RNG:NextNumber(29.6,44.6),3.7,RNG:NextNumber(42.5,48.5)))
@@ -606,7 +597,6 @@ local function tryCook()
 							end
 						end
 						if oven and raw.Parent==workspace.AllDough then
-							--make
 							if (root.Position-Vector3.new(36.64, 3.80, 54.11)).magnitude>9 then  smoothTP(CFrame.new(36.64, 3.80, 54.11)) wait(.01) end
 							didsomething=true
 							network:FireServer("AddIngredientToPizza", raw,"TomatoSauce")
@@ -614,7 +604,6 @@ local function tryCook()
 							network:FireServer("AddIngredientToPizza", raw,topping)
 							network:FireServer("UpdateProperty", raw, "CFrame", oven.Bottom.CFrame+Vector3.new(0,0.7,0))
 							oven.Door.ClickDetector.Detector:FireServer()
-							--mark as cooking
 							cookingDict[order]=cookingDict[order]+1
 							local revoked=false
 							spawn(function()
@@ -634,7 +623,6 @@ local function tryCook()
 					end
 				end
 			end
-			--open unnecessarily closed ovens
 			for _,o in ipairs(ovens) do
 				local bar = o.Door.Meter.SurfaceGui.ProgressBar.Bar
 				if o.IsOpen.Value==false and (o.IsCooking.Value==false or (Vector3.new(bar.ImageColor3.r,bar.ImageColor3.g,bar.ImageColor3.b)-Vector3.new(.871,.518,.224)).magnitude>.1) then
@@ -644,14 +632,12 @@ local function tryCook()
 					break
 				end
 			end
-			--trash
 			if badD then
 				didsomething=true
 				if (root.Position-Vector3.new(36.64, 3.80, 54.11)).magnitude>9 then  smoothTP(CFrame.new(36.64, 3.80, 54.11)) wait(.01) end
 				network:FireServer("UpdateProperty", badD, "CFrame", CFrame.new(RNG:NextNumber(28,30), 1.7, RNG:NextNumber(55,57)))
 			end
 			if trash and (trash.IsBurned.Value==false or getOvenNear(trash.Position)==nil or getOvenNear(trash.Position).IsOpen.Value) then
-				--closed oven breaks if you take burnt out of it
 				didsomething=true
 				if (root.Position-Vector3.new(36.64, 3.80, 54.11)).magnitude>9 then  smoothTP(CFrame.new(36.64, 3.80, 54.11)) wait(.01) end
 				network:FireServer("UpdateProperty", trash, "CFrame", CFrame.new(47.90, 7.00, 72.49, 1, 0, -0, 0, 0, 1, 0, -1, 0))
@@ -663,7 +649,7 @@ local function tryCook()
 	end
 end
 wait(1.5)
---//main loop
+
 while gui.Parent do
 	wait(1.2)
 	humanoid.Sit=false
@@ -681,7 +667,7 @@ while gui.Parent do
 			elseif c.Head.Position.X < 70 then
 				reg = 1
 			end
-			if (root.Position-Vector3.new(50.30, 3.80, 83.24)).magnitude>9 then smoothTP(CFrame.new(50.30, 3.80, 83.24)) wait(.1) end
+			if (root.Position-Vector3.new(50.30, 3.80, 83.24)).magnitude>9 then smoothTP(CFrame.new(50.30, 3.80, 83.24)) wait(.01) end
 			network:FireServer("OrderComplete", c, order, workspace["Register"..reg])
 			wait(0.1)
 		else
@@ -705,7 +691,6 @@ while gui.Parent do
 					didsomething=true
 					if (root.Position-Vector3.new(58.74, 3.80, 12.400)).magnitude>9 then  smoothTP(CFrame.new(58.74, 3.80, 12.40))wait(.01) continue end
 					network:FireServer("CloseBox", fullBox)
-					--will be moved next loop
 				elseif tick()-boxPtick>0.8 then
 					didsomething=true
 					if (root.Position-Vector3.new(58.74, 3.80, 12.400)).magnitude>9 then  smoothTP(CFrame.new(58.74, 3.80, 12.40))wait(.01) continue end
@@ -720,8 +705,9 @@ while gui.Parent do
 				wait()
 				network:FireServer("OpenBox", closedBox)
 			end
-			-- Optimize the pizza cutter handling
-			local function FindPizzaCutterTool(parent)
+
+			-- Pizza Slicer finder.
+			local function FindPizzaSlicerTool(parent)
 			    for _, tool in pairs(parent:GetChildren()) do
 			        if tool:IsA("Tool") and tool.Name == "Pizza Slicer" then
 			            return tool
@@ -730,50 +716,46 @@ while gui.Parent do
 			    return nil
 			end
 
-			local function cutPizza(pizza)
-    			-- Find pizza cutter in workspace or character
-    			local pizzaCutter = FindPizzaCutterTool(workspace) or FindPizzaCutterTool(character)
+			--local function slicePizza(pizza)
+    			-- Find Pizza Slicer in workspace or character.
+    			--local pizzaSlier = FindPizzaSlicerTool(workspace) or FindPizzaSlicerTool(character)
 
-    			if not pizzaCutter then
-        			-- If the pizza cutter isn't found, try to get one
-        			if (root.Position - Vector3.new(54.45, 4.02, -15)).magnitude > 9 then 
-            			smoothTP(CFrame.new(54.45, 4.02, -15)) 
-            			wait(0.02) 
-        			end
+    			--if not pizzaSlicer then
+        			-- If the Pizza Slicer isn't found, try to find one.
+        			--if (root.Position - Vector3.new(58.74, 3.80, 12.400)).magnitude > 9 then 
+            			--smoothTP(CFrame.new(58.74, 3.80, 12.400)) 
+            			--wait(0.02) 
+        			--end
 
-        			-- Look for the pizza cutter in the workspace again
-        			pizzaCutter = FindPizzaCutterTool(workspace)
+        			-- Look for the Pizza Slicer in the workspace again.
+        			--pizzaSlicer = FindPizzaSlicerTool(workspace)
 
-        			if pizzaCutter then
-            			humanoid:EquipTool(pizzaCutter)
-            			wait(0.05)
-            			pizzaCutter.Parent = player.Backpack
-        			else
-            			warn("Failed to find pizza cutter")
-            			return
-        			end
-    			end
+        			--if pizzaSlicer then
+            			--humanoid:EquipTool(pizzaSlicer)
+            			--wait(0.05)
+            			--pizzaSlicer.Parent = player.Backpack
+        			--else
+            			--warn("Failed to find and equip Pizza Slicer, Golden Pizza Slicer functionality is broken.")
+            			--return
+        			--end
+    			--end
 
-    			-- Equip the pizza cutter
-    			if pizzaCutter.Parent ~= character then
-        			humanoid:EquipTool(pizzaCutter)
-        			wait(0.05)
-    			end
+    			-- Equip the Pizza Slicer.
+    			--if pizzaSlicer.Parent ~= character then
+        			--humanoid:EquipTool(pizzaSlicer)
+        			--wait(0.05)
+    			--end
 
-    			-- Use the pizza cutter on the pizza
-    			network:FireServer("UseTool", pizzaCutter, pizza)
-    			wait(0.05) -- Wait for the cutting animation to complete
+    			-- Use the Pizza Slicer.
+    			--network:FireServer("UseTool", pizzaSlicer, pizza)
+    			--wait(0.05)
 
-    			-- Unequip the tool after use
-    			pizzaCutter.Parent = player.Backpack
+    			--if ffc(character, "RightHand") and ffc(character.RightHand, "RightGrip") then
+        			--character.RightHand.RightGrip:Destroy()
+    			--end
+			--end
 
-    			-- Destroy the RightGrip if it exists
-    			if ffc(character, "RightHand") and ffc(character.RightHand, "RightGrip") then
-        			character.RightHand.RightGrip:Destroy()
-    			end
-			end
-
-			-- In the boxing loop, add the cutting step before boxing
+			-- Add the slicing step before boxing.
 			if openBox and boxP then
     			didsomething = true
     			if (root.Position-Vector3.new(58.74, 3.80, 12.400)).magnitude>9 then
@@ -782,8 +764,8 @@ while gui.Parent do
         			continue
     			end
 
-    			-- Cut the pizza before boxing
-    			cutPizza(boxP)
+    			-- Slice the pizza before boxing.
+    			--slicePizza(boxP) -- Needed for Golden Pizza Slicer.
 
     			network:FireServer("UpdateProperty", boxP, "Anchored", true)
     			network:FireServer("UpdateProperty", openBox, "Anchored", true)
@@ -792,7 +774,7 @@ while gui.Parent do
     			wait()
     			network:FireServer("AssignPizzaToBox", openBox, boxP)
 			end
-			if didsomething then wait(0.1) else break end
+			if didsomething then wait(0.05) else break end
 		else
 			break
 		end
@@ -800,7 +782,7 @@ while gui.Parent do
 	if doDelivery then
 		local wstools = FindAllDeliveryTools(workspace)
 		if #wstools > 1 or (wstools[1] and ffc(wstools[1].Handle,"X10")) then
-			--get tools
+			-- Table Pickup.
 			if (root.Position-Vector3.new(54.45, 4.02, -15)).magnitude>9 then smoothTP(CFrame.new(54.45, 4.02, -15)) wait(.01) end
 			for i=1,#wstools do
 				if wstools[i].Parent == workspace then
@@ -820,7 +802,7 @@ while gui.Parent do
 		end
 		local bptools = FindAllDeliveryTools(player.Backpack)
 		if #bptools >= settings.deliver_at and #bptools > 0 and tick()-delTick > 30 then
-			--deliver to houses
+			-- Delivery.
 			table.sort(bptools,function(a,b)
 				a,b=tostring(a),tostring(b)
 				if (a:sub(1,1)=="B" and b:sub(1,1)=="B") then
@@ -884,7 +866,7 @@ while gui.Parent do
 			local waitingTick = 0
 			local lastBox
 			while doSupplier do
-				--check if refill is done otherwise hit buttons
+				-- Supplier Selection.
 				local fulfilled=true
 				local boxes = workspace.AllSupplyBoxes:GetChildren()
 				for yy=1,2 do
@@ -926,11 +908,11 @@ while gui.Parent do
 				end
 				smoothTP(CFrame.new(8,12.4,-1020))
 				if not doSupplier then break end
-				--check if can finish waiting for boxes to move
+				-- Supply Wait.
 				if waiting and (lastBox.Position.X>42 or tick()-waitingTick>6) then
 					waiting=false
 					if lastBox.Position.X<42 then
-						--clear boxes if stuck
+						-- Fix Broken Supplier Boxes.
 						smoothTP(CFrame.new(20.5,8,-35))
 						wait(0.1)
 						local boxes = workspace.AllSupplyBoxes:GetChildren()
@@ -945,7 +927,7 @@ while gui.Parent do
 					end
 				end
 				if not waiting then
-					--move boxes
+					-- Supply Drop-off.
 					if root.Position.Z > -900 then smoothTP(CFrame.new(8,12.4,-1020)) end
 					wait(0.1)
 					lastBox=nil
