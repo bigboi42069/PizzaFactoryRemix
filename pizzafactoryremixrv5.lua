@@ -727,9 +727,10 @@ while gui.Parent do
 				local pizzaSlicer = FindPizzaSlicerTool(workspace) or FindPizzaSlicerTool(character)
 	
 				if not pizzaSlicer then
-					if ffc(character, "RightHand") and ffc(character.RightHand, "RightGrip") then
-						character.RightHand.RightGrip:Destroy()
+					if tool:IsA("Tool") in pairs(parent:GetChildren()) do
+						tool.Parent = player.Backpack
 						wait(0.1)
+					end
 					-- If the Pizza Slicer isn't found, try to find one.
 					if (root.Position - Vector3.new(58.74, 3.80, 12.40)).magnitude > 9 then 
 						smoothTP(CFrame.new(58.74, 3.80, 12.40)) 
