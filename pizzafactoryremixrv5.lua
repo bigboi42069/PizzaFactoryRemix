@@ -726,8 +726,6 @@ while gui.Parent do
 				if ffc(character, "RightHand") and ffc(character.RightHand, "RightGrip") then
 					character.RightHand.RightGrip:Destroy()
 					wait(0.1)
-					pizzaSlicer.Parent = player.Backpack
-					wait(0.1)
 				end
 				-- Find Pizza Slicer in workspace or character.
 				local pizzaSlicer = FindPizzaSlicerTool(workspace) or FindPizzaSlicerTool(character)
@@ -735,8 +733,6 @@ while gui.Parent do
 				if not pizzaSlicer then
 					if ffc(character, "RightHand") and ffc(character.RightHand, "RightGrip") then
 						character.RightHand.RightGrip:Destroy()
-						wait(0.1)
-						pizzaSlicer.Parent = player.Backpack
 						wait(0.1)
 					end
 					-- If the Pizza Slicer isn't found, try to find one.
