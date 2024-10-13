@@ -138,8 +138,8 @@ cookBtn=Create("ImageButton",cook,{Name="cookBtn", ImageTransparency=1, BorderSi
 cookSlider=Create("Frame",cookBtn,{Name="slider", Size=UDim2.new(0.5,-4,1,-4), Position=UDim2.new(doCook and 0.5 or 0,2,0,2), BorderSizePixel=0, BackgroundColor3=Color3.new(0.784,0.784,0.784)})
 toggleAll=Create("Frame",settings_1,{Name="toggleAll", LayoutOrder=1, BackgroundTransparency=1, Size=UDim2.new(0,100,0,100), BackgroundColor3=Color3.new(1,1,1)})
 switch=Create("Frame",toggleAll,{Name="switch", BackgroundTransparency=1, Size=UDim2.new(0.75,0,1,0), BackgroundColor3=Color3.new(1,1,1)})
-allOffBtn=Create("ImageButton",switch,{Name="allOffBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.5,0,1,0), BackgroundColor3=Color3.new(0.333,0.666,0.333)})
-allOnBtn=Create("ImageButton",switch,{Name="allOnBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.5,0,1,0), Position=UDim2.new(0.5,0,0,0), BackgroundColor3=Color3.new(0.666,0.333,0.333)})
+allOffBtn=Create("ImageButton",switch,{Name="allOffBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.5,0,1,0), BackgroundColor3=Color3.new(0.333,0.444,0.333)})
+allOnBtn=Create("ImageButton",switch,{Name="allOnBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.5,0,1,0), Position=UDim2.new(0.5,0,0,0), BackgroundColor3=Color3.new(0.999,0.333,0.333)})
 toggleAllSlider=Create("Frame",switch,{Name="slider", Size=UDim2.new(0.1,0,1,4), Position=UDim2.new(0.45,0,0,-2), BorderSizePixel=0, BackgroundColor3=Color3.new(0.784,0.784,0.784)})
 messageLbl=Create("TextLabel",topbar,{Name="messageLbl", Size=UDim2.new(0.5,0,1,0), Text="Saved.", TextSize=14, Font="GothamSemibold", BackgroundTransparency=1, 
 	Position=UDim2.new(0.07,0,0,0), TextColor3=Color3.new(1,1,1), Visible=false, TextXAlignment="Left"})
@@ -577,8 +577,9 @@ local function tryCook()
 						if (root.Position-Vector3.new(36.64, 3.80, 54.11)).magnitude>9 then  smoothTP(CFrame.new(36.64, 3.80, 54.11)) wait(.04) end
 						didsomething=true
 						network:FireServer("UpdateProperty", raw, "CFrame", CFrame.new(RNG:NextNumber(29.6,44.6),3.7,RNG:NextNumber(42.5,48.5)))
-						wait()
+						wait(0.01)
 						network:FireServer("SquishDough", raw)
+						wait(0.05)
 					else
 						local oven
 						for _,o in ipairs(ovens) do
@@ -723,8 +724,8 @@ while gui.Parent do
 	
 				if not pizzaSlicer then
 					-- If the Pizza Slicer isn't found, try to find one.
-					if (root.Position - Vector3.new(58.74, 3.80, 12.400)).magnitude > 9 then 
-						smoothTP(CFrame.new(58.74, 3.80, 12.400)) 
+					if (root.Position - Vector3.new(58.74, 3.80, 12.40)).magnitude > 9 then 
+						smoothTP(CFrame.new(58.74, 3.80, 12.40)) 
 						wait(0.05) 
 					end
 	
@@ -769,7 +770,7 @@ while gui.Parent do
 				end
 			end
 	
-			-- Add the slicing step before boxing.
+			-- Add the slicing step when boxing.
 			if openBox and boxP then
 				didsomething = true
 				if (root.Position-Vector3.new(58.74, 3.80, 12.400)).magnitude>9 then
@@ -778,15 +779,14 @@ while gui.Parent do
 					continue
 				end
 	
-				-- Slice the pizza before boxing.
-				slicePizza(boxP) -- Needed for Golden Pizza Slicer.
-	
 				network:FireServer("UpdateProperty", boxP, "Anchored", true)
 				network:FireServer("UpdateProperty", openBox, "Anchored", true)
 				wait()
 				network:FireServer("UpdateProperty", boxP, "CFrame", openBox.CFrame+Vector3.new(0,-2,0))
 				wait()
 				network:FireServer("AssignPizzaToBox", openBox, boxP)
+				-- Slice the pizza in box.
+				slicePizza(boxP) -- Needed for Golden Pizza Slicer.
 			end
 			if didsomething then wait(0.05) else break end
 		else
