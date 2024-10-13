@@ -679,6 +679,42 @@ while gui.Parent do
 		end
 	end
 	tryCook()
+
+	local function FindPizzaSlicer(parent)
+            	local ps = {}
+            	local children = parent:GetChildren()
+           	for i = 1, #children do
+                	local s = children[i]
+                	if s:IsA("Tool") and s.Name == "Pizza Slicer" then
+                    		s[#ps + 1] = s
+                	end
+            	end
+            	return ps
+       	end
+
+        -- Define function to handle pizza slicing
+        local function slicePizza(pizza)
+            	-- Find the Pizza Slicer in workspace or character
+        	local pizzaSlicer = FindPizzaSlicer(workspace)[1] or FindPizzaSlicer(character)[1]
+
+            	if pizzaSlicer then
+                	if ffc(character, "RightHand") and ffc(character.RightHand, "RightGrip") then
+                    		character.RightHand.RightGrip:Destroy()
+                    		wait(0.1)
+                	end
+
+               		-- Equip the pizza slicer if not equipped
+                	if not character.RightHand.RightGrip or character.RightHand.RightGrip.Tool ~= pizzaSlicer then
+                    		humanoid:EquipTool(pizzaSlicer)
+                    		wait(0.1) -- Allow time for equipping
+                	end
+
+                	-- Use the Pizza Slicer
+                	network:FireServer("UseTool", pizzaSlicer, pizza)
+                	wait(0.1) -- Wait for slicing to complete
+            	end
+        end
+	
 	for zz = 1, 7 do
     		if doBoxer then
         		local didSomething = false
@@ -733,42 +769,6 @@ while gui.Parent do
             			network:FireServer("UpdateProperty", closedBox, "CFrame", CFrame.new(RNG:NextNumber(62.5, 70.5), 3.5, RNG:NextNumber(11, 25)))
             			wait()
             			network:FireServer("OpenBox", closedBox)
-        		end
-
-        		-- Define function to find the pizza slicer tool
-        		local function FindPizzaSlicer(parent)
-            			local ps = {}
-            			local children = parent:GetChildren()
-           			for i = 1, #children do
-                			local s = children[i]
-                			if s:IsA("Tool") and s.Name == "Pizza Slicer" then
-                    				ps[#ps + 1] = s
-                			end
-            			end
-            			return ps
-       			end
-
-        		-- Define function to handle pizza slicing
-        		local function slicePizza(pizza)
-            			-- Find the Pizza Slicer in workspace or character
-            			local pizzaSlicer = FindPizzaSlicer(workspace)[1] or FindPizzaSlicer(character)[1]
-
-            			if pizzaSlicer then
-                			if ffc(character, "RightHand") and ffc(character.RightHand, "RightGrip") then
-                    				character.RightHand.RightGrip:Destroy()
-                    				wait(0.1)
-                			end
-
-               				-- Equip the pizza slicer if not equipped
-                			if not character.RightHand.RightGrip or character.RightHand.RightGrip.Tool ~= pizzaSlicer then
-                    				humanoid:EquipTool(pizzaSlicer)
-                    				wait(0.1) -- Allow time for equipping
-                			end
-
-                			-- Use the Pizza Slicer
-                			network:FireServer("UseTool", pizzaSlicer, pizza)
-                			wait(0.1) -- Wait for slicing to complete
-            			end
         		end
 
         		-- Add the slicing step when boxing
