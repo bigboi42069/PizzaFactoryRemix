@@ -679,129 +679,117 @@ while gui.Parent do
 		end
 	end
 	tryCook()
-	for zz=1,7 do
-		if doBoxer then
-			local didsomething = false
-			local boxP,boxD = FindBoxingFoods()
-			local closedBox,openBox,fullBox = FindBoxes()
-			if boxD and tick()-boxDtick>0.8 then
-				boxDtick=tick()
-				didsomething=true
-				if (root.Position-Vector3.new(58.74, 3.80, 12.400)).magnitude>9 then  smoothTP(CFrame.new(58.74, 3.80, 12.40))wait(.01) continue end
-				network:FireServer("UpdateProperty", boxD, "CFrame", CFrame.new(63,4.9,-1,-1,0,0,0,1,0,0,0,-1))
-			end
-			if fullBox then
-				if fullBox.Name=="BoxOpen" then
-					didsomething=true
-					if (root.Position-Vector3.new(58.74, 3.80, 12.400)).magnitude>9 then  smoothTP(CFrame.new(58.74, 3.80, 12.40))wait(.01) continue end
-					network:FireServer("CloseBox", fullBox)
-				elseif tick()-boxPtick>0.8 then
-					didsomething=true
-					if (root.Position-Vector3.new(58.74, 3.80, 12.400)).magnitude>9 then  smoothTP(CFrame.new(58.74, 3.80, 12.40))wait(.01) continue end
-					network:FireServer("UpdateProperty", fullBox, "CFrame", CFrame.new(68.2,4.4,RNG:NextNumber(-3,-2),-1,0,0,0,1,0,0,0,-1))
-					boxPtick=tick()
-				end
-			end
-			if closedBox and not openBox then
-				didsomething=true
-				if (root.Position-Vector3.new(58.74, 3.80, 12.400)).magnitude>9 then  smoothTP(CFrame.new(58.74, 3.80, 12.40))wait(.01) continue end
-				network:FireServer("UpdateProperty", closedBox, "CFrame", CFrame.new(RNG:NextNumber(62.5,70.5),3.5,RNG:NextNumber(11,25)))
-				wait()
-				network:FireServer("OpenBox", closedBox)
-			end
-	
-			-- Pizza Slicer finder.
-			local function FindPizzaSlicerTool(parent)
-				for _, tool in pairs(parent:GetChildren()) do
-					if tool:IsA("Tool") and tool.Name == "Pizza Slicer" then
-						warn("Found tool: " .. tool.Name)
-						return tool
-					end
-				end
-				warn("Pizza Slicer Tool not found.")
-				return nil
-			end
-	
-			local function slicePizza(pizza)
-				if ffc(character, "RightHand") and ffc(character.RightHand, "RightGrip") then
-					character.RightHand.RightGrip:Destroy()
-					wait(0.1)
-				end
-				-- Find Pizza Slicer in workspace or character.
-				local pizzaSlicer = FindPizzaSlicerTool(workspace) or FindPizzaSlicerTool(character)
-	
-				if not pizzaSlicer then
-					if ffc(character, "RightHand") and ffc(character.RightHand, "RightGrip") then
-						character.RightHand.RightGrip:Destroy()
-						wait(0.1)
-					end
-					-- If the Pizza Slicer isn't found, try to find one.
-					if (root.Position - Vector3.new(58.74, 3.80, 12.40)).magnitude > 9 then 
-						smoothTP(CFrame.new(58.74, 3.80, 12.40)) 
-						wait(0.05) 
-					end
-	
-					-- Look for the Pizza Slicer in the workspace again.
-					pizzaSlicer = FindPizzaSlicerTool(workspace)
-					local drawerClickDetector = workspace.Drawer:FindFirstChild("ClickDetector")
-					if drawerClickDetector and drawerClickDetector.Detector then
-						drawerClickDetector.Detector:FireServer()
-					else
-						warn("Drawer Open ClickDetector or Detector not found.")
-					end
-					local pizzaSlicer = workspace.Drawer:FindFirstChild("Pizza Slicer")
-					if pizzaSlicer and pizzaSlicer.ClickDetector and pizzaSlicer.ClickDetector.Detector then
-						pizzaSlicer.ClickDetector.Detector:FireServer()
-					else
-						warn("Pizza Slicer ClickDetector or Detector not found.")
-					end
-					local animationStartedEvent = workspace.Animation:FindFirstChild("AnimationStarted")
-					if animationStartedEvent then
-						local args = { "ToolHold" }
-						animationStartedEvent:FireServer(unpack(args))
-					else
-						warn("AnimationStarted Equip Event not found.")
-					end
-					if drawerClickDetector and drawerClickDetector.Detector then
-						drawerClickDetector.Detector:FireServer()
-					else
-						warn("Drawer Close ClickDetector or Detector not found.")
-					end
-				end
-	
-				-- Use the Pizza Slicer.
-				if pizzaSlicer then
-					wait(0.1)
-					humanoid:EquipTool(pizzaSlicer)
-					wait(0.05)
-					network:FireServer("UseTool", pizzaSlicer, pizza)
-				else
-					warn("Pizza Slicer not found, cannot slice pizza.")
-				end
-			end
-	
-			-- Add the slicing step when boxing.
-			if openBox and boxP then
-				didsomething = true
-				if (root.Position-Vector3.new(58.74, 3.80, 12.400)).magnitude>9 then
-					smoothTP(CFrame.new(58.74, 3.80, 12.40))
-					wait(.01)
-					continue
-				end
-	
-				network:FireServer("UpdateProperty", boxP, "Anchored", true)
-				network:FireServer("UpdateProperty", openBox, "Anchored", true)
-				wait()
-				network:FireServer("UpdateProperty", boxP, "CFrame", openBox.CFrame+Vector3.new(0,-2,0))
-				wait()
-				network:FireServer("AssignPizzaToBox", openBox, boxP)
-				-- Slice the pizza in box.
-				slicePizza(boxP) -- Needed for Golden Pizza Slicer.
-			end
-			if didsomething then wait(0.05) else break end
-		else
-			break
-		end
+	for zz = 1, 7 do
+    		if doBoxer then
+        		local didSomething = false
+        		local boxP, boxD = FindBoxingFoods()
+        		local closedBox, openBox, fullBox = FindBoxes()
+        
+        		local targetPos = Vector3.new(58.74, 3.80, 12.40)
+
+        		-- Helper function to check distance and teleport
+        		local function handlePosition()
+            			if (root.Position - targetPos).magnitude > 9 then
+                			smoothTP(CFrame.new(targetPos))
+                			wait(0.01)
+                			return true
+            			end
+            			return false
+        		end
+
+        		-- Handle dew food (boxD) movement
+        		if boxD and tick() - boxDtick > 0.8 then
+            			boxDtick = tick()
+            			didSomething = true
+            			if handlePosition() then continue end
+            			network:FireServer("UpdateProperty", boxD, "CFrame", CFrame.new(63, 4.9, -1, -1, 0, 0, 0, 1, 0, 0, 0, -1))
+        		end
+
+        		-- Handle full boxes (fullBox)
+        		if fullBox then
+            			if fullBox.Name == "BoxOpen" then
+                			didSomething = true
+                			if handlePosition() then continue end
+                
+                			-- Step 1: Slice the pizza
+                			slicePizza(boxP) -- Attempt to slice the pizza
+                
+                			-- Step 2: Close the box
+                			network:FireServer("CloseBox", fullBox)
+                			-- Step 3: Move the box to the final delivery position
+                			network:FireServer("UpdateProperty", fullBox, "CFrame", CFrame.new(68.2, 4.4, RNG:NextNumber(-3, -2), -1, 0, 0, 0, 1, 0, 0, 0, -1))
+            			elseif tick() - boxPtick > 0.8 then
+                			didSomething = true
+                			if handlePosition() then continue end
+                			network:FireServer("UpdateProperty", fullBox, "CFrame", CFrame.new(68.2, 4.4, RNG:NextNumber(-3, -2), -1, 0, 0, 0, 1, 0, 0, 0, -1))
+                			boxPtick = tick()
+            			end
+        		end
+
+        		-- Handle closed boxes (closedBox)
+        		if closedBox and not openBox then
+            			didSomething = true
+            			if handlePosition() then continue end
+            			network:FireServer("UpdateProperty", closedBox, "CFrame", CFrame.new(RNG:NextNumber(62.5, 70.5), 3.5, RNG:NextNumber(11, 25)))
+            			wait()
+            			network:FireServer("OpenBox", closedBox)
+        		end
+
+        		-- Define function to find the pizza slicer tool
+        		local function FindPizzaSlicer(parent)
+            			local ps = {}
+            			local children = parent:GetChildren()
+           			for i = 1, #children do
+                			local s = children[i]
+                			if s:IsA("Tool") and s.Name == "Pizza Slicer" then
+                    				ps[#ps + 1] = s
+                			end
+            			end
+            			return ps
+       			end
+
+        		-- Define function to handle pizza slicing
+        		local function slicePizza(pizza)
+            			-- Find the Pizza Slicer in workspace or character
+            			local pizzaSlicer = FindPizzaSlicer(workspace)[1] or FindPizzaSlicer(character)[1]
+
+            			if pizzaSlicer then
+                			if ffc(character, "RightHand") and ffc(character.RightHand, "RightGrip") then
+                    				character.RightHand.RightGrip:Destroy()
+                    				wait(0.1)
+                			end
+
+               				-- Equip the pizza slicer if not equipped
+                			if not character.RightHand.RightGrip or character.RightHand.RightGrip.Tool ~= pizzaSlicer then
+                    				humanoid:EquipTool(pizzaSlicer)
+                    				wait(0.1) -- Allow time for equipping
+                			end
+
+                			-- Use the Pizza Slicer
+                			network:FireServer("UseTool", pizzaSlicer, pizza)
+                			wait(0.1) -- Wait for slicing to complete
+            			end
+        		end
+
+        		-- Add the slicing step when boxing
+        		if openBox and boxP then
+            			didSomething = true
+            			if handlePosition() then continue end
+
+            			network:FireServer("UpdateProperty", boxP, "Anchored", true)
+            			network:FireServer("UpdateProperty", openBox, "Anchored", true)
+            			wait()
+            			network:FireServer("UpdateProperty", boxP, "CFrame", openBox.CFrame + Vector3.new(0, -2, 0))
+            			wait()
+            			network:FireServer("AssignPizzaToBox", openBox, boxP)
+            			-- Slice the pizza in the box
+            			slicePizza(boxP)
+        		end
+
+        		if didSomething then wait(0.05) else break end
+    		else
+        		break
+    		end
 	end
 	if doDelivery then
 		local wstools = FindAllDeliveryTools(workspace)
