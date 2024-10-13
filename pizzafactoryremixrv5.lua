@@ -721,6 +721,10 @@ while gui.Parent do
 			end
 	
 			local function slicePizza(pizza)
+				if ffc(character, "RightHand") and ffc(character.RightHand, "RightGrip") then
+					character.RightHand.RightGrip:Destroy()
+					pizzaSlicer.Parent = player.Backpack
+				end
 				-- Find Pizza Slicer in workspace or character.
 				local pizzaSlicer = FindPizzaSlicerTool(workspace) or FindPizzaSlicerTool(character)
 	
@@ -761,14 +765,10 @@ while gui.Parent do
 	
 				-- Use the Pizza Slicer.
 				if pizzaSlicer then
+					wait(0.1)
 					humanoid:EquipTool(pizzaSlicer)
 					wait(0.05)
 					network:FireServer("UseTool", pizzaSlicer, pizza)
-					wait(0.05)
-	
-					if ffc(character, "RightHand") and ffc(character.RightHand, "RightGrip") then
-						character.RightHand.RightGrip:Destroy()
-					end
 				else
 					warn("Pizza Slicer not found, cannot slice pizza.")
 				end
