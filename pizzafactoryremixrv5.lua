@@ -732,7 +732,8 @@ while gui.Parent do
 			            return tool
 			        end
 			    end
-			    return nil
+			    warn("Pizza Slicer ClickDetector or Detector not found.")
+			    return
 			end
 
 			local function slicePizza(pizza)
