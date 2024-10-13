@@ -576,10 +576,11 @@ local function tryCook()
 					if raw.Mesh.Scale.Y>1.5 then
 						if (root.Position-Vector3.new(36.64, 3.80, 54.11)).magnitude>9 then  smoothTP(CFrame.new(36.64, 3.80, 54.11)) wait(.04) end
 						didsomething=true
-						network:FireServer("UpdateProperty", raw, "CFrame", CFrame.new(RNG:NextNumber(29.6,44.6),3.7,RNG:NextNumber(42.5,48.5)))
 						wait(0.01)
+						network:FireServer("UpdateProperty", raw, "CFrame", CFrame.new(RNG:NextNumber(29.6,44.6),3.7,RNG:NextNumber(42.5,48.5)))
+						wait(0.02)
 						network:FireServer("SquishDough", raw)
-						wait(0.05)
+						wait(0.04)
 					else
 						local oven
 						for _,o in ipairs(ovens) do
@@ -713,6 +714,7 @@ while gui.Parent do
 			local function FindPizzaSlicerTool(parent)
 				for _, tool in pairs(parent:GetChildren()) do
 					if tool:IsA("Tool") and tool.Name == "Pizza Slicer" then
+						warn("Found tool: " .. tool.Name)
 						return tool
 					end
 				end
@@ -768,7 +770,6 @@ while gui.Parent do
 				-- Use the Pizza Slicer.
 				if pizzaSlicer then
 					wait(0.1)
-					pcall(function() tool.Parent = character end)
 					humanoid:EquipTool(pizzaSlicer)
 					wait(0.05)
 					network:FireServer("UseTool", pizzaSlicer, pizza)
@@ -966,6 +967,7 @@ while gui.Parent do
 						end
 						wait(0.1)
 						box.CFrame = CFrame.new(38-4.3*math.floor(j/2),5,-7-5*(j%2))
+						wait(0.02)
 						network:FireServer("UpdateProperty", box, "CFrame", box.CFrame)
 						lastBox=box
 						j=j+1
