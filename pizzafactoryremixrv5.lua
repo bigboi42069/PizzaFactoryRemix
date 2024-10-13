@@ -753,11 +753,13 @@ while gui.Parent do
 						drawerClickDetector.Detector:FireServer()
 					else
 						warn("Drawer Close ClickDetector or Detector not found (second fire).")
-					humanoid:EquipTool(pizzaSlicer)
+					end
 					if pizzaSlicer then
 						slicePizza(pizza)
+					else
+						humanoid:EquipTool(pizzaSlicer)
 					end
-				else:
+				elseif pizzaSlicer then:
         				humanoid:EquipTool(pizzaSlicer)
         				wait(0.02)
 					if pizzaSlicer then
@@ -771,6 +773,8 @@ while gui.Parent do
 					if ffc(character, "RightHand") and ffc(character.RightHand, "RightGrip") then
 						character.RightHand.RightGrip:Destroy()
 					end
+				else
+					break
 				end
 			end
 	
