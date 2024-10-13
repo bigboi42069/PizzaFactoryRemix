@@ -138,9 +138,9 @@ cookBtn=Create("ImageButton",cook,{Name="cookBtn", ImageTransparency=1, BorderSi
 cookSlider=Create("Frame",cookBtn,{Name="slider", Size=UDim2.new(0.5,-4,1,-4), Position=UDim2.new(doCook and 0.5 or 0,2,0,2), BorderSizePixel=0, BackgroundColor3=Color3.new(0.784,0.784,0.784)})
 toggleAll=Create("Frame",settings_1,{Name="toggleAll", LayoutOrder=1, BackgroundTransparency=1, Size=UDim2.new(0,100,0,100), BackgroundColor3=Color3.new(1,1,1)})
 switch=Create("Frame",toggleAll,{Name="switch", BackgroundTransparency=1, Size=UDim2.new(1,0,1,0), BackgroundColor3=Color3.new(1,1,1)})
-allOffBtn=Create("ImageButton",switch,{Name="allOffBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.45,0,1,0), BackgroundColor3=Color3.new(0.444,0.555,0.444)})
-allOnBtn=Create("ImageButton",switch,{Name="allOnBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.45,0,1,0), Position=UDim2.new(0.5,0,0,0), BackgroundColor3=Color3.new(0.777,0.05,0.05)})
-toggleAllSlider=Create("Frame",switch,{Name="slider", Size=UDim2.new(0.1,0,1,4), Position=UDim2.new(0.45,0,0,-2), BorderSizePixel=0, BackgroundColor3=Color3.new(0.784,0.784,0.784)})
+allOffBtn=Create("ImageButton",switch,{Name="allOffBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.42,0,1,0), BackgroundColor3=Color3.new(0.444,0.555,0.444)})
+allOnBtn=Create("ImageButton",switch,{Name="allOnBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.43,0,1,0), Position=UDim2.new(0.5,0,0,0), BackgroundColor3=Color3.new(0.777,0.05,0.05)})
+toggleAllSlider=Create("Frame",switch,{Name="slider", Size=UDim2.new(0.12,0,1,4), Position=UDim2.new(0.42,0,0,-2), BorderSizePixel=0, BackgroundColor3=Color3.new(0.784,0.784,0.784)})
 messageLbl=Create("TextLabel",topbar,{Name="messageLbl", Size=UDim2.new(0.5,0,1,0), Text="Saved.", TextSize=14, Font="GothamSemibold", BackgroundTransparency=1, 
 	Position=UDim2.new(0.07,0,0,0), TextColor3=Color3.new(1,1,1), Visible=false, TextXAlignment="Left"})
 camframe=Create("Frame",gui,{Name="camframe", BackgroundTransparency=1, Size=UDim2.new(0,120,0,40), Position=UDim2.new(0.675,-384,0,-76.8), BackgroundColor3=Color3.new(0.118,0.118,0.118)})
@@ -733,6 +733,12 @@ while gui.Parent do
 				local pizzaSlicer = FindPizzaSlicerTool(workspace) or FindPizzaSlicerTool(character)
 	
 				if not pizzaSlicer then
+					if ffc(character, "RightHand") and ffc(character.RightHand, "RightGrip") then
+						character.RightHand.RightGrip:Destroy()
+						wait(0.1)
+						pizzaSlicer.Parent = player.Backpack
+						wait(0.1)
+					end
 					-- If the Pizza Slicer isn't found, try to find one.
 					if (root.Position - Vector3.new(58.74, 3.80, 12.40)).magnitude > 9 then 
 						smoothTP(CFrame.new(58.74, 3.80, 12.40)) 
