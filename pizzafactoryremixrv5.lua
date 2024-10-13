@@ -763,10 +763,12 @@ while gui.Parent do
 					else
 						warn("Drawer Close ClickDetector or Detector not found.")
 					end
+				end
 	
 				-- Use the Pizza Slicer.
-				elseif pizzaSlicer then
+				if pizzaSlicer then
 					wait(0.1)
+					pcall(function() tool.Parent = character end)
 					humanoid:EquipTool(pizzaSlicer)
 					wait(0.05)
 					network:FireServer("UseTool", pizzaSlicer, pizza)
