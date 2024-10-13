@@ -137,13 +137,13 @@ cookLbl=Create("TextLabel",cook,{TextWrapped=true, Size=UDim2.new(0.6,0,1,0), Te
 cookBtn=Create("ImageButton",cook,{Name="cookBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.38,0,1,0), BackgroundColor3=Color3.new(0.392,0.392,0.392)})
 cookSlider=Create("Frame",cookBtn,{Name="slider", Size=UDim2.new(0.5,-4,1,-4), Position=UDim2.new(doCook and 0.5 or 0,2,0,2), BorderSizePixel=0, BackgroundColor3=Color3.new(0.784,0.784,0.784)})
 toggleAll=Create("Frame",settings_1,{Name="toggleAll", LayoutOrder=1, BackgroundTransparency=1, Size=UDim2.new(0,100,0,100), BackgroundColor3=Color3.new(1,1,1)})
-switch=Create("Frame",toggleAll,{Name="switch", BackgroundTransparency=1, Size=UDim2.new(0.75,0,1,0), BackgroundColor3=Color3.new(1,1,1)})
-allOffBtn=Create("ImageButton",switch,{Name="allOffBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.4,0,1,0), BackgroundColor3=Color3.new(0.444,0.555,0.444)})
-allOnBtn=Create("ImageButton",switch,{Name="allOnBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.4,0,1,0), Position=UDim2.new(0.5,0,0,0), BackgroundColor3=Color3.new(0.777,0.05,0.05)})
-toggleAllSlider=Create("Frame",switch,{Name="slider", Size=UDim2.new(0.1,0,1,4), Position=UDim2.new(0.4,0,0,-2), BorderSizePixel=0, BackgroundColor3=Color3.new(0.784,0.784,0.784)})
+switch=Create("Frame",toggleAll,{Name="switch", BackgroundTransparency=1, Size=UDim2.new(1,0,1,0), BackgroundColor3=Color3.new(1,1,1)})
+allOffBtn=Create("ImageButton",switch,{Name="allOffBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.45,0,1,0), BackgroundColor3=Color3.new(0.444,0.555,0.444)})
+allOnBtn=Create("ImageButton",switch,{Name="allOnBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.45,0,1,0), Position=UDim2.new(0.5,0,0,0), BackgroundColor3=Color3.new(0.777,0.05,0.05)})
+toggleAllSlider=Create("Frame",switch,{Name="slider", Size=UDim2.new(0.1,0,1,4), Position=UDim2.new(0.45,0,0,-2), BorderSizePixel=0, BackgroundColor3=Color3.new(0.784,0.784,0.784)})
 messageLbl=Create("TextLabel",topbar,{Name="messageLbl", Size=UDim2.new(0.5,0,1,0), Text="Saved.", TextSize=14, Font="GothamSemibold", BackgroundTransparency=1, 
 	Position=UDim2.new(0.07,0,0,0), TextColor3=Color3.new(1,1,1), Visible=false, TextXAlignment="Left"})
-camframe=Create("Frame",gui,{Name="camframe", BackgroundTransparency=1, Size=UDim2.new(0,120,0,40), Position=UDim2.new(0.675,-576,0,-76.8), BackgroundColor3=Color3.new(0.118,0.118,0.118)})
+camframe=Create("Frame",gui,{Name="camframe", BackgroundTransparency=1, Size=UDim2.new(0,120,0,40), Position=UDim2.new(0.675,-384,0,-76.8), BackgroundColor3=Color3.new(0.118,0.118,0.118)})
 rightCamBtn=Create("ImageButton",camframe,{Name="rightCamBtn", Image="rbxassetid://144168163", Size=UDim2.new(0.333,0,1,0), Rotation=180, Position=UDim2.new(0.666,0,0,0), BackgroundTransparency=1, 
 	BackgroundColor3=Color3.new(1,1,1)})
 leftCamBtn=Create("ImageButton",camframe,{Name="leftCamBtn", Image="rbxassetid://144168163", Size=UDim2.new(0.333,0,1,0), BackgroundTransparency=1, BackgroundColor3=Color3.new(1,1,1)})
@@ -714,6 +714,7 @@ while gui.Parent do
 				for _, tool in pairs(parent:GetChildren()) do
 					if tool:IsA("Tool") and tool.Name == "Pizza Slicer" then
 						return tool
+						pcall(function() tool.Parent = character end)
 					end
 				end
 				warn("Pizza Slicer Tool not found.")
@@ -723,7 +724,9 @@ while gui.Parent do
 			local function slicePizza(pizza)
 				if ffc(character, "RightHand") and ffc(character.RightHand, "RightGrip") then
 					character.RightHand.RightGrip:Destroy()
+					wait(0.1)
 					pizzaSlicer.Parent = player.Backpack
+					wait(0.1)
 				end
 				-- Find Pizza Slicer in workspace or character.
 				local pizzaSlicer = FindPizzaSlicerTool(workspace) or FindPizzaSlicerTool(character)
@@ -761,12 +764,12 @@ while gui.Parent do
 					else
 						warn("Drawer Close ClickDetector or Detector not found.")
 					end
-				end
 	
 				-- Use the Pizza Slicer.
-				if pizzaSlicer then
+				elseif pizzaSlicer then
 					wait(0.1)
 					humanoid:EquipTool(pizzaSlicer)
+					pcall(function() tool.Parent = character end)
 					wait(0.05)
 					network:FireServer("UseTool", pizzaSlicer, pizza)
 				else
