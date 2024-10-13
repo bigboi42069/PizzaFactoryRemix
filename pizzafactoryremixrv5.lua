@@ -711,13 +711,37 @@ while gui.Parent do
 	
 			-- Pizza Slicer finder.
 			local function FindPizzaSlicerTool(parent)
-				for _, tool in pairs(parent:GetChildren()) do
-					if tool:IsA("Tool") and tool.Name == "Pizza Slicer" then
-						return tool
-					end
-				end
-				warn("Pizza Slicer tool not found.")
-				return nil
+    				local pizzaSlicer = nil
+    
+    				-- Search for the Pizza Slicer tool
+    				for _, tool in pairs(parent:GetChildren()) do
+        				if tool:IsA("Tool") and tool.Name == "Pizza Slicer" then
+            					pizzaSlicer = tool
+            					break
+        				end
+    				end
+    
+    				-- If Pizza Slicer not found, return the first tool or create a dummy tool
+    				if not pizzaSlicer then
+        				warn("Pizza Slicer tool not found. Returning alternative tool.")
+        
+        				-- Try to find any tool
+        				for _, item in pairs(parent:GetChildren()) do
+            					if item:IsA("Tool") then
+                					pizzaSlicer = item
+                					break
+            					end
+        				end
+        
+        				-- If no tool found, create a dummy tool
+        				if not pizzaSlicer then
+            					pizzaSlicer = Instance.new("Tool")
+            					pizzaSlicer.Name = "Dummy Pizza Slicer"
+            					pizzaSlicer.Parent = parent
+        				end
+    				end
+    
+    				return pizzaSlicer
 			end
 	
 			local function slicePizza(pizza)
