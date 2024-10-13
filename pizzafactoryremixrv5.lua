@@ -711,37 +711,33 @@ while gui.Parent do
 	
 			-- Pizza Slicer finder.
 			local function FindPizzaSlicerTool(parent)
-    				local pizzaSlicer = nil
+    				-- Create a dummy tool to return if nothing is found
+    				local dummyTool = Instance.new("Tool")
+    				dummyTool.Name = "Dummy Pizza Slicer"
+    
+    				-- Check if parent exists and is valid
+    				if not parent or typeof(parent) ~= "Instance" then
+        				warn("Invalid parent provided to FindPizzaSlicerTool")
+       					return dummyTool
+    				end
     
     				-- Search for the Pizza Slicer tool
     				for _, tool in pairs(parent:GetChildren()) do
-        				if tool:IsA("Tool") and tool.Name == "Pizza Slicer" then
-            					pizzaSlicer = tool
-            					break
-        				end
-    				end
-    
-    				-- If Pizza Slicer not found, return the first tool or create a dummy tool
-    				if not pizzaSlicer then
-        				warn("Pizza Slicer tool not found. Returning alternative tool.")
-        
-        				-- Try to find any tool
-        				for _, item in pairs(parent:GetChildren()) do
-            					if item:IsA("Tool") then
-                					pizzaSlicer = item
-                					break
+        				if tool:IsA("Tool") then
+            					if tool.Name == "Pizza Slicer" then
+                					return tool
+            					elseif not dummyTool.Parent then
+                					-- If we haven't found the Pizza Slicer yet, 
+                					-- keep track of the first tool we find
+                					dummyTool = tool
             					end
         				end
-        
-        				-- If no tool found, create a dummy tool
-        				if not pizzaSlicer then
-            					pizzaSlicer = Instance.new("Tool")
-            					pizzaSlicer.Name = "Dummy Pizza Slicer"
-            					pizzaSlicer.Parent = parent
-        				end
     				end
     
-    				return pizzaSlicer
+    				-- If we didn't find the Pizza Slicer, return the first tool we found
+    				-- or the dummy tool if no tools were found
+    				warn("Pizza Slicer tool not found. Returning alternative tool.")
+    				return dummyTool
 			end
 	
 			local function slicePizza(pizza)
