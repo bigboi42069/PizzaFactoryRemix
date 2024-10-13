@@ -714,7 +714,7 @@ while gui.Parent do
 			local function FindPizzaSlicerTool(parent)
 				for _, tool in pairs(parent:GetChildren()) do
 					if tool:IsA("Tool") and tool.Name == "Pizza Slicer" then
-						warn("Found tool: " .. tool.Name)
+						warn("Found tool: " .. tool)
 						return tool
 					end
 				end
@@ -723,20 +723,12 @@ while gui.Parent do
 			end
 	
 			local function slicePizza(pizza)
-				if ffc(character, "RightHand") and ffc(character.RightHand, "RightGrip") then
-					character.RightHand.RightGrip:Destroy()
-					wait(0.1)
-					pizzaSlicer.Parent = player.Backpack
-					wait(0.1)
-				end
 				-- Find Pizza Slicer in workspace or character.
 				local pizzaSlicer = FindPizzaSlicerTool(workspace) or FindPizzaSlicerTool(character)
 	
 				if not pizzaSlicer then
-					if ffc(character, "RightHand") and ffc(character.RightHand, "RightGrip") then
-						character.RightHand.RightGrip:Destroy()
-						wait(0.1)
-						pizzaSlicer.Parent = player.Backpack
+					if tool:IsA("Tool") in pairs(parent:GetChildren()) do
+						tool.Parent = player.Backpack
 						wait(0.1)
 					end
 					-- If the Pizza Slicer isn't found, try to find one.
