@@ -671,6 +671,8 @@ while gui.Parent do
 			if (root.Position-Vector3.new(50.30, 3.80, 83.24)).magnitude>9 then smoothTP(CFrame.new(50.30, 3.80, 83.24)) wait(.01) end
 			network:FireServer("OrderComplete", c, order, workspace["Register"..reg])
 			wait(0.01)
+			network:FireServer("OrderComplete", c, order, workspace["Register"..reg])
+			wait(0.09)
 		else
 			break
 		end
@@ -714,7 +716,7 @@ while gui.Parent do
 						return tool
 					end
 				end
-				warn("Pizza Slicer ClickDetector or Detector not found.")
+				warn("Pizza Slicer tool not found.")
 				return nil
 			end
 	
@@ -732,40 +734,43 @@ while gui.Parent do
 					if drawerClickDetector and drawerClickDetector.Detector then
 						drawerClickDetector.Detector:FireServer()
 					else
-						warn("Drawer ClickDetector or Detector not found.")
+						warn("Drawer Open ClickDetector or Detector not found.")
 					end
 					local pizzaSlicer = workspace.Drawer:FindFirstChild("Pizza Slicer")
 					if pizzaSlicer and pizzaSlicer.ClickDetector and pizzaSlicer.ClickDetector.Detector then
 						pizzaSlicer.ClickDetector.Detector:FireServer()
 					else
-						warn("Pizza Slicer ClickDetector or Detector not found.")
+						warn("Pizza Slicer Pickup ClickDetector or Detector not found.")
 					end
 					local animationStartedEvent = workspace.Animation:FindFirstChild("AnimationStarted")
 					if animationStartedEvent then
 						local args = { "ToolHold" }
 						animationStartedEvent:FireServer(unpack(args))
 					else
-						warn("AnimationStarted event not found.")
+						warn("AnimationStarted Equip event not found.")
 					end
 					if drawerClickDetector and drawerClickDetector.Detector then
 						drawerClickDetector.Detector:FireServer()
 					else
-						warn("Drawer ClickDetector or Detector not found (second fire).")
+						warn("Drawer Close ClickDetector or Detector not found (second fire).")
+					humanoid:EquipTool(pizzaSlicer)
+					if pizzaSlicer then
+						slicePizza(pizza)
 					end
-					if pizzaSlicer.Parent ~= character then
-        					humanoid:EquipTool(pizzaCutter)
-        					wait(0.02)
-    					end
+				else:
+        				humanoid:EquipTool(pizzaSlicer)
+        				wait(0.02)
 					if pizzaSlicer then
 						network:FireServer("UseTool", pizzaSlicer, pizza)
 						wait(0.05)
-    					pizzaCutter.Parent = player.Backpack
+    						pizzaCutter.Parent = player.Backpack
+					else
+						warn("Pizza Slicer not found, cannot slice pizza.")
+					end
 	
 					if ffc(character, "RightHand") and ffc(character.RightHand, "RightGrip") then
 						character.RightHand.RightGrip:Destroy()
 					end
-				else
-					warn("Pizza Slicer not found, cannot slice pizza.")
 				end
 			end
 	
