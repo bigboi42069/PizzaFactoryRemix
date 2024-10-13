@@ -671,8 +671,6 @@ while gui.Parent do
 			if (root.Position-Vector3.new(50.30, 3.80, 83.24)).magnitude>9 then smoothTP(CFrame.new(50.30, 3.80, 83.24)) wait(.01) end
 			network:FireServer("OrderComplete", c, order, workspace["Register"..reg])
 			wait(0.01)
-			network:FireServer("OrderComplete", c, order, workspace["Register"..reg])
-			wait(0.1)
 		else
 			break
 		end
