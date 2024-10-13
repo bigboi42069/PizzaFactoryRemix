@@ -672,7 +672,7 @@ while gui.Parent do
 			network:FireServer("OrderComplete", c, order, workspace["Register"..reg])
 			wait(0.01)
 			network:FireServer("OrderComplete", c, order, workspace["Register"..reg])
-			wait(0.09)
+			wait(0.1)
 		else
 			break
 		end
@@ -711,33 +711,13 @@ while gui.Parent do
 	
 			-- Pizza Slicer finder.
 			local function FindPizzaSlicerTool(parent)
-    				-- Create a dummy tool to return if nothing is found
-    				local dummyTool = Instance.new("Tool")
-    				dummyTool.Name = "Dummy Pizza Slicer"
-    
-    				-- Check if parent exists and is valid
-    				if not parent or typeof(parent) ~= "Instance" then
-        				warn("Invalid parent provided to FindPizzaSlicerTool")
-       					return dummyTool
-    				end
-    
-    				-- Search for the Pizza Slicer tool
-    				for _, tool in pairs(parent:GetChildren()) do
-        				if tool:IsA("Tool") then
-            					if tool.Name == "Pizza Slicer" then
-                					return tool
-            					elseif not dummyTool.Parent then
-                					-- If we haven't found the Pizza Slicer yet, 
-                					-- keep track of the first tool we find
-                					dummyTool = tool
-            					end
-        				end
-    				end
-    
-    				-- If we didn't find the Pizza Slicer, return the first tool we found
-    				-- or the dummy tool if no tools were found
-    				warn("Pizza Slicer tool not found. Returning alternative tool.")
-    				return dummyTool
+				for _, tool in pairs(parent:GetChildren()) do
+					if tool:IsA("Tool") and tool.Name == "Pizza Slicer" then
+						return tool
+					end
+				end
+				warn("Pizza Slicer Tool not found.")
+				return nil
 			end
 	
 			local function slicePizza(pizza)
@@ -745,10 +725,13 @@ while gui.Parent do
 				local pizzaSlicer = FindPizzaSlicerTool(workspace) or FindPizzaSlicerTool(character)
 	
 				if not pizzaSlicer then
+					-- If the Pizza Slicer isn't found, try to find one.
 					if (root.Position - Vector3.new(58.74, 3.80, 12.40)).magnitude > 9 then 
 						smoothTP(CFrame.new(58.74, 3.80, 12.40)) 
 						wait(0.05) 
 					end
+	
+					-- Look for the Pizza Slicer in the workspace again.
 					pizzaSlicer = FindPizzaSlicerTool(workspace)
 					local drawerClickDetector = workspace.Drawer:FindFirstChild("ClickDetector")
 					if drawerClickDetector and drawerClickDetector.Detector then
@@ -760,41 +743,34 @@ while gui.Parent do
 					if pizzaSlicer and pizzaSlicer.ClickDetector and pizzaSlicer.ClickDetector.Detector then
 						pizzaSlicer.ClickDetector.Detector:FireServer()
 					else
-						warn("Pizza Slicer Pickup ClickDetector or Detector not found.")
+						warn("Pizza Slicer ClickDetector or Detector not found.")
 					end
 					local animationStartedEvent = workspace.Animation:FindFirstChild("AnimationStarted")
 					if animationStartedEvent then
 						local args = { "ToolHold" }
 						animationStartedEvent:FireServer(unpack(args))
 					else
-						warn("AnimationStarted Equip event not found.")
+						warn("AnimationStarted Equip Event not found.")
 					end
 					if drawerClickDetector and drawerClickDetector.Detector then
 						drawerClickDetector.Detector:FireServer()
 					else
-						warn("Drawer Close ClickDetector or Detector not found (second fire).")
+						warn("Drawer Close ClickDetector or Detector not found.")
 					end
-					if pizzaSlicer then
-						slicePizza(pizza)
-					else
-						humanoid:EquipTool(pizzaSlicer)
-					end
-				elseif pizzaSlicer then:
-        				humanoid:EquipTool(pizzaSlicer)
-        				wait(0.02)
-					if pizzaSlicer then
-						network:FireServer("UseTool", pizzaSlicer, pizza)
-						wait(0.05)
-    						pizzaCutter.Parent = player.Backpack
-					else
-						warn("Pizza Slicer not found, cannot slice pizza.")
-					end
+				end
+	
+				-- Use the Pizza Slicer.
+				if pizzaSlicer then
+					humanoid:EquipTool(pizzaSlicer)
+					wait(0.05)
+					network:FireServer("UseTool", pizzaSlicer, pizza)
+					wait(0.05)
 	
 					if ffc(character, "RightHand") and ffc(character.RightHand, "RightGrip") then
 						character.RightHand.RightGrip:Destroy()
 					end
 				else
-					break
+					warn("Pizza Slicer not found, cannot slice pizza.")
 				end
 			end
 	
