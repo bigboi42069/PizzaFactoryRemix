@@ -749,13 +749,6 @@ while gui.Parent do
 	
 					-- Look for the Pizza Slicer in the workspace again.
 					pizzaSlicer = FindPizzaSlicerTool(workspace)
-					local function getNil(name, class)
-						for _, v in pairs(getnilinstances()) do
-							if v.ClassName == class and v.Name == name then
-								return v
-							end
-						end
-					end
 					local drawerClickDetector = workspace.Drawer:FindFirstChild("ClickDetector")
 					if drawerClickDetector and drawerClickDetector.Detector then
 						drawerClickDetector.Detector:FireServer()
