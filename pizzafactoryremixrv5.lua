@@ -138,8 +138,8 @@ cookBtn=Create("ImageButton",cook,{Name="cookBtn", ImageTransparency=1, BorderSi
 cookSlider=Create("Frame",cookBtn,{Name="slider", Size=UDim2.new(0.5,-4,1,-4), Position=UDim2.new(doCook and 0.5 or 0,2,0,2), BorderSizePixel=0, BackgroundColor3=Color3.new(0.784,0.784,0.784)})
 toggleAll=Create("Frame",settings_1,{Name="toggleAll", LayoutOrder=1, BackgroundTransparency=1, Size=UDim2.new(0,100,0,100), BackgroundColor3=Color3.new(1,1,1)})
 switch=Create("Frame",toggleAll,{Name="switch", BackgroundTransparency=1, Size=UDim2.new(0.75,0,1,0), BackgroundColor3=Color3.new(1,1,1)})
-allOffBtn=Create("ImageButton",switch,{Name="allOffBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.5,0,1,0), BackgroundColor3=Color3.new(0.333,0.444,0.333)})
-allOnBtn=Create("ImageButton",switch,{Name="allOnBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.5,0,1,0), Position=UDim2.new(0.5,0,0,0), BackgroundColor3=Color3.new(0.999,0.333,0.333)})
+allOffBtn=Create("ImageButton",switch,{Name="allOffBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.5,0,1,0), BackgroundColor3=Color3.new(0.333,0.555,0.333)})
+allOnBtn=Create("ImageButton",switch,{Name="allOnBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.5,0,1,0), Position=UDim2.new(0.5,0,0,0), BackgroundColor3=Color3.new(0.888,0.111,0.111)})
 toggleAllSlider=Create("Frame",switch,{Name="slider", Size=UDim2.new(0.1,0,1,4), Position=UDim2.new(0.45,0,0,-2), BorderSizePixel=0, BackgroundColor3=Color3.new(0.784,0.784,0.784)})
 messageLbl=Create("TextLabel",topbar,{Name="messageLbl", Size=UDim2.new(0.5,0,1,0), Text="Saved.", TextSize=14, Font="GothamSemibold", BackgroundTransparency=1, 
 	Position=UDim2.new(0.07,0,0,0), TextColor3=Color3.new(1,1,1), Visible=false, TextXAlignment="Left"})
@@ -670,6 +670,8 @@ while gui.Parent do
 			end
 			if (root.Position-Vector3.new(50.30, 3.80, 83.24)).magnitude>9 then smoothTP(CFrame.new(50.30, 3.80, 83.24)) wait(.01) end
 			network:FireServer("OrderComplete", c, order, workspace["Register"..reg])
+			wait(0.01)
+			network:FireServer("OrderComplete", c, order, workspace["Register"..reg])
 			wait(0.1)
 		else
 			break
@@ -723,13 +725,10 @@ while gui.Parent do
 				local pizzaSlicer = FindPizzaSlicerTool(workspace) or FindPizzaSlicerTool(character)
 	
 				if not pizzaSlicer then
-					-- If the Pizza Slicer isn't found, try to find one.
 					if (root.Position - Vector3.new(58.74, 3.80, 12.40)).magnitude > 9 then 
 						smoothTP(CFrame.new(58.74, 3.80, 12.40)) 
 						wait(0.05) 
 					end
-	
-					-- Look for the Pizza Slicer in the workspace again.
 					pizzaSlicer = FindPizzaSlicerTool(workspace)
 					local drawerClickDetector = workspace.Drawer:FindFirstChild("ClickDetector")
 					if drawerClickDetector and drawerClickDetector.Detector then
@@ -755,12 +754,14 @@ while gui.Parent do
 					else
 						warn("Drawer ClickDetector or Detector not found (second fire).")
 					end
-				end
-	
-				-- Use the Pizza Slicer.
-				if pizzaSlicer then
-					network:FireServer("UseTool", pizzaSlicer, pizza)
-					wait(0.05)
+					if pizzaSlicer.Parent ~= character then
+        					humanoid:EquipTool(pizzaCutter)
+        					wait(0.02)
+    					end
+					if pizzaSlicer then
+						network:FireServer("UseTool", pizzaSlicer, pizza)
+						wait(0.05)
+    					pizzaCutter.Parent = player.Backpack
 	
 					if ffc(character, "RightHand") and ffc(character.RightHand, "RightGrip") then
 						character.RightHand.RightGrip:Destroy()
@@ -944,8 +945,6 @@ while gui.Parent do
 					-- Supply Drop-off.
 					if root.Position.Z > -900 then smoothTP(CFrame.new(8,12.4,-1020)) end
 					wait(0.1)
-					if root.Position.Z > -900 then smoothTP(CFrame.new(8,12.4,-1020)) end
-					wait(0.1)
 					lastBox=nil
 					local j=0
 					local boxes = workspace.AllSupplyBoxes:GetChildren()
@@ -953,6 +952,7 @@ while gui.Parent do
 						local box = boxes[i]
 						if box.Anchored==false and box.Position.Z < -940 and bcolorToSupply[box.BrickColor.Name] and supplyCounts[bcolorToSupply[box.BrickColor.Name]]<settings.refill_end then
 							box.CFrame = CFrame.new(38-4.3*math.floor(j/2),5,-7-5*(j%2))
+							wait(0.1)
 							network:FireServer("UpdateProperty", box, "CFrame", box.CFrame)
 							lastBox=box
 							j=j+1
