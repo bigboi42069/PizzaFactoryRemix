@@ -714,7 +714,6 @@ while gui.Parent do
 				for _, tool in pairs(parent:GetChildren()) do
 					if tool:IsA("Tool") and tool.Name == "Pizza Slicer" then
 						return tool
-						pcall(function() tool.Parent = character end)
 					end
 				end
 				warn("Pizza Slicer Tool not found.")
@@ -769,7 +768,6 @@ while gui.Parent do
 				elseif pizzaSlicer then
 					wait(0.1)
 					humanoid:EquipTool(pizzaSlicer)
-					pcall(function() tool.Parent = character end)
 					wait(0.05)
 					network:FireServer("UseTool", pizzaSlicer, pizza)
 				else
