@@ -138,7 +138,7 @@ cookBtn=Create("ImageButton",cook,{Name="cookBtn", ImageTransparency=1, BorderSi
 cookSlider=Create("Frame",cookBtn,{Name="slider", Size=UDim2.new(0.5,-4,1,-4), Position=UDim2.new(doCook and 0.5 or 0,2,0,2), BorderSizePixel=0, BackgroundColor3=Color3.new(0.784,0.784,0.784)})
 toggleAll=Create("Frame",settings_1,{Name="toggleAll", LayoutOrder=1, BackgroundTransparency=1, Size=UDim2.new(0,100,0,100), BackgroundColor3=Color3.new(1,1,1)})
 switch=Create("Frame",toggleAll,{Name="switch", BackgroundTransparency=1, Size=UDim2.new(0.75,0,1,0), BackgroundColor3=Color3.new(1,1,1)})
-allOffBtn=Create("ImageButton",switch,{Name="allOffBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.5,0,1,0), BackgroundColor3=Color3.new(0.333,0.333,0.333)})
+allOffBtn=Create("ImageButton",switch,{Name="allOffBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.5,0,1,0), BackgroundColor3=Color3.new(0.333,0.666,0.333)})
 allOnBtn=Create("ImageButton",switch,{Name="allOnBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.5,0,1,0), Position=UDim2.new(0.5,0,0,0), BackgroundColor3=Color3.new(0.666,0.333,0.333)})
 toggleAllSlider=Create("Frame",switch,{Name="slider", Size=UDim2.new(0.1,0,1,4), Position=UDim2.new(0.45,0,0,-2), BorderSizePixel=0, BackgroundColor3=Color3.new(0.784,0.784,0.784)})
 messageLbl=Create("TextLabel",topbar,{Name="messageLbl", Size=UDim2.new(0.5,0,1,0), Text="Saved.", TextSize=14, Font="GothamSemibold", BackgroundTransparency=1, 
@@ -651,7 +651,7 @@ end
 wait(1.5)
 
 while gui.Parent do
-	wait(0.6)
+	wait(1.2)
 	humanoid.Sit=false
 	if RNG:NextInteger(1,20)==1 then
 		game:GetService("VirtualInputManager"):SendKeyEvent(true,"Z",false,game)
@@ -669,9 +669,6 @@ while gui.Parent do
 			end
 			if (root.Position-Vector3.new(50.30, 3.80, 83.24)).magnitude>9 then smoothTP(CFrame.new(50.30, 3.80, 83.24)) wait(.005) end
 			network:FireServer("OrderComplete", c, order, workspace["Register"..reg])
-			network:FireServer("OrderComplete", c, order, workspace["Register"..reg])
-			wait(0.01)
-			network:FireServer("OrderComplete", c, order, workspace["Register"..reg])
 			wait(0.05)
 		else
 			local c,order = FindFirstCustomer()
@@ -683,9 +680,6 @@ while gui.Parent do
 					reg = 1
 				end
 				if (root.Position-Vector3.new(50.30, 3.80, 83.24)).magnitude>9 then smoothTP(CFrame.new(50.30, 3.80, 83.24)) wait(.005) end
-				network:FireServer("OrderComplete", c, order, workspace["Register"..reg])
-				network:FireServer("OrderComplete", c, order, workspace["Register"..reg])
-				wait(0.01)
 				network:FireServer("OrderComplete", c, order, workspace["Register"..reg])
 				wait(0.05)
 			else
@@ -724,96 +718,74 @@ while gui.Parent do
 				wait()
 				network:FireServer("OpenBox", closedBox)
 			end
-	
+
 			-- Pizza Slicer finder.
 			local function FindPizzaSlicerTool(parent)
-				for _, tool in pairs(parent:GetChildren()) do
-					if tool:IsA("Tool") and tool.Name == "Pizza Slicer" then
-						return tool
-					end
-				end
-				warn("Pizza Slicer ClickDetector or Detector not found.")
-				return nil
+			    for _, tool in pairs(parent:GetChildren()) do
+			        if tool:IsA("Tool") and tool.Name == "Pizza Slicer" then
+			            return tool
+			        end
+			    end
+			    return nil
 			end
-	
+
 			--local function slicePizza(pizza)
-				-- Find Pizza Slicer in workspace or character.
-				--local pizzaSlicer = FindPizzaSlicerTool(workspace) or FindPizzaSlicerTool(character)
-	
-				--if not pizzaSlicer then
-					-- If the Pizza Slicer isn't found, try to find one.
-					--if (root.Position - Vector3.new(58.74, 3.80, 12.400)).magnitude > 9 then 
-						--smoothTP(CFrame.new(58.74, 3.80, 12.400)) 
-						--wait(0.05) 
-					--end
-	
-					-- Look for the Pizza Slicer in the workspace again.
-					--pizzaSlicer = FindPizzaSlicerTool(workspace)
-					--local drawerClickDetector = workspace.Drawer:FindFirstChild("ClickDetector")
-					--if drawerClickDetector and drawerClickDetector.Detector then
-						--drawerClickDetector.Detector:FireServer()
-					--else
-						--warn("Drawer ClickDetector or Detector not found.")
-					--end
-					--local pizzaSlicer = workspace.Drawer:FindFirstChild("Pizza Slicer")
-					--if pizzaSlicer and pizzaSlicer.ClickDetector and pizzaSlicer.ClickDetector.Detector then
-						--pizzaSlicer.ClickDetector.Detector:FireServer()
-					--else
-						--warn("Pizza Slicer ClickDetector or Detector not found.")
-					--end
-					--local animationStartedEvent = workspace.Animation:FindFirstChild("AnimationStarted")
-					--if animationStartedEvent then
-						--local args = { "ToolHold" }
-						--animationStartedEvent:FireServer(unpack(args))
-					--else
-						--warn("AnimationStarted event not found.")
-					--end
-					--if drawerClickDetector and drawerClickDetector.Detector then
-						--drawerClickDetector.Detector:FireServer()
-					--else
-						--warn("Drawer ClickDetector or Detector not found (second fire).")
-					--end
-					--if pizzaSlicer then
-						--humanoid:EquipTool(pizzaSlicer)
-						--wait(0.05)
-						--pizzaSlicer.Parent = player.Backpack
-					--else
-						--warn("Failed to find and equip Pizza Slicer, Golden Pizza Slicer functionality is broken.")
-						--return
-					--end
-				--end
-	
-				-- Use the Pizza Slicer.
-				--if pizzaSlicer then
-					--network:FireServer("UseTool", pizzaSlicer, pizza)
-					--wait(0.05)
-	
-					--if ffc(character, "RightHand") and ffc(character.RightHand, "RightGrip") then
-						--character.RightHand.RightGrip:Destroy()
-					--end
-				--else
-					--warn("Pizza Slicer not found, cannot slice pizza.")
-				--end
+    			-- Find Pizza Slicer in workspace or character.
+    			--local pizzaSlier = FindPizzaSlicerTool(workspace) or FindPizzaSlicerTool(character)
+
+    			--if not pizzaSlicer then
+        			-- If the Pizza Slicer isn't found, try to find one.
+        			--if (root.Position - Vector3.new(58.74, 3.80, 12.400)).magnitude > 9 then 
+            			--smoothTP(CFrame.new(58.74, 3.80, 12.400)) 
+            			--wait(0.02) 
+        			--end
+
+        			-- Look for the Pizza Slicer in the workspace again.
+        			--pizzaSlicer = FindPizzaSlicerTool(workspace)
+
+        			--if pizzaSlicer then
+            			--humanoid:EquipTool(pizzaSlicer)
+            			--wait(0.05)
+            			--pizzaSlicer.Parent = player.Backpack
+        			--else
+            			--warn("Failed to find and equip Pizza Slicer, Golden Pizza Slicer functionality is broken.")
+            			--return
+        			--end
+    			--end
+
+    			-- Equip the Pizza Slicer.
+    			--if pizzaSlicer.Parent ~= character then
+        			--humanoid:EquipTool(pizzaSlicer)
+        			--wait(0.05)
+    			--end
+
+    			-- Use the Pizza Slicer.
+    			--network:FireServer("UseTool", pizzaSlicer, pizza)
+    			--wait(0.05)
+
+    			--if ffc(character, "RightHand") and ffc(character.RightHand, "RightGrip") then
+        			--character.RightHand.RightGrip:Destroy()
+    			--end
 			--end
-	
+
 			-- Add the slicing step before boxing.
 			if openBox and boxP then
-				didsomething = true
-				if (root.Position-Vector3.new(58.74, 3.80, 12.400)).magnitude>9 then
-					smoothTP(CFrame.new(58.74, 3.80, 12.40))
-					wait(.01)
-					continue
-				end
-	
-				-- Slice the pizza before boxing.
-				--slicePizza(boxP) -- Needed for Golden Pizza Slicer.
-	
-				network:FireServer("UpdateProperty", boxP, "Anchored", true)
-				network:FireServer("UpdateProperty", openBox, "Anchored", true)
-				wait()
-				network:FireServer("UpdateProperty", boxP, "CFrame", openBox.CFrame+Vector3.new(0,-2,0))
-				wait()
-				network:FireServer("AssignPizzaToBox", openBox, boxP)
+    			didsomething = true
+    			if (root.Position-Vector3.new(58.74, 3.80, 12.400)).magnitude>9 then
+        			smoothTP(CFrame.new(58.74, 3.80, 12.40))
+        			wait(.01)
+        			continue
+    			end
+
+    			-- Slice the pizza before boxing.
+    			--slicePizza(boxP) -- Needed for Golden Pizza Slicer.
+
+    			network:FireServer("UpdateProperty", boxP, "Anchored", true)
+    			network:FireServer("UpdateProperty", openBox, "Anchored", true)
+    			wait()
+    			network:FireServer("UpdateProperty", boxP, "CFrame", openBox.CFrame+Vector3.new(0,-2,0))
+    			wait()
+    			network:FireServer("AssignPizzaToBox", openBox, boxP)
 			end
 			if didsomething then wait(0.05) else break end
 		else
@@ -971,8 +943,6 @@ while gui.Parent do
 					-- Supply Drop-off.
 					if root.Position.Z > -900 then smoothTP(CFrame.new(8,12.4,-1020)) end
 					wait(0.1)
-					if root.Position.Z > -900 then smoothTP(CFrame.new(8,12.4,-1020)) end
-					wait(0.1)
 					lastBox=nil
 					local j=0
 					local boxes = workspace.AllSupplyBoxes:GetChildren()
@@ -985,12 +955,6 @@ while gui.Parent do
 							j=j+1
 							if j>13 then break end
 						end
-						wait(0.1)
-						box.CFrame = CFrame.new(38-4.3*math.floor(j/2),5,-7-5*(j%2))
-						network:FireServer("UpdateProperty", box, "CFrame", box.CFrame)
-						lastBox=box
-						j=j+1
-						if j>13 then break end
 					end
 					if lastBox then
 						waiting=true
