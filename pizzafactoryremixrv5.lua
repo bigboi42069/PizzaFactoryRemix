@@ -137,13 +137,13 @@ cookLbl=Create("TextLabel",cook,{TextWrapped=true, Size=UDim2.new(0.6,0,1,0), Te
 cookBtn=Create("ImageButton",cook,{Name="cookBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.38,0,1,0), BackgroundColor3=Color3.new(0.392,0.392,0.392)})
 cookSlider=Create("Frame",cookBtn,{Name="slider", Size=UDim2.new(0.5,-4,1,-4), Position=UDim2.new(doCook and 0.5 or 0,2,0,2), BorderSizePixel=0, BackgroundColor3=Color3.new(0.784,0.784,0.784)})
 toggleAll=Create("Frame",settings_1,{Name="toggleAll", LayoutOrder=1, BackgroundTransparency=1, Size=UDim2.new(0,100,0,100), BackgroundColor3=Color3.new(1,1,1)})
-switch=Create("Frame",toggleAll,{Name="switch", BackgroundTransparency=1, Size=UDim2.new(1,0,1,0), BackgroundColor3=Color3.new(1,1,1)})
-allOffBtn=Create("ImageButton",switch,{Name="allOffBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.42,0,1,0), BackgroundColor3=Color3.new(0.444,0.555,0.444)})
-allOnBtn=Create("ImageButton",switch,{Name="allOnBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.43,0,1,0), Position=UDim2.new(0.5,0,0,0), BackgroundColor3=Color3.new(0.777,0.05,0.05)})
-toggleAllSlider=Create("Frame",switch,{Name="slider", Size=UDim2.new(0.12,0,1,4), Position=UDim2.new(0.42,0,0,-2), BorderSizePixel=0, BackgroundColor3=Color3.new(0.784,0.784,0.784)})
+switch=Create("Frame",toggleAll,{Name="switch", BackgroundTransparency=1, Size=UDim2.new(0.75,0,1,0), BackgroundColor3=Color3.new(1,1,1)})
+allOffBtn=Create("ImageButton",switch,{Name="allOffBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.5,0,1,0), BackgroundColor3=Color3.new(0.444,0.555,0.444)})
+allOnBtn=Create("ImageButton",switch,{Name="allOnBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.5,0,1,0), Position=UDim2.new(0.5,0,0,0), BackgroundColor3=Color3.new(0.666,0.333,0.333)})
+toggleAllSlider=Create("Frame",switch,{Name="slider", Size=UDim2.new(0.1,0,1,4), Position=UDim2.new(0.45,0,0,-2), BorderSizePixel=0, BackgroundColor3=Color3.new(0.784,0.784,0.784)})
 messageLbl=Create("TextLabel",topbar,{Name="messageLbl", Size=UDim2.new(0.5,0,1,0), Text="Saved.", TextSize=14, Font="GothamSemibold", BackgroundTransparency=1, 
 	Position=UDim2.new(0.07,0,0,0), TextColor3=Color3.new(1,1,1), Visible=false, TextXAlignment="Left"})
-camframe=Create("Frame",gui,{Name="camframe", BackgroundTransparency=1, Size=UDim2.new(0,120,0,40), Position=UDim2.new(0.675,-384,0,-76.8), BackgroundColor3=Color3.new(0.118,0.118,0.118)})
+camframe=Create("Frame",gui,{Name="camframe", BackgroundTransparency=1, Size=UDim2.new(0,120,0,40), Position=UDim2.new(0.675,-400,0,-40), BackgroundColor3=Color3.new(0.118,0.118,0.118)})
 rightCamBtn=Create("ImageButton",camframe,{Name="rightCamBtn", Image="rbxassetid://144168163", Size=UDim2.new(0.333,0,1,0), Rotation=180, Position=UDim2.new(0.666,0,0,0), BackgroundTransparency=1, 
 	BackgroundColor3=Color3.new(1,1,1)})
 leftCamBtn=Create("ImageButton",camframe,{Name="leftCamBtn", Image="rbxassetid://144168163", Size=UDim2.new(0.333,0,1,0), BackgroundTransparency=1, BackgroundColor3=Color3.new(1,1,1)})
@@ -650,90 +650,6 @@ local function tryCook()
 		end
 	end
 end
-
--- Helper function to check distance and teleport
-local function handlePosition()
-	if (root.Position - targetPos).magnitude > 9 then
-                smoothTP(CFrame.new(targetPos))
-                wait(0.01)
-                return true
-        end
-        return false
-end
-
-local function FindPizzaSlicer(parent)
-	local ps = {}
-    	local children = parent:GetChildren()
-    
-    	-- First, look for the Pizza Slicer in the given parent.
-    	for i = 1, #children do
-        	local s = children[i]
-        	if s:IsA("Tool") and s.Name == "Pizza Slicer" then
-            		ps[#ps + 1] = s
-        	end
-    	end
-    
-    	-- If no Pizza Slicer was found, handle the search logic.
-    	if #ps == 0 then
-        	-- Teleport if the player is too far.
-        	if (root.Position - Vector3.new(58.74, 3.80, 12.40)).magnitude > 9 then 
-            		smoothTP(CFrame.new(58.74, 3.80, 12.40)) 
-            		wait(0.05) 
-        	end
-        
-        	-- Look for the Pizza Slicer in the workspace.
-        	local pizzaSlicer = workspace.Drawer:FindFirstChild("Pizza Slicer")
-        	local drawerClickDetector = workspace.Drawer:FindFirstChild("ClickDetector")
-        
-        	if drawerClickDetector and drawerClickDetector.Detector then
-            		drawerClickDetector.Detector:FireServer() -- Open the drawer.
-        	else
-            		warn("Drawer Open ClickDetector or Detector not found.")
-        	end
-        
-        	if pizzaSlicer and pizzaSlicer.ClickDetector and pizzaSlicer.ClickDetector.Detector then
-           		pizzaSlicer.ClickDetector.Detector:FireServer() -- Equip the pizza slicer.
-        	else
-            		warn("Pizza Slicer ClickDetector or Detector not found.")
-        	end
-        
-        	-- Start the animation if the event exists.
-        	local animationStartedEvent = workspace.Animation:FindFirstChild("AnimationStarted")
-        	if animationStartedEvent then
-            		animationStartedEvent:FireServer("ToolHold") -- Trigger the animation.
-        	else
-            		warn("AnimationStarted Equip Event not found.")
-        	end
-        
-        	-- Close the drawer after equipping the slicer.
-        	if drawerClickDetector and drawerClickDetector.Detector then
-            		drawerClickDetector.Detector:FireServer() -- Close the drawer.
-        	else
-           		warn("Drawer Close ClickDetector or Detector not found.")
-        	end
-    	end
-    	return ps
-end
-
--- Define function to handle pizza slicing
-local function slicePizza(pizza)
-	-- Find the Pizza Slicer in workspace or character
-        local pizzaSlicer = FindPizzaSlicer(workspace)[1] or FindPizzaSlicer(character)[1]
-
-        if pizzaSlicer then
-        	if ffc(character, "RightHand") and ffc(character.RightHand, "RightGrip") then
-                    	character.RightHand.RightGrip:Destroy()
-                    	wait(0.1)
-                end
-
-               	-- Equip the pizza slicer if not equipped
-                humanoid:EquipTool(pizzaSlicer)
-                wait(0.1) -- Allow time for equipping
-                -- Use the Pizza Slicer
-                network:FireServer("UseTool", pizzaSlicer, pizza)
-                wait(0.1) -- Wait for slicing to complete
-        end
-end
 wait(1.5)
 
 while gui.Parent do
@@ -763,6 +679,81 @@ while gui.Parent do
 		end
 	end
 	tryCook()
+
+	local function FindPizzaSlicer(parent)
+    		local ps = {}
+    		local children = parent:GetChildren()
+    
+    		-- First, look for the Pizza Slicer in the given parent.
+    		for i = 1, #children do
+        		local s = children[i]
+        		if s:IsA("Tool") and s.Name == "Pizza Slicer" then
+            			ps[#ps + 1] = s
+        		end
+    		end
+    
+    		-- If no Pizza Slicer was found, handle the search logic.
+    		if #ps == 0 then
+        		-- Teleport if the player is too far.
+        		if (root.Position - Vector3.new(58.74, 3.80, 12.40)).magnitude > 9 then 
+            			smoothTP(CFrame.new(58.74, 3.80, 12.40)) 
+            			wait(0.05) 
+        		end
+        
+        		-- Look for the Pizza Slicer in the workspace.
+        		local pizzaSlicer = workspace.Drawer:FindFirstChild("Pizza Slicer")
+        		local drawerClickDetector = workspace.Drawer:FindFirstChild("ClickDetector")
+        
+        		if drawerClickDetector and drawerClickDetector.Detector then
+            			drawerClickDetector.Detector:FireServer() -- Open the drawer.
+        		else
+            			warn("Drawer Open ClickDetector or Detector not found.")
+        		end
+        
+        		if pizzaSlicer and pizzaSlicer.ClickDetector and pizzaSlicer.ClickDetector.Detector then
+           			pizzaSlicer.ClickDetector.Detector:FireServer() -- Equip the pizza slicer.
+        		else
+            			warn("Pizza Slicer ClickDetector or Detector not found.")
+        		end
+        
+        		-- Start the animation if the event exists.
+        		local animationStartedEvent = workspace.Animation:FindFirstChild("AnimationStarted")
+        		if animationStartedEvent then
+            			animationStartedEvent:FireServer("ToolHold") -- Trigger the animation.
+        		else
+            			warn("AnimationStarted Equip Event not found.")
+        		end
+        
+        		-- Close the drawer after equipping the slicer.
+        		if drawerClickDetector and drawerClickDetector.Detector then
+            			drawerClickDetector.Detector:FireServer() -- Close the drawer.
+        		else
+           			warn("Drawer Close ClickDetector or Detector not found.")
+        		end
+    		end
+    		return ps
+	end
+
+        -- Define function to handle pizza slicing
+        local function slicePizza(pizza)
+            	-- Find the Pizza Slicer in workspace or character
+        	local pizzaSlicer = FindPizzaSlicer(workspace)[1] or FindPizzaSlicer(character)[1]
+
+            	if pizzaSlicer then
+                	if ffc(character, "RightHand") and ffc(character.RightHand, "RightGrip") then
+                    		character.RightHand.RightGrip:Destroy()
+                    		wait(0.1)
+                	end
+
+               		-- Equip the pizza slicer if not equipped
+                    	humanoid:EquipTool(pizzaSlicer)
+                    	wait(0.1) -- Allow time for equipping
+                	-- Use the Pizza Slicer
+                	network:FireServer("UseTool", pizzaSlicer, pizza)
+                	wait(0.1) -- Wait for slicing to complete
+            	end
+        end
+	
 	for zz = 1, 7 do
     		if doBoxer then
         		local didSomething = false
@@ -770,6 +761,16 @@ while gui.Parent do
         		local closedBox, openBox, fullBox = FindBoxes()
         
         		local targetPos = Vector3.new(58.74, 3.80, 12.40)
+
+        		-- Helper function to check distance and teleport
+        		local function handlePosition()
+            			if (root.Position - targetPos).magnitude > 9 then
+                			smoothTP(CFrame.new(targetPos))
+                			wait(0.01)
+                			return true
+            			end
+            			return false
+        		end
 
         		-- Handle dew food (boxD) movement
         		if boxD and tick() - boxDtick > 0.8 then
