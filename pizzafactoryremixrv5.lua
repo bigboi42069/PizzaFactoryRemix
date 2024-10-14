@@ -683,15 +683,15 @@ while gui.Parent do
 	local function FindPizzaSlicer(parent)
     		local ps = {}
     		local children = parent:GetChildren()
-    
+
     		-- First, look for the Pizza Slicer in the given parent.
     		for i = 1, #children do
         		local s = children[i]
         		if s:IsA("Tool") and s.Name == "Pizza Slicer" then
-            			ps[#ps + 1] = s
+           			ps[#ps + 1] = s
         		end
     		end
-    
+
     		-- If no Pizza Slicer was found, handle the search logic.
     		if #ps == 0 then
         		-- Teleport if the player is too far.
@@ -699,40 +699,53 @@ while gui.Parent do
             			smoothTP(CFrame.new(58.74, 3.80, 12.40)) 
             			wait(0.05) 
         		end
-        
-        		-- Look for the Pizza Slicer in the workspace.
-        		local pizzaSlicer = workspace.Drawer:FindFirstChild("Pizza Slicer")
-        		local drawerClickDetector = workspace.Drawer:FindFirstChild("ClickDetector")
-        
-        		if drawerClickDetector and drawerClickDetector.Detector then
-            			drawerClickDetector.Detector:FireServer() -- Open the drawer.
-        		else
-            			warn("Drawer Open ClickDetector or Detector not found.")
-        		end
-        
-        		if pizzaSlicer and pizzaSlicer.ClickDetector and pizzaSlicer.ClickDetector.Detector then
-           			pizzaSlicer.ClickDetector.Detector:FireServer() -- Equip the pizza slicer.
-        		else
-            			warn("Pizza Slicer ClickDetector or Detector not found.")
-        		end
-        
-        		-- Start the animation if the event exists.
-        		local animationStartedEvent = workspace.Animation:FindFirstChild("AnimationStarted")
-        		if animationStartedEvent then
-            			animationStartedEvent:FireServer("ToolHold") -- Trigger the animation.
-        		else
-            			warn("AnimationStarted Equip Event not found.")
-        		end
-        
-        		-- Close the drawer after equipping the slicer.
-        		if drawerClickDetector and drawerClickDetector.Detector then
-            			drawerClickDetector.Detector:FireServer() -- Close the drawer.
-        		else
-           			warn("Drawer Close ClickDetector or Detector not found.")
-        		end
-    		end
-    		return ps
-	end
+    
+        	-- Look for the Pizza Slicer in the workspace.
+        	local pizzaSlicer = workspace.Drawer:FindFirstChild("Pizza Slicer")
+        	local drawerClickDetector = workspace.Drawer:FindFirstChild("ClickDetector")
+    
+        	-- Attempt to open the drawer.
+        	if drawerClickDetector and drawerClickDetector.Detector then
+            		drawerClickDetector.Detector:FireServer() -- Open the drawer.
+        	else
+           		warn("Drawer Open ClickDetector or Detector not found.")
+        	end
+    
+        	-- Equip the pizza slicer if found.
+        	if pizzaSlicer and pizzaSlicer.ClickDetector and pizzaSlicer.ClickDetector.Detector then
+            		pizzaSlicer.ClickDetector.Detector:FireServer() -- Equip the pizza slicer.
+            		ps[#ps + 1] = pizzaSlicer -- Add the pizza slicer to the list
+        	else
+            		warn("Pizza Slicer ClickDetector or Detector not found.")
+        	end
+    
+        	-- Start the animation if the event exists.
+        	local animationStartedEvent = workspace.Animation:FindFirstChild("AnimationStarted")
+        	if animationStartedEvent then
+            		animationStartedEvent:FireServer("ToolHold") -- Trigger the animation.
+        	else
+            		warn("AnimationStarted Equip Event not found.")
+        	end
+    
+        	-- Close the drawer after equipping the slicer.
+        	if drawerClickDetector and drawerClickDetector.Detector then
+            		drawerClickDetector.Detector:FireServer() -- Close the drawer.
+        	else
+	        	warn("Drawer Close ClickDetector or Detector not found.")
+        	end
+    	end
+
+    -- Check again in the parent if not found in the workspace
+    if #ps == 0 then
+        for _, tool in pairs(parent:GetChildren()) do
+            if tool:IsA("Tool") and tool.Name == "Pizza Slicer" then
+                ps[#ps + 1] = tool
+            end
+        end
+    end
+
+    return ps
+end
 
         -- Define function to handle pizza slicing
         local function slicePizza(pizza)
@@ -787,7 +800,7 @@ while gui.Parent do
                 			if handlePosition() then continue end
                 
                 			-- Step 1: Slice the pizza
-                			slicePizza(boxP) -- Attempt to slice the pizza
+                			--slicePizza(boxP) -- Attempt to slice the pizza
                 
                 			-- Step 2: Close the box
                 			network:FireServer("CloseBox", fullBox)
