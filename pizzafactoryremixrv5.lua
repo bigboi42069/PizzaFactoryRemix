@@ -8,7 +8,7 @@ if not (getrawmetatable and getupvalues and setupvalue and (getreg or debug.getr
 	h:Destroy()
 	return
 end
-local settings = {refill_at=20, refill_end=81, deliver_at=16, stay_in_kitchen=true}
+local settings = {refill_at=20, refill_end=82, deliver_at=16, stay_in_kitchen=true}
 local doCashier,doBoxer,doCook,doSupplier,doDelivery = false,false,false,false,false
 if readfile then
 	pcall(function()
@@ -686,7 +686,7 @@ while gui.Parent do
            	for i = 1, #children do
                 	local s = children[i]
                 	if s:IsA("Tool") and s.Name == "Pizza Slicer" then
-                    		s[#ps + 1] = s
+                    		ps[#ps + 1] = s
                 	end
             	end
             	return ps
