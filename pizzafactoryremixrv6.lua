@@ -740,8 +740,10 @@ while gui.Parent do
     			wait(0.05) -- Wait for the clickdetector to equip the slicer
 			else
 				local pizzaSlicer = player.Backpack:FindFirstChild("Pizza Slicer") or player.Character:FindFirstChild("Pizza Slicer")
-    			humanoid:EquipTool(pizzaSlicer)
-    			wait(0.05)
+				if pizzaSlicer then
+    				humanoid:EquipTool(pizzaSlicer)
+    				wait(0.05)
+				end
 			end
 
 			-- Start the animation if the event exists.
@@ -765,7 +767,10 @@ while gui.Parent do
         	end
    		end
 
-    	return ps[1]
+		if #ps == 0 then
+			return nil
+		end
+		return ps[1]
 	end
 
     -- Define function to handle pizza slicing
@@ -773,7 +778,7 @@ while gui.Parent do
         -- Find the Pizza Slicer in workspace or character
         local pizzaSlicer = FindPizzaSlicer(workspace)[1] or FindPizzaSlicer(character)[1]
 
-        if pizzaSlicer then
+        if pizzaSlicer and humanoid then
             if ffc(character, "RightHand") and ffc(character.RightHand, "RightGrip") then
                 character.RightHand.RightGrip:Destroy()
                 wait(0.1)
@@ -785,6 +790,8 @@ while gui.Parent do
             -- Use the Pizza Slicer
             network:FireServer("UseTool", pizzaSlicer, pizza)
             wait(0.1) -- Wait for slicing to complete
+		else
+			warn("Pizza Slicer not found, skipping pizza slicing operation.")
         end
     end
 	
