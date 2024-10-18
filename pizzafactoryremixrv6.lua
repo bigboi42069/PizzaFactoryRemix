@@ -316,35 +316,26 @@ for name in pairs(supplyCounts) do
 	end)
 end
 
-local function getOrderFromChatBubble(chatBubble)
-    local dialog = chatBubble:FindFirstChild("Dialog")
-    if dialog then
-        local responseDialog = dialog:FindFirstChild("ResponseDialog")
-        if responseDialog then
-            local dialogText = responseDialog.Text
-            if dialogText:find("pepperoni", 1, true) then
-                return "PepperoniPizza"
-            elseif dialogText:find("sausage", 1, true) then
-                return "SausagePizza"
-            elseif dialogText:find("cheese", 1, true) then
-                return "CheesePizza"
-            elseif dialogText:find("MountainDew", 1, true) then
-                return "MountainDew"
-            end
-        end
-    end
-    return nil
-end
-
 local function FindFirstCustomer()
-    for _, customer in pairs(workspace.Customers:GetChildren()) do
-        local chatBubble = customer:FindFirstChild("ChatBubble")
-        if chatBubble then
-            local order = getOrderFromChatBubble(chatBubble)
-            return customer, order
+    local children = workspace.Customers:GetChildren()
+    for i=1,#children do
+        local c = children[i]
+        if ffc(c,"Head") and ffc(c,"Humanoid") and ffc(c.Head,"Dialog") and ffc(c.Head.Dialog,"Correct") then
+            local dialog = c.Head.Dialog.Correct.ResponseDialog or ''
+            local order = "MountainDew"
+            if dialog:sub(-8)=="instead." then
+                dialog = dialog:sub(-30)
+            end
+            if dialog:find("pepperoni",1,true) then
+                order = "PepperoniPizza"
+            elseif dialog:find("sausage",1,true) then
+                order = "SausagePizza"
+            elseif dialog:find("cheese",1,true) then
+                order = "CheesePizza"
+            end
+            return c,order
         end
     end
-    return nil, nil
 end
 
 local boxPtick=0
