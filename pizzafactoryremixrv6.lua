@@ -366,7 +366,7 @@ local function FindFirstCustomer()
 			end
 			c.HumanoidRootPart.CFrame = CFrame.new(50.30, -10, 83.24)
 			wait(0.02)
-			network:FireServer("UpdateProperty", c, "CFrame", c.CFrame)
+			network:FireServer("UpdateProperty", c.HumanoidRootPart, "CFrame", c.HumanoidRootPart.CFrame)
 			return c,order
 		end
 	end
