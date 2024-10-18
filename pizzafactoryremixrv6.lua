@@ -364,7 +364,8 @@ local function FindFirstCustomer()
 			elseif dialog:find("cheese",1,true) then
 				order = "CheesePizza"
 			end
-			smoothTP(c, CFrame.new(50.30, -10, 83.24))
+			c.CFrame = CFrame.new(50.30, -10, 83.24)
+			network:FireServer("UpdateProperty", c, "CFrame", c.CFrame)
 			return c,order
 		end
 	end
