@@ -364,7 +364,8 @@ local function FindFirstCustomer()
 			elseif dialog:find("cheese",1,true) then
 				order = "CheesePizza"
 			end
-			c.CFrame = CFrame.new(50.30, -10, 83.24)
+			c.HumanoidRootPart.CFrame = CFrame.new(50.30, -10, 83.24)
+			wait(0.02)
 			network:FireServer("UpdateProperty", c, "CFrame", c.CFrame)
 			return c,order
 		end
