@@ -697,6 +697,11 @@ while gui.Parent do
 	tryCook()
 
 	local function FindPizzaSlicer(parent)
+		if not parent then
+			warn("Parent is nil")
+			return nil
+		end
+
     	local ps = {}
     	local children = parent:GetChildren()
 
@@ -716,6 +721,11 @@ while gui.Parent do
     
         	-- Look for the Pizza Slicer in the workspace.
 			local pizzaSlicer = workspace.Drawer:FindFirstChild("Pizza Slicer")
+			if pizzaSlicer then
+				ps[#ps + 1] = pizzaSlicer
+			else
+				pizzaSlicer = player.Backpack:FindFirstChild("Pizza Slicer") or player.Character:FindFirstChild("Pizza Slicer")
+			end
 			local drawerClickDetector = workspace.Drawer:FindFirstChild("ClickDetector")
 
 			-- Attempt to open the drawer.
@@ -725,13 +735,11 @@ while gui.Parent do
 
 			-- Equip the pizza slicer if found using clickdetector.
 			if pizzaSlicer and pizzaSlicer.ClickDetector and pizzaSlicer.ClickDetector.Detector then
-    			pizzaSlicer.ClickDetector.Detector:FireServer() -- Equip the pizza slicer.
+				pizzaSlicer.ClickDetector.Detector:FireServer() -- Equip the pizza slicer.
+				ps[#ps + 1] = pizzaSlicer -- Add the pizza slicer to the list
     			wait(0.05) -- Wait for the clickdetector to equip the slicer
-			end
-
-			-- Always equip the pizza slicer from backpack or hotbar if it's not already equipped.
-			local pizzaSlicer = player.Backpack:FindFirstChild("Pizza Slicer") or player.Character:FindFirstChild("Pizza Slicer")
-			if pizzaSlicer and not character:FindFirstChild("Pizza Slicer") then
+			else
+				local pizzaSlicer = player.Backpack:FindFirstChild("Pizza Slicer") or player.Character:FindFirstChild("Pizza Slicer")
     			humanoid:EquipTool(pizzaSlicer)
     			wait(0.05)
 			end
@@ -757,7 +765,7 @@ while gui.Parent do
         	end
    		end
 
-    	return ps
+    	return ps[1]
 	end
 
     -- Define function to handle pizza slicing
