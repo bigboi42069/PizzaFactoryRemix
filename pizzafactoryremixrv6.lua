@@ -373,7 +373,6 @@ local function getCustomerOrder(c)
     return order
 end
 
-
 local function FindFirstCustomer()
     local children = workspace.Customers:GetChildren()
     for i = 1, #children do
@@ -384,8 +383,10 @@ local function FindFirstCustomer()
                 RemoveCustomer(c)
                 return c, order
             else
-                FindFirstCustomer()
-                return c, order
+                local result = FindFirstCustomer()
+                if result then
+                    return result
+                end
             end
         else
             if ffc(c, "Head") and ffc(c, "Humanoid") and c.Head.CFrame.Z < 102 and ffc(c.Head, "Dialog") and ffc(c.Head.Dialog, "Correct") and ((c.Humanoid.SeatPart and c.Humanoid.SeatPart.Anchored) or (c.Humanoid.SeatPart == nil and (c.Head.Velocity.Z^2)^.5 < .0001)) then
@@ -409,10 +410,10 @@ local function RemoveCustomer(c)
     else
         wait(0.1)
         if c and c:IsDescendantOf(workspace) then
-            RemoveCustomer(c)
+            return RemoveCustomer(c)
         else
             local c = workspace.Customers:GetChildren()[1]
-            RemoveCustomer(c)
+            return RemoveCustomer(c)
         end
     end
 end
