@@ -689,7 +689,7 @@ local function tryCook()
 				if (root.Position-Vector3.new(36.64, 3.80, 54.11)).magnitude>9 then  smoothTP(CFrame.new(36.64, 3.80, 54.11)) wait(0.02) end
 				network:FireServer("UpdateProperty", trash, "CFrame", CFrame.new(47.90, 7.00, 72.49, 1, 0, -0, 0, 0, 1, 0, -1, 0))
 			end
-			if didsomething then wait(0.1) else break end
+			if didsomething then wait(0.5) else break end
 		else
 			break
 		end
@@ -785,9 +785,9 @@ while gui.Parent do
     	-- Check again in the parent if not found in the workspace
     	if #ps == 0 then
         	for _, tool in pairs(parent:GetChildren()) do
-            	if tool:IsA("Tool") and tool.Name == "Pizza Slicer" then
-                	ps[#ps + 1] = tool
-            	end
+            		if tool:IsA("Tool") and tool.Name == "Pizza Slicer" then
+                		ps[#ps + 1] = tool
+            		end
         	end
     	end
 
@@ -811,80 +811,80 @@ while gui.Parent do
                 network:FireServer("UseTool", pizzaSlicer, pizza)
                 wait(0.02) -- Wait for slicing to complete
             end
-    end
+    	end
 	
 	for zz = 1, 7 do
-    	if doBoxer then
-        	local didSomething = false
-        	local boxP, boxD = FindBoxingFoods()
-        	local closedBox, openBox, fullBox = FindBoxes()
+    		if doBoxer then
+        		local didSomething = false
+        		local boxP, boxD = FindBoxingFoods()
+        		local closedBox, openBox, fullBox = FindBoxes()
         
-        	local targetPos = Vector3.new(58.74, 3.80, 12.40)
+        		local targetPos = Vector3.new(58.74, 3.80, 12.40)
 
-        	-- Helper function to check distance and teleport
-        	local function handlePosition()
-            	if (root.Position - targetPos).magnitude > 9 then
-                	smoothTP(CFrame.new(targetPos))
-                	wait(0.02)
-                	return true
-            	end
-            	return false
-        	end
+        		-- Helper function to check distance and teleport
+        		local function handlePosition()
+            			if (root.Position - targetPos).magnitude > 9 then
+                			smoothTP(CFrame.new(targetPos))
+                			wait(0.02)
+                			return true
+            			end
+            			return false
+        		end
 
-        	-- Handle dew food (boxD) movement
-        	if boxD and tick() - boxDtick > 0.8 then
-            	boxDtick = tick()
-            	didSomething = true
-            	if handlePosition() then continue end
-            	network:FireServer("UpdateProperty", boxD, "CFrame", CFrame.new(63, 4.9, -1, -1, 0, 0, 0, 1, 0, 0, 0, -1))
-        	end
+        		-- Handle dew food (boxD) movement
+        		if boxD and tick() - boxDtick > 0.8 then
+            			boxDtick = tick()
+            			didSomething = true
+            			if handlePosition() then continue end
+            			network:FireServer("UpdateProperty", boxD, "CFrame", CFrame.new(63, 4.9, -1, -1, 0, 0, 0, 1, 0, 0, 0, -1))
+        		end
 
-        	-- Handle full boxes (fullBox)
-        	if fullBox then
-            	if fullBox.Name == "BoxOpen" then
-                	didSomething = true
-                	if handlePosition() then continue end
+        		-- Handle full boxes (fullBox)
+        		if fullBox then
+            			if fullBox.Name == "BoxOpen" then
+                			didSomething = true
+                			if handlePosition() then continue end
                 
-                	network:FireServer("CloseBox", fullBox)
+                			network:FireServer("CloseBox", fullBox)
 					wait(0.02)
-                	network:FireServer("UpdateProperty", fullBox, "CFrame", CFrame.new(68.2, 4.4, RNG:NextNumber(-3, -2), -1, 0, 0, 0, 1, 0, 0, 0, -1))
-            	elseif tick() - boxPtick > 0.8 then
-                	didSomething = true
-                	if handlePosition() then continue end
-                	network:FireServer("UpdateProperty", fullBox, "CFrame", CFrame.new(68.2, 4.4, RNG:NextNumber(-3, -2), -1, 0, 0, 0, 1, 0, 0, 0, -1))
-                	boxPtick = tick()
-            	end
-        	end
+                			network:FireServer("UpdateProperty", fullBox, "CFrame", CFrame.new(68.2, 4.4, RNG:NextNumber(-3, -2), -1, 0, 0, 0, 1, 0, 0, 0, -1))
+            			elseif tick() - boxPtick > 0.8 then
+                			didSomething = true
+                			if handlePosition() then continue end
+                			network:FireServer("UpdateProperty", fullBox, "CFrame", CFrame.new(68.2, 4.4, RNG:NextNumber(-3, -2), -1, 0, 0, 0, 1, 0, 0, 0, -1))
+                			boxPtick = tick()
+            			end
+        		end
 
-        	-- Handle closed boxes (closedBox)
-        	if closedBox and not openBox then
-            	didSomething = true
-            	if handlePosition() then continue end
-            	network:FireServer("UpdateProperty", closedBox, "CFrame", CFrame.new(RNG:NextNumber(62.5, 70.5), 3.5, RNG:NextNumber(11, 25)))
-            	wait()
-            	network:FireServer("OpenBox", closedBox)
-        	end
+        		-- Handle closed boxes (closedBox)
+        		if closedBox and not openBox then
+            			didSomething = true
+            			if handlePosition() then continue end
+            			network:FireServer("UpdateProperty", closedBox, "CFrame", CFrame.new(RNG:NextNumber(62.5, 70.5), 3.5, RNG:NextNumber(11, 25)))
+            			wait()
+            			network:FireServer("OpenBox", closedBox)
+        		end
 
-        	-- Add the slicing step when boxing
-        	if openBox and boxP then
-            	didSomething = true
-            	if handlePosition() then continue end
+        		-- Add the slicing step when boxing
+        		if openBox and boxP then
+            			didSomething = true
+            			if handlePosition() then continue end
 
-            	network:FireServer("UpdateProperty", boxP, "Anchored", true)
-            	network:FireServer("UpdateProperty", openBox, "Anchored", true)
-            	wait()
-            	network:FireServer("UpdateProperty", boxP, "CFrame", openBox.CFrame + Vector3.new(0, -2, 0))
-            	wait()
-            	network:FireServer("AssignPizzaToBox", openBox, boxP)
+            			network:FireServer("UpdateProperty", boxP, "Anchored", true)
+            			network:FireServer("UpdateProperty", openBox, "Anchored", true)
+            			wait()
+            			network:FireServer("UpdateProperty", boxP, "CFrame", openBox.CFrame + Vector3.new(0, -2, 0))
+            			wait()
+            			network:FireServer("AssignPizzaToBox", openBox, boxP)
 				wait(0.02)
-            	-- Slice the pizza in the box
-            	slicePizza(boxP)
-        	end
+            			-- Slice the pizza in the box
+            			slicePizza(boxP)
+        		end
 
-        	if didSomething then wait(0.05) else break end
-    	else
-        	break
-    	end
+        		if didSomething then wait(0.5) else break end
+    		else
+        		break
+    		end
 	end
 	if doDelivery then
 		local wstools = FindAllDeliveryTools(workspace)
