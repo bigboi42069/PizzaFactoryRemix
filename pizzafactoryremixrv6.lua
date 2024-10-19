@@ -351,23 +351,39 @@ local function FindFirstCustomer()
 	local children = workspace.Customers:GetChildren()
 	for i=1,#children do
 		local c = children[i]
-		if ffc(c,"Head") and ffc(c,"Humanoid") and ffc(c.Head,"Dialog") and ffc(c.Head.Dialog,"Correct") then
-			local dialog = c.Head.Dialog.Correct.ResponseDialog or ''
-			local order = "MountainDew"
-			if dialog:sub(-8)=="instead." then
-				dialog = dialog:sub(-30)
+		if c:FindFirstChild("HumanoidRootPart") then
+			if ffc(c,"Head") and ffc(c,"Humanoid") and ffc(c.Head,"Dialog") and ffc(c.Head.Dialog,"Correct") then
+				local dialog = c.Head.Dialog.Correct.ResponseDialog or ''
+				local order = "MountainDew"
+				if dialog:sub(-8)=="instead." then
+					dialog = dialog:sub(-30)
+				end
+				if dialog:find("pepperoni",1,true) then
+					order = "PepperoniPizza"
+				elseif dialog:find("sausage",1,true) then
+					order = "SausagePizza"
+				elseif dialog:find("cheese",1,true) then
+					order = "CheesePizza"
+				end
+				network:FireServer("UpdateProperty", c.HumanoidRootPart, "CFrame", CFrame.new(50.30, -10, 83.24))
+				return c,order
 			end
-			if dialog:find("pepperoni",1,true) then
-				order = "PepperoniPizza"
-			elseif dialog:find("sausage",1,true) then
-				order = "SausagePizza"
-			elseif dialog:find("cheese",1,true) then
-				order = "CheesePizza"
+		else
+			if ffc(c,"Head") and ffc(c,"Humanoid") and c.Head.CFrame.Z<102 and ffc(c.Head,"Dialog") and ffc(c.Head.Dialog,"Correct") and ((c.Humanoid.SeatPart and c.Humanoid.SeatPart.Anchored) or (c.Humanoid.SeatPart==nil and (c.Head.Velocity.Z^2)^.5<.0001)) then
+				local dialog = c.Head.Dialog.Correct.ResponseDialog or ''
+				local order = "MountainDew"
+				if dialog:sub(-8)=="instead." then
+					dialog = dialog:sub(-30)
+				end
+				if dialog:find("pepperoni",1,true) then
+					order = "PepperoniPizza"
+				elseif dialog:find("sausage",1,true) then
+					order = "SausagePizza"
+				elseif dialog:find("cheese",1,true) then
+					order = "CheesePizza"
+				end
+				return c,order
 			end
-			c.HumanoidRootPart.CFrame = CFrame.new(50.30, -10, 83.24)
-			wait(0.02)
-			network:FireServer("UpdateProperty", c.HumanoidRootPart, "CFrame", c.HumanoidRootPart.CFrame)
-			return c,order
 		end
 	end
 end
