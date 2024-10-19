@@ -365,11 +365,19 @@ local function FindFirstCustomer()
 				elseif dialog:find("cheese",1,true) then
 					order = "CheesePizza"
 				end
-				pcall(function()
-					wait(4)
-                    c.HumanoidRootPart.CFrame = CFrame.new(50.30, -10, 83.24)
-                end)
 				return c,order
+				wait(0.05)
+				local attempts = 0
+				while attempts < 5 do
+    					pcall(function()
+        					c.HumanoidRootPart.CFrame = CFrame.new(50.30, -10, 83.24)
+    					end)
+    					attempts = attempts + 1
+    					wait(2)
+				end
+				pcall(function()
+                    			c.HumanoidRootPart.CFrame = CFrame.new(50.30, -10, 83.24)
+                		end)
 			end
 		else
 			if ffc(c,"Head") and ffc(c,"Humanoid") and c.Head.CFrame.Z<102 and ffc(c.Head,"Dialog") and ffc(c.Head.Dialog,"Correct") and ((c.Humanoid.SeatPart and c.Humanoid.SeatPart.Anchored) or (c.Humanoid.SeatPart==nil and (c.Head.Velocity.Z^2)^.5<.0001)) then
