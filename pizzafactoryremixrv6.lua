@@ -137,7 +137,7 @@ cookSlider=Create("Frame",cookBtn,{Name="slider", Size=UDim2.new(0.5,-4,1,-4), P
 toggleAll=Create("Frame",settings_1,{Name="toggleAll", LayoutOrder=1, BackgroundTransparency=1, Size=UDim2.new(0,100,0,100), BackgroundColor3=Color3.new(1,1,1)})
 switch=Create("Frame",toggleAll,{Name="switch", BackgroundTransparency=1, Size=UDim2.new(0.75,0,1,0), BackgroundColor3=Color3.new(1,1,1)})
 allOffBtn=Create("ImageButton",switch,{Name="allOffBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.5,0,1,0), BackgroundColor3=Color3.new(0.333,0.333,0.333)})
-allOnBtn=Create("ImageButton",switch,{Name="allOnBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.5,0,1,0), Position=UDim2.new(0.5,0,0,0), BackgroundColor3=Color3.new(0.666,0.333,0.333)})
+allOnBtn=Create("ImageButton",switch,{Name="allOnBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.5,0,1,0), Position=UDim2.new(0.5,0,0,0), BackgroundColor3=Color3.new(0.888,0.111,0.111)})
 toggleAllSlider=Create("Frame",switch,{Name="slider", Size=UDim2.new(0.1,0,1,4), Position=UDim2.new(0.45,0,0,-2), BorderSizePixel=0, BackgroundColor3=Color3.new(0.784,0.784,0.784)})
 messageLbl=Create("TextLabel",topbar,{Name="messageLbl", Size=UDim2.new(0.5,0,1,0), Text="Saved.", TextSize=14, Font="GothamSemibold", BackgroundTransparency=1, 
 	Position=UDim2.new(0.07,0,0,0), TextColor3=Color3.new(1,1,1), Visible=false, TextXAlignment="Left"})
@@ -150,7 +150,7 @@ creditLbl=Create("TextLabel",main,{Position=UDim2.new(0,0,1,4),Size=UDim2.new(1,
 
 local function toggleButtonColor(button)
     if button.BackgroundColor3 == Color3.new(0.333,0.333,0.333) then
-        button.BackgroundColor3 = Color3.new(0.888,0.222,0.222)
+        button.BackgroundColor3 = Color3.new(0.888,0.111,0.111)
     else
         button.BackgroundColor3 = Color3.new(0.333,0.333,0.333)
     end
@@ -253,11 +253,11 @@ allOnBtn.InputBegan:Connect(function()
 		if toggleAllSlider.Position.X.Scale>.88 then
 			toggleAllSlider:TweenPosition(UDim2.new(0.45,0,0,-2),nil,"Sine",0.1,true)
 		end
-			cashierBtn.BackgroundColor3 = Color3.new(0.888, 0.222, 0.222)
-			cookBtn.BackgroundColor3 = Color3.new(0.888, 0.222, 0.222)
-			boxerBtn.BackgroundColor3 = Color3.new(0.888, 0.222, 0.222)
-			deliveryBtn.BackgroundColor3 = Color3.new(0.888, 0.222, 0.222)
-			supplierBtn.BackgroundColor3 = Color3.new(0.888, 0.222, 0.222)
+			cashierBtn.BackgroundColor3 = Color3.new(0.888,0.111,0.111)
+			cookBtn.BackgroundColor3 = Color3.new(0.888,0.111,0.111)
+			boxerBtn.BackgroundColor3 = Color3.new(0.888,0.111,0.111)
+			deliveryBtn.BackgroundColor3 = Color3.new(0.888,0.111,0.111)
+			supplierBtn.BackgroundColor3 = Color3.new(0.888,0.111,0.111)
 	end
 end)
 local oldRefillAt=refillAtBox.Text
