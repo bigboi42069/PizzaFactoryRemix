@@ -146,7 +146,7 @@ rightCamBtn=Create("ImageButton",camframe,{Name="rightCamBtn", Image="rbxassetid
 	BackgroundColor3=Color3.new(1,1,1)})
 leftCamBtn=Create("ImageButton",camframe,{Name="leftCamBtn", Image="rbxassetid://144168163", Size=UDim2.new(0.333,0,1,0), BackgroundTransparency=1, BackgroundColor3=Color3.new(1,1,1)})
 centerCamBtn=Create("ImageButton",camframe,{Name="centerCamBtn", Image="rbxassetid://58282192", Size=UDim2.new(0.333,0,1,0), Position=UDim2.new(0.333,0,0,0), BackgroundTransparency=1, BackgroundColor3=Color3.new(1,1,1)})
-creditLbl=Create("TextLabel",main,{Position=UDim2.new(0,0,1,4),Size=UDim2.new(1,0,0,16),BackgroundTransparency=1,TextColor3=Color3.new(1,1,1),Text="by sirelKilla & BallsNDeath",TextScaled=true,TextStrokeTransparency=.8})
+creditLbl=Create("TextLabel",main,{Position=UDim2.new(0,0,1,4),Size=UDim2.new(1.2,0,0,16),BackgroundTransparency=1,TextColor3=Color3.new(1,1,1),Text="by sirelKilla & BallsNDeath",TextScaled=true,TextStrokeTransparency=.8})
 
 local function toggleButtonColor(button)
     if button.BackgroundColor3 == Color3.new(0.333,0.333,0.333) then
@@ -375,7 +375,7 @@ local function FindFirstCustomer()
 				elseif dialog:find("cheese",1,true) then
 					order = "CheesePizza"
 				end
-				if ffc(c,"Head") and ffc(c,"Humanoid") and c.Head.CFrame.Z<102 and ffc(c.Head,"Dialog") and ffc(c.Head.Dialog,"Correct") and ((c.Humanoid.SeatPart and c.Humanoid.SeatPart.Anchored) or (c.Humanoid.SeatPart==nil and (c.Head.Velocity.Z^2)^.5<.0001)) then
+				if ffc(c,"Head") and ffc(c,"Humanoid") and c.Head.CFrame.Z<102 and ((c.Humanoid.SeatPart and c.Humanoid.SeatPart.Anchored) or (c.Humanoid.SeatPart==nil and (c.Head.Velocity.Z^2)^.5<.0001)) then
 					wait(0.02)
 					pcall(function()
                     	c.HumanoidRootPart.CFrame = CFrame.new(50.30, -10, 83.24)
