@@ -159,12 +159,12 @@ local function toggleCashier(bool)
 	cashierSlider:TweenPosition(UDim2.new(doCashier and 0.5 or 0,2,0,2),nil,"Sine",0.1,true)
 end
 local function toggleCook(bool)
+	cookBtn.BackgroundColor3 = Color3.new(0.444,0.555,0.444)
 	if bool~=nil then
 		doCook=bool
 		cookBtn.BackgroundColor3 = Color3.new(0.666, 0.333, 0.333)
 	else
 		doCook = not doCook
-		cookBtn.BackgroundColor3 = Color3.new(0.444,0.555,0.444)
 	end
 	cookSlider:TweenPosition(UDim2.new(doCook and 0.5 or 0,2,0,2),nil,"Sine",0.1,true)
 end
