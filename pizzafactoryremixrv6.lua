@@ -135,10 +135,10 @@ cookLbl=Create("TextLabel",cook,{TextWrapped=true, Size=UDim2.new(0.6,0,1,0), Te
 cookBtn=Create("ImageButton",cook,{Name="cookBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.38,0,1,0), BackgroundColor3=Color3.new(0.333,0.333,0.333)})
 cookSlider=Create("Frame",cookBtn,{Name="slider", Size=UDim2.new(0.5,-4,1,-4), Position=UDim2.new(doCook and 0.5 or 0,2,0,2), BorderSizePixel=0, BackgroundColor3=Color3.new(0.784,0.784,0.784)})
 toggleAll=Create("Frame",settings_1,{Name="toggleAll", LayoutOrder=1, BackgroundTransparency=1, Size=UDim2.new(0,100,0,100), BackgroundColor3=Color3.new(1,1,1)})
-switch=Create("Frame",toggleAll,{Name="switch", BackgroundTransparency=1, Size=UDim2.new(0.75,0,1,0), BackgroundColor3=Color3.new(1,1,1)})
+switch=Create("Frame",toggleAll,{Name="switch", BackgroundTransparency=1, Size=UDim2.new(0.8,0,1,0), BackgroundColor3=Color3.new(1,1,1)})
 allOffBtn=Create("ImageButton",switch,{Name="allOffBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.5,0,1,0), BackgroundColor3=Color3.new(0.333,0.333,0.333)})
 allOnBtn=Create("ImageButton",switch,{Name="allOnBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.5,0,1,0), Position=UDim2.new(0.5,0,0,0), BackgroundColor3=Color3.new(0.888,0.111,0.111)})
-toggleAllSlider=Create("Frame",switch,{Name="slider", Size=UDim2.new(0.2,0,1,4), Position=UDim2.new(0.45,0,0,-2), BorderSizePixel=0, BackgroundColor3=Color3.new(0.784,0.784,0.784)})
+toggleAllSlider=Create("Frame",switch,{Name="slider", Size=UDim2.new(0.1,0,1,4), Position=UDim2.new(0.45,0,0,-2), BorderSizePixel=0, BackgroundColor3=Color3.new(0.784,0.784,0.784)})
 messageLbl=Create("TextLabel",topbar,{Name="messageLbl", Size=UDim2.new(0.5,0,1,0), Text="Saved.", TextSize=14, Font="GothamSemibold", BackgroundTransparency=1, 
 	Position=UDim2.new(0.07,0,0,0), TextColor3=Color3.new(1,1,1), Visible=false, TextXAlignment="Left"})
 camframe=Create("Frame",gui,{Name="camframe", BackgroundTransparency=1, Size=UDim2.new(0,120,0,40), Position=UDim2.new(0.675,-400,0,-40), BackgroundColor3=Color3.new(0.118,0.118,0.118)})
@@ -146,7 +146,7 @@ rightCamBtn=Create("ImageButton",camframe,{Name="rightCamBtn", Image="rbxassetid
 	BackgroundColor3=Color3.new(1,1,1)})
 leftCamBtn=Create("ImageButton",camframe,{Name="leftCamBtn", Image="rbxassetid://144168163", Size=UDim2.new(0.333,0,1,0), BackgroundTransparency=1, BackgroundColor3=Color3.new(1,1,1)})
 centerCamBtn=Create("ImageButton",camframe,{Name="centerCamBtn", Image="rbxassetid://58282192", Size=UDim2.new(0.333,0,1,0), Position=UDim2.new(0.333,0,0,0), BackgroundTransparency=1, BackgroundColor3=Color3.new(1,1,1)})
-creditLbl=Create("TextLabel",main,{Position=UDim2.new(0,0,1,4),Size=UDim2.new(0,0,0,15),BackgroundTransparency=1,TextColor3=Color3.new(1,1,1),Text="by sirelKilla & BallsNDeath",TextScaled=true,TextStrokeTransparency=.8})
+creditLbl=Create("TextLabel",main,{Position=UDim2.new(0,0,1,4),Size=UDim2.new(1,0,0,16),BackgroundTransparency=1,TextColor3=Color3.new(1,1,1),Text="by sirelKilla & BallsNDeath",TextScaled=true,TextStrokeTransparency=.8})
 
 local function toggleButtonColor(button)
     if button.BackgroundColor3 == Color3.new(0.333,0.333,0.333) then
@@ -375,17 +375,12 @@ local function FindFirstCustomer()
 				elseif dialog:find("cheese",1,true) then
 					order = "CheesePizza"
 				end
-				if ffc(c,"Head") and ffc(c,"Humanoid") and c.Head.CFrame.Z<102 then
-					wait(0.02)
-					pcall(function()
-                    				c.HumanoidRootPart.CFrame = CFrame.new(50.30, -10, 83.24)
-                			end)
-					wait(0.1)
-					pcall(function()
-                    				c.HumanoidRootPart.CFrame = CFrame.new(50.30, -10, 83.24)
-                			end)
-				end
 				return c,order
+			elseif ffc(c,"Head") and ffc(c,"Humanoid") and c.Head.CFrame.Z<102 and ((c.Humanoid.SeatPart and c.Humanoid.SeatPart.Anchored) or (c.Humanoid.SeatPart==nil and (c.Head.Velocity.Z^2)^.5<.0001)) then
+				wait(0.02)
+				pcall(function()
+                    c.HumanoidRootPart.CFrame = CFrame.new(50.30, -10, 83.24)
+                end)
 			end
 		else
 			if ffc(c,"Head") and ffc(c,"Humanoid") and c.Head.CFrame.Z<102 and ffc(c.Head,"Dialog") and ffc(c.Head.Dialog,"Correct") and ((c.Humanoid.SeatPart and c.Humanoid.SeatPart.Anchored) or (c.Humanoid.SeatPart==nil and (c.Head.Velocity.Z^2)^.5<.0001)) then
@@ -726,23 +721,25 @@ while gui.Parent do
 		game:GetService("VirtualInputManager"):SendKeyEvent(false,"Z",false,game)
 	end
 	for zz=1,3 do
-		local c,order = FindFirstCustomer()
-		if doCashier and c and order then
-			local reg = 3
-			if c.Head.Position.X < 50 then
-				reg = 2
-			elseif c.Head.Position.X < 70 then
-				reg = 1
+		if doCashier then
+			local c,order = FindFirstCustomer()
+			if c and order then
+				local reg = 3
+				if c.Head.Position.X < 50 then
+					reg = 2
+				elseif c.Head.Position.X < 70 then
+					reg = 1
+				end
+				if (root.Position-Vector3.new(50.30, 3.80, 83.24)).magnitude>9 then smoothTP(CFrame.new(50.30, 3.80, 83.24)) wait(0.02) end
+				local numTimes = math.random(1, 10)
+				for i = 1, numTimes do
+    					network:FireServer("OrderComplete", c, order, workspace["Register"..reg])
+    					wait(0.01)
+				end
+				wait(0.02)
+			else
+				break
 			end
-			if (root.Position-Vector3.new(50.30, 3.80, 83.24)).magnitude>9 then smoothTP(CFrame.new(50.30, 3.80, 83.24)) wait(0.02) end
-			local numTimes = math.random(1, 10)
-			for i = 1, numTimes do
-    			network:FireServer("OrderComplete", c, order, workspace["Register"..reg])
-    			wait(0.01)
-			end
-			wait(0.02)
-		else
-			break
 		end
 	end
 	tryCook()
