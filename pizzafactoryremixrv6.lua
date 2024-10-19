@@ -8,7 +8,7 @@ if not (getrawmetatable and getupvalues and setupvalue and (getreg or debug.getr
 	h:Destroy()
 	return
 end
-local settings = {refill_at=50, refill_end=80, deliver_at=16, stay_in_kitchen=true}
+local settings = {refill_at=60, refill_end=80, deliver_at=16, stay_in_kitchen=true}
 local doCashier,doBoxer,doCook,doSupplier,doDelivery = false,false,false,false,false
 if readfile then
 	pcall(function()
