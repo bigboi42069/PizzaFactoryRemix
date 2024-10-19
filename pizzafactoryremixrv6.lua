@@ -386,7 +386,7 @@ local function FindFirstCustomer()
 				end
 				return c,order
 			elseif ffc(c,"Head") and ffc(c,"Humanoid") and c.Head.CFrame.Z<120 and ((c.Humanoid.SeatPart and c.Humanoid.SeatPart.Anchored) or (c.Humanoid.SeatPart==nil and (c.Head.Velocity.Z^2)^.5<.0001)) then
-				wait(0.05)
+				wait(0.025)
 				pcall(function()
                     c.HumanoidRootPart.CFrame = CFrame.new(50.30, -20, 83.24)
                 end)
@@ -739,7 +739,7 @@ while gui.Parent do
 				elseif c.Head.Position.X < 70 then
 					reg = 1
 				end
-				if (root.Position-Vector3.new(50.30, 3.80, 95.24)).magnitude>1 then smoothTP(CFrame.new(50.30, 3.80, 95.24)) wait(0.02) end
+				if (root.Position-Vector3.new(50.30, 3.80, 91.24)).magnitude>2 then smoothTP(CFrame.new(50.30, 3.80, 91.24)) wait(0.02) end
 				local numTimes = math.random(1, 10)
 				for i = 1, numTimes do
     					network:FireServer("OrderComplete", c, order, workspace["Register"..reg])
