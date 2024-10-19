@@ -163,7 +163,6 @@ local function toggleCashier(bool)
 		doCashier = not doCashier
 	end
 	cashierSlider:TweenPosition(UDim2.new(doCashier and 0.5 or 0,2,0,2),nil,"Sine",0.1,true)
-	toggleButtonColor(cashierBtn)
 end
 local function toggleCook(bool)
 	if bool~=nil then
@@ -172,7 +171,6 @@ local function toggleCook(bool)
 		doCook = not doCook
 	end
 	cookSlider:TweenPosition(UDim2.new(doCook and 0.5 or 0,2,0,2),nil,"Sine",0.1,true)
-	toggleButtonColor(cookBtn)
 end
 local function toggleBoxer(bool)
 	if bool~=nil then
@@ -181,7 +179,6 @@ local function toggleBoxer(bool)
 		doBoxer = not doBoxer
 	end
 	boxerSlider:TweenPosition(UDim2.new(doBoxer and 0.5 or 0,2,0,2),nil,"Sine",0.1,true)
-	toggleButtonColor(boxerBtn)
 end
 local function toggleDelivery(bool)
 	if bool~=nil then
@@ -190,7 +187,6 @@ local function toggleDelivery(bool)
 		doDelivery = not doDelivery
 	end
 	deliverySlider:TweenPosition(UDim2.new(doDelivery and 0.5 or 0,2,0,2),nil,"Sine",0.1,true)
-	toggleButtonColor(deliveryBtn)
 end
 local function toggleSupplier(bool)
 	if bool~=nil then
@@ -199,27 +195,31 @@ local function toggleSupplier(bool)
 		doSupplier = not doSupplier
 	end
 	supplierSlider:TweenPosition(UDim2.new(doSupplier and 0.5 or 0,2,0,2),nil,"Sine",0.1,true)
-	toggleButtonColor(supplierBtn)
 end
 
 cashierBtn.MouseButton1Click:Connect(function()
     toggleCashier()
+	toggleButtonColor(cashierBtn)
 end)
 
 cookBtn.MouseButton1Click:Connect(function()
     toggleCook()
+	toggleButtonColor(cookBtn)
 end)
 
 boxerBtn.MouseButton1Click:Connect(function()
     toggleBoxer()
+	toggleButtonColor(boxerBtn)
 end)
 
 deliveryBtn.MouseButton1Click:Connect(function()
     toggleDelivery()
+	toggleButtonColor(deliveryBtn)
 end)
 
 supplierBtn.MouseButton1Click:Connect(function()
     toggleSupplier()
+	toggleButtonColor(supplierBtn)
 end)
 
 allOffBtn.InputBegan:Connect(function()
@@ -358,46 +358,64 @@ local function smoothTP(cf)
 end
 
 local function FindFirstCustomer()
-	local children = workspace.Customers:GetChildren()
-	for i=1,#children do
-		local c = children[i]
-		if c:FindFirstChild("HumanoidRootPart") then
-			if ffc(c,"Head") and ffc(c,"Humanoid") and ffc(c.Head,"Dialog") and ffc(c.Head.Dialog,"Correct") then
-				local dialog = c.Head.Dialog.Correct.ResponseDialog or ''
-				local order = "MountainDew"
-				if dialog:sub(-8)=="instead." then
-					dialog = dialog:sub(-30)
-				end
-				if dialog:find("pepperoni",1,true) then
-					order = "PepperoniPizza"
-				elseif dialog:find("sausage",1,true) then
-					order = "SausagePizza"
-				elseif dialog:find("cheese",1,true) then
-					order = "CheesePizza"
-				end
-				pcall(function()
+    local children = workspace.Customers:GetChildren()
+    for i=1,#children do
+        local c = children[i]
+        if c:FindFirstChild("HumanoidRootPart") then
+            if ffc(c,"Head") and ffc(c,"Humanoid") and ffc(c.Head,"Dialog") and ffc(c.Head.Dialog,"Correct") then
+                local dialog = c.Head.Dialog.Correct.ResponseDialog or ''
+                local order = "MountainDew"
+                if dialog:sub(-8)=="instead." then
+                    dialog = dialog:sub(-30)
+                end
+                if dialog:find("pepperoni",1,true) then
+                    order = "PepperoniPizza"
+                elseif dialog:find("sausage",1,true) then
+                    order = "SausagePizza"
+                elseif dialog:find("cheese",1,true) then
+                    order = "CheesePizza"
+                end
+                pcall(function()
                     c.HumanoidRootPart.CFrame = CFrame.new(50.30, -10, 83.24)
                 end)
-				return c,order
-			end
-		else
-			if ffc(c,"Head") and ffc(c,"Humanoid") and c.Head.CFrame.Z<102 and ffc(c.Head,"Dialog") and ffc(c.Head.Dialog,"Correct") and ((c.Humanoid.SeatPart and c.Humanoid.SeatPart.Anchored) or (c.Humanoid.SeatPart==nil and (c.Head.Velocity.Z^2)^.5<.0001)) then
-				local dialog = c.Head.Dialog.Correct.ResponseDialog or ''
-				local order = "MountainDew"
-				if dialog:sub(-8)=="instead." then
-					dialog = dialog:sub(-30)
-				end
-				if dialog:find("pepperoni",1,true) then
-					order = "PepperoniPizza"
-				elseif dialog:find("sausage",1,true) then
-					order = "SausagePizza"
-				elseif dialog:find("cheese",1,true) then
-					order = "CheesePizza"
-				end
-				return c,order
-			end
-		end
-	end
+                return c,order
+            end
+        else
+            if ffc(c,"Head") and ffc(c,"Humanoid") and c.Head.CFrame.Z<102 and ffc(c.Head,"Dialog") and ffc(c.Head.Dialog,"Correct") and ((c.Humanoid.SeatPart and c.Humanoid.SeatPart.Anchored) or (c.Humanoid.SeatPart==nil and (c.Head.Velocity.Z^2)^.5<.0001)) then
+                local dialog = c.Head.Dialog.Correct.ResponseDialog or ''
+                local order = "MountainDew"
+                if dialog:sub(-8)=="instead." then
+                    dialog = dialog:sub(-30)
+                end
+                if dialog:find("pepperoni",1,true) then
+                    order = "PepperoniPizza"
+                elseif dialog:find("sausage",1,true) then
+                    order = "SausagePizza"
+                elseif dialog:find("cheese",1,true) then
+                    order = "CheesePizza"
+                end
+                return c,order
+            end
+        end
+    end
+end
+
+while true do
+    local children = workspace.Customers:GetChildren()
+    for i=1,#children do
+        local c = children[i]
+        if not ffc(c.Head, "Dialog") and c.HumanoidRootPart.Velocity.Magnitude < 0.01 then
+            local attempts = 0
+            while attempts < 5 do
+                pcall(function()
+                    c.HumanoidRootPart.CFrame = CFrame.new(50.30, -10, 83.24)
+                end)
+                attempts = attempts + 1
+                wait(2)
+            end
+        end
+    end
+    wait(1)
 end
 
 local boxPtick=0
