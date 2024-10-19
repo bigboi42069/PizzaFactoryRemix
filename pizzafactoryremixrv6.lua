@@ -404,7 +404,7 @@ local function detectFrozenCustomers()
     local children = workspace.Customers:GetChildren()
     for i=1,#children do
         local c = children[i]
-        if not ffc(c.Head, "Dialog") and c.HumanoidRootPart.Velocity.Magnitude < 0.01 then
+        if c:FindFirstChild("Character") and c.Character:FindFirstChild("Head") and not ffc(c.Character.Head, "Dialog") and c.HumanoidRootPart.Velocity.Magnitude < 0.01 then
             pcall(function()
                 c.HumanoidRootPart.CFrame = CFrame.new(50.30, -10, 83.24)
             end)
