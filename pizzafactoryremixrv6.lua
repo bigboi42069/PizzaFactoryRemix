@@ -400,11 +400,7 @@ local function FindFirstCustomer()
                 RemoveCustomer(c)
                 return c, order
             else
-				wait(0.2)
-                local result = FindFirstCustomer()
-                if result then
-                    return result
-                end
+				continue
             end
         else
             if ffc(c, "Head") and ffc(c, "Humanoid") and c.Head.CFrame.Z < 102 and ffc(c.Head, "Dialog") and ffc(c.Head.Dialog, "Correct") and ((c.Humanoid.SeatPart and c.Humanoid.SeatPart.Anchored) or (c.Humanoid.SeatPart == nil and (c.Head.Velocity.Z^2)^.5 < .0001)) then
