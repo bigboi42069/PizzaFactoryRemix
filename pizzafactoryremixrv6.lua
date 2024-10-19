@@ -358,23 +358,27 @@ local function smoothTP(cf)
 end
 
 local function getCustomerOrder(c)
-	if c and c.Head and c.Head.Dialog and c.Head.Dialog.Correct then
-    	local dialog = c.Head.Dialog.Correct.ResponseDialog or ''
-    	local order = "MountainDew"
-    	if dialog:sub(-8) == "instead." then
-        	dialog = dialog:sub(-30)
-    	end
-    	if dialog:find("pepperoni", 1, true) then
-        	order = "PepperoniPizza"
-    	elseif dialog:find("sausage", 1, true) then
-        	order = "SausagePizza"
-    	elseif dialog:find("cheese", 1, true) then
-        	order = "CheesePizza"
-    	end
-    	return order
-	else
-		return "MountainDew"
-	end
+    if not c then
+        return "MountainDew"
+    end
+
+    if c.Head and c.Head.Dialog and c.Head.Dialog.Correct then
+        local dialog = c.Head.Dialog.Correct.ResponseDialog or ''
+        local order = "MountainDew"
+        if dialog:sub(-8) == "instead." then
+            dialog = dialog:sub(-30)
+        end
+        if dialog:find("pepperoni", 1, true) then
+            order = "PepperoniPizza"
+        elseif dialog:find("sausage", 1, true) then
+            order = "SausagePizza"
+        elseif dialog:find("cheese", 1, true) then
+            order = "CheesePizza"
+        end
+        return order
+    else
+        return "MountainDew"
+    end
 end
 
 local function RemoveCustomer(c)
