@@ -393,15 +393,18 @@ local function FindFirstCustomer()
 end
 
 local function RemoveCustomer(c)
-	if ffc(c,"Head") and ffc(c,"Humanoid") and c.Head.CFrame.Z<105 and ffc(c.Head,"Dialog") and ffc(c.Head.Dialog,"Correct") and ((c.Humanoid.SeatPart and c.Humanoid.SeatPart.Anchored) or (c.Humanoid.SeatPart==nil and (c.Head.Velocity.Z^2)^.5<.0001)) then
-		pcall(function()
-			c.HumanoidRootPart.CFrame = CFrame.new(50.30, -10, 83.24)
-		end)
-	else
-		wait(0.1)
-		if c and c:IsDescendantOf(workspace) then
-			RemoveCustomer(c)
-	end
+    if ffc(c,"Head") and ffc(c,"Humanoid") and c.Head.CFrame.Z<102 and ffc(c.Head,"Dialog") and ffc(c.Head.Dialog,"Correct") and ((c.Humanoid.SeatPart and c.Humanoid.SeatPart.Anchored) or (c.Humanoid.SeatPart==nil and (c.Head.Velocity.Z^2)^.5<.0001)) then
+        pcall(function()
+            c.HumanoidRootPart.CFrame = CFrame.new(50.30, -10, 83.24)
+        end)
+    else
+        wait(0.1)
+        if c and c:IsDescendantOf(workspace) then
+            RemoveCustomer(c)
+        else
+            return
+        end
+    end
 end
 
 local boxPtick=0
