@@ -149,12 +149,12 @@ centerCamBtn=Create("ImageButton",camframe,{Name="centerCamBtn", Image="rbxasset
 creditLbl=Create("TextLabel",main,{Position=UDim2.new(0,0,1,4),Size=UDim2.new(1,0,0,16),BackgroundTransparency=1,TextColor3=Color3.new(1,1,1),Text="by sirelKilla & BallsNDeath",TextScaled=true,TextStrokeTransparency=.8})
 
 local function toggleCashier(bool)
+	cashierBtn.BackgroundColor3 = Color3.new(0.444,0.555,0.444)
 	if bool~=nil then
 		doCashier=bool
 		cashierBtn.BackgroundColor3 = Color3.new(0.666, 0.333, 0.333)
 	else
 		doCashier = not doCashier
-		cashierBtn.BackgroundColor3 = Color3.new(0.444,0.555,0.444)
 	end
 	cashierSlider:TweenPosition(UDim2.new(doCashier and 0.5 or 0,2,0,2),nil,"Sine",0.1,true)
 end
@@ -169,32 +169,32 @@ local function toggleCook(bool)
 	cookSlider:TweenPosition(UDim2.new(doCook and 0.5 or 0,2,0,2),nil,"Sine",0.1,true)
 end
 local function toggleBoxer(bool)
+	boxerBtn.BackgroundColor3 = Color3.new(0.444,0.555,0.444)
 	if bool~=nil then
 		doBoxer=bool
 		boxerBtn.BackgroundColor3 = Color3.new(0.666, 0.333, 0.333)
 	else
 		doBoxer = not doBoxer
-		boxerBtn.BackgroundColor3 = Color3.new(0.444,0.555,0.444)
 	end
 	boxerSlider:TweenPosition(UDim2.new(doBoxer and 0.5 or 0,2,0,2),nil,"Sine",0.1,true)
 end
 local function toggleDelivery(bool)
+	deliveryBtn.BackgroundColor3 = Color3.new(0.444,0.555,0.444)
 	if bool~=nil then
 		doDelivery=bool
 		deliveryBtn.BackgroundColor3 = Color3.new(0.666, 0.333, 0.333)
 	else
 		doDelivery = not doDelivery
-		deliveryBtn.BackgroundColor3 = Color3.new(0.444,0.555,0.444)
 	end
 	deliverySlider:TweenPosition(UDim2.new(doDelivery and 0.5 or 0,2,0,2),nil,"Sine",0.1,true)
 end
 local function toggleSupplier(bool)
+	supplierBtn.BackgroundColor3 = Color3.new(0.444,0.555,0.444)
 	if bool~=nil then
 		doSupplier=bool
 		supplierBtn.BackgroundColor3 = Color3.new(0.666, 0.333, 0.333)
 	else
 		doSupplier = not doSupplier
-		supplierBtn.BackgroundColor3 = Color3.new(0.444,0.555,0.444)
 	end
 	supplierSlider:TweenPosition(UDim2.new(doSupplier and 0.5 or 0,2,0,2),nil,"Sine",0.1,true)
 end
@@ -231,6 +231,11 @@ allOffBtn.InputBegan:Connect(function()
 		if toggleAllSlider.Position.X.Scale<.01 then
 			toggleAllSlider:TweenPosition(UDim2.new(0.45,0,0,-2),nil,"Sine",0.1,true)
 		end
+			cashierBtn.BackgroundColor3 = Color3.new(0.444,0.555,0.444)
+			cookBtn.BackgroundColor3 = Color3.new(0.444,0.555,0.444)
+			boxerBtn.BackgroundColor3 = Color3.new(0.444,0.555,0.444)
+			deliveryBtn.BackgroundColor3 = Color3.new(0.444,0.555,0.444)
+			supplierBtn.BackgroundColor3 = Color3.new(0.444,0.555,0.444)
 	end
 end)
 allOnBtn.InputBegan:Connect(function()
@@ -245,6 +250,11 @@ allOnBtn.InputBegan:Connect(function()
 		if toggleAllSlider.Position.X.Scale>.88 then
 			toggleAllSlider:TweenPosition(UDim2.new(0.45,0,0,-2),nil,"Sine",0.1,true)
 		end
+			cashierBtn.BackgroundColor3 = Color3.new(0.666, 0.333, 0.333)
+			cookBtn.BackgroundColor3 = Color3.new(0.666, 0.333, 0.333)
+			boxerBtn.BackgroundColor3 = Color3.new(0.666, 0.333, 0.333)
+			deliveryBtn.BackgroundColor3 = Color3.new(0.666, 0.333, 0.333)
+			supplierBtn.BackgroundColor3 = Color3.new(0.666, 0.333, 0.333)
 	end
 end)
 local oldRefillAt=refillAtBox.Text
