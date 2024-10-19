@@ -351,13 +351,6 @@ local function FindFirstCustomer()
 	local children = workspace.Customers:GetChildren()
 	for i=1,#children do
 		local c = children[i]
-		print(c)
-		print("Child:", c.Name)
-		print("Class:", c.ClassName)
-		print("Children:")
-    	for _, grandchild in pairs(c:GetChildren()) do
-        	print("  ", grandchild.Name)
-		end
 		if c:FindFirstChild("HumanoidRootPart") then
 			if ffc(c,"Head") and ffc(c,"Humanoid") and ffc(c.Head,"Dialog") and ffc(c.Head.Dialog,"Correct") then
 				local dialog = c.Head.Dialog.Correct.ResponseDialog or ''
