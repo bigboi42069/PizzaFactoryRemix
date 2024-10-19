@@ -316,10 +316,16 @@ end)
 local cameraArray = {CFrame.new(23,14,65,0.629,0.386,-0.674,-0,0.867,0.497,0.777,-0.313,0.545),CFrame.new(39,15,83,-0.571,0.392,-0.720,-0,0.878,0.478,0.820,0.273,-0.502),CFrame.new(40,20,-38,-0.801,-0.229,0.552,-0,0.923,0.384,-0.598,0.307,-0.739),CFrame.new(51,15,-25,-0.707,0.338,-0.620,0,0.878,0.478,0.707,0.338,-0.620),CFrame.new(47,12,21,0.026,0.323,-0.945,-0,0.946,0.323,0.999,-0.008,0.024)}
 local cameraIndex = 0
 centerCamBtn.MouseButton1Click:Connect(function()
+	centerCamBtn.BackgroundColor3 = Color3.new(0.111,0.888,0.111)
+	wait(0.2)
+	centerCamBtn.BackgroundColor3 = Color3.new(1,1,1)
 	cameraIndex = 0
 	workspace.CurrentCamera.CameraType = "Custom"
 end)
 leftCamBtn.MouseButton1Click:Connect(function()
+	leftCamBtn.BackgroundColor3 = Color3.new(0.111,0.888,0.111)
+	wait(0.2)
+	leftCamBtn.BackgroundColor3 = Color3.new(1,1,1)
 	cameraIndex = cameraIndex - 1
 	if cameraIndex < 0 then
 		cameraIndex = #cameraArray
@@ -333,6 +339,9 @@ leftCamBtn.MouseButton1Click:Connect(function()
 	end
 end)
 rightCamBtn.MouseButton1Click:Connect(function()
+	rightCamBtn.BackgroundColor3 = Color3.new(0.111,0.888,0.111)
+	wait(0.2)
+	rightCamBtn.BackgroundColor3 = Color3.new(1,1,1)
 	cameraIndex = cameraIndex + 1
 	if cameraIndex > #cameraArray then
 		cameraIndex = 0
@@ -376,10 +385,10 @@ local function FindFirstCustomer()
 					order = "CheesePizza"
 				end
 				return c,order
-			elseif ffc(c,"Head") and ffc(c,"Humanoid") and c.Head.CFrame.Z<102 and ((c.Humanoid.SeatPart and c.Humanoid.SeatPart.Anchored) or (c.Humanoid.SeatPart==nil and (c.Head.Velocity.Z^2)^.5<.0001)) then
-				wait(0.02)
+			elseif ffc(c,"Head") and ffc(c,"Humanoid") and c.Head.CFrame.Z<125 and ((c.Humanoid.SeatPart and c.Humanoid.SeatPart.Anchored) or (c.Humanoid.SeatPart==nil and (c.Head.Velocity.Z^2)^.5<.0001)) then
+				wait(0.025)
 				pcall(function()
-                    c.HumanoidRootPart.CFrame = CFrame.new(50.30, -10, 83.24)
+                    c.HumanoidRootPart.CFrame = CFrame.new(48.30, -20, 91.24)
                 end)
 			end
 		else
@@ -730,11 +739,11 @@ while gui.Parent do
 				elseif c.Head.Position.X < 70 then
 					reg = 1
 				end
-				if (root.Position-Vector3.new(50.30, 3.80, 83.24)).magnitude>9 then smoothTP(CFrame.new(50.30, 3.80, 83.24)) wait(0.02) end
+				if (root.Position-Vector3.new(48.30, 3.80, 91.24)).magnitude>4 then smoothTP(CFrame.new(48.30, 3.80, 91.24)) wait(0.02) end
 				local numTimes = math.random(1, 10)
 				for i = 1, numTimes do
     					network:FireServer("OrderComplete", c, order, workspace["Register"..reg])
-    					wait(0.01)
+    					wait(math.random(0.01, 0.03))
 				end
 				wait(0.02)
 			else
