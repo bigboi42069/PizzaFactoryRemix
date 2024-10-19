@@ -97,7 +97,7 @@ Layout=Create("UIGridLayout",settings_1,{VerticalAlignment="Center", SortOrder="
 cashier=Create("Frame",settings_1,{Name="cashier", LayoutOrder=4, BackgroundTransparency=1, Size=UDim2.new(0,100,0,100), BackgroundColor3=Color3.new(1,1,1)})
 Label=Create("TextLabel",cashier,{TextWrapped=true, Size=UDim2.new(0.6,0,1,0), Text="Cashier", TextSize=14, TextXAlignment="Left", Font="SourceSans", 
 	BackgroundTransparency=1, Position=UDim2.new(0.4,0,0,0), TextColor3=Color3.new(1,1,1), TextScaled=true, BackgroundColor3=Color3.new(1,1,1)})
-cashierBtn=Create("ImageButton",cashier,{Name="cashierBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.38,0,1,0), BackgroundColor3=Color3.new(0.444,0.444,0.444)})
+cashierBtn=Create("ImageButton",cashier,{Name="cashierBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.38,0,1,0), BackgroundColor3=Color3.new(0.555,0.555,0.555)})
 cashierSlider=Create("Frame",cashierBtn,{Name="slider", Size=UDim2.new(0.5,-4,1,-4), Position=UDim2.new(doCashier and 0.5 or 0,2,0,2), BorderSizePixel=0, BackgroundColor3=Color3.new(0.784,0.784,0.784)})
 kitchen=Create("Frame",settings_1,{Name="kitchen", LayoutOrder=9, BackgroundTransparency=1, Size=UDim2.new(0,100,0,100), BackgroundColor3=Color3.new(1,1,1)})
 Label_2=Create("TextLabel",kitchen,{TextWrapped=true, Size=UDim2.new(0.6,0,1,0), Text="Deliver At:", TextSize=14, TextXAlignment="Right", Font="SourceSans", 
@@ -117,27 +117,27 @@ refillAtBox=Create("TextBox",refillAt,{Name="refillAtBox", TextWrapped=true, Siz
 supplier=Create("Frame",settings_1,{Name="supplier", LayoutOrder=6, BackgroundTransparency=1, Size=UDim2.new(0,100,0,100), BackgroundColor3=Color3.new(1,1,1)})
 Label_5=Create("TextLabel",supplier,{TextWrapped=true, Size=UDim2.new(0.6,0,1,0), Text="Supplier", TextSize=14, TextXAlignment="Left", Font="SourceSans", 
 	BackgroundTransparency=1, Position=UDim2.new(0.4,0,0,0), TextColor3=Color3.new(1,1,1), TextScaled=true, BackgroundColor3=Color3.new(1,1,1)})
-supplierBtn=Create("ImageButton",supplier,{Name="supplierBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.38,0,1,0), BackgroundColor3=Color3.new(0.444,0.444,0.444)})
+supplierBtn=Create("ImageButton",supplier,{Name="supplierBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.38,0,1,0), BackgroundColor3=Color3.new(0.555,0.555,0.555)})
 supplierSlider=Create("Frame",supplierBtn,{Name="slider", Size=UDim2.new(0.5,-4,1,-4), Position=UDim2.new(doSupplier and 0.5 or 0,2,0,2), BorderSizePixel=0, BackgroundColor3=Color3.new(0.784,0.784,0.784)})
 delivery=Create("Frame",settings_1,{Name="delivery", LayoutOrder=5, BackgroundTransparency=1, Size=UDim2.new(0,100,0,100), BackgroundColor3=Color3.new(1,1,1)})
 Label_6=Create("TextLabel",delivery,{TextWrapped=true, Size=UDim2.new(0.6,0,1,0), Text="Delivery", TextSize=14, TextXAlignment="Left", Font="SourceSans", 
 	BackgroundTransparency=1, Position=UDim2.new(0.4,0,0,0), TextColor3=Color3.new(1,1,1), TextScaled=true, BackgroundColor3=Color3.new(1,1,1)})
-deliveryBtn=Create("ImageButton",delivery,{Name="deliveryBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.38,0,1,0), BackgroundColor3=Color3.new(0.444,0.444,0.444)})
+deliveryBtn=Create("ImageButton",delivery,{Name="deliveryBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.38,0,1,0), BackgroundColor3=Color3.new(0.555,0.555,0.555)})
 deliverySlider=Create("Frame",deliveryBtn,{Name="slider", Size=UDim2.new(0.5,-4,1,-4), Position=UDim2.new(doDelivery and 0.5 or 0,2,0,2), BorderSizePixel=0, BackgroundColor3=Color3.new(0.784,0.784,0.784)})
 boxer=Create("Frame",settings_1,{Name="boxer", LayoutOrder=2, BackgroundTransparency=1, Size=UDim2.new(0,100,0,100), BackgroundColor3=Color3.new(1,1,1)})
 boxerLbl=Create("TextLabel",boxer,{TextWrapped=true, Size=UDim2.new(0.6,0,1,0), Text="Boxer", TextSize=14, TextXAlignment="Left", Font="SourceSans", 
 	BackgroundTransparency=1, Position=UDim2.new(0.4,0,0,0), TextColor3=Color3.new(1,1,1), TextScaled=true, BackgroundColor3=Color3.new(1,1,1)})
-boxerBtn=Create("ImageButton",boxer,{Name="boxerBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.38,0,1,0), BackgroundColor3=Color3.new(0.444,0.444,0.444)})
+boxerBtn=Create("ImageButton",boxer,{Name="boxerBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.38,0,1,0), BackgroundColor3=Color3.new(0.555,0.555,0.555)})
 boxerSlider=Create("Frame",boxerBtn,{Name="slider", Size=UDim2.new(0.5,-4,1,-4), Position=UDim2.new(doBoxer and 0.5 or 0,2,0,2), BorderSizePixel=0, BackgroundColor3=Color3.new(0.784,0.784,0.784)})
 cook=Create("Frame",settings_1,{Name="cook", LayoutOrder=3, BackgroundTransparency=1, Size=UDim2.new(0,100,0,100), BackgroundColor3=Color3.new(1,1,1)})
 cookLbl=Create("TextLabel",cook,{TextWrapped=true, Size=UDim2.new(0.6,0,1,0), Text="Cook", TextSize=14, TextXAlignment="Left", Font="SourceSans", 
 	BackgroundTransparency=1, Position=UDim2.new(0.4,0,0,0), TextColor3=Color3.new(1,1,1), TextScaled=true, BackgroundColor3=Color3.new(1,1,1)})
-cookBtn=Create("ImageButton",cook,{Name="cookBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.38,0,1,0), BackgroundColor3=Color3.new(0.444,0.444,0.444)})
+cookBtn=Create("ImageButton",cook,{Name="cookBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.38,0,1,0), BackgroundColor3=Color3.new(0.555,0.555,0.555)})
 cookSlider=Create("Frame",cookBtn,{Name="slider", Size=UDim2.new(0.5,-4,1,-4), Position=UDim2.new(doCook and 0.5 or 0,2,0,2), BorderSizePixel=0, BackgroundColor3=Color3.new(0.784,0.784,0.784)})
 toggleAll=Create("Frame",settings_1,{Name="toggleAll", LayoutOrder=1, BackgroundTransparency=1, Size=UDim2.new(0,100,0,100), BackgroundColor3=Color3.new(1,1,1)})
 switch=Create("Frame",toggleAll,{Name="switch", BackgroundTransparency=1, Size=UDim2.new(0.75,0,1,0), BackgroundColor3=Color3.new(1,1,1)})
-allOffBtn=Create("ImageButton",switch,{Name="allOffBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.5,0,1,0), BackgroundColor3=Color3.new(0.444,0.444,0.444)})
-allOnBtn=Create("ImageButton",switch,{Name="allOnBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.5,0,1,0), Position=UDim2.new(0.5,0,0,0), BackgroundColor3=Color3.new(0.888,0.222,0.222)})
+allOffBtn=Create("ImageButton",switch,{Name="allOffBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.5,0,1,0), BackgroundColor3=Color3.new(0.555,0.555,0.555)})
+allOnBtn=Create("ImageButton",switch,{Name="allOnBtn", ImageTransparency=1, BorderSizePixel=0, Size=UDim2.new(0.5,0,1,0), Position=UDim2.new(0.5,0,0,0), BackgroundColor3=Color3.new(0.888,0.333,0.333)})
 toggleAllSlider=Create("Frame",switch,{Name="slider", Size=UDim2.new(0.1,0,1,4), Position=UDim2.new(0.45,0,0,-2), BorderSizePixel=0, BackgroundColor3=Color3.new(0.784,0.784,0.784)})
 messageLbl=Create("TextLabel",topbar,{Name="messageLbl", Size=UDim2.new(0.5,0,1,0), Text="Saved.", TextSize=14, Font="GothamSemibold", BackgroundTransparency=1, 
 	Position=UDim2.new(0.07,0,0,0), TextColor3=Color3.new(1,1,1), Visible=false, TextXAlignment="Left"})
@@ -146,13 +146,13 @@ rightCamBtn=Create("ImageButton",camframe,{Name="rightCamBtn", Image="rbxassetid
 	BackgroundColor3=Color3.new(1,1,1)})
 leftCamBtn=Create("ImageButton",camframe,{Name="leftCamBtn", Image="rbxassetid://144168163", Size=UDim2.new(0.333,0,1,0), BackgroundTransparency=1, BackgroundColor3=Color3.new(1,1,1)})
 centerCamBtn=Create("ImageButton",camframe,{Name="centerCamBtn", Image="rbxassetid://58282192", Size=UDim2.new(0.333,0,1,0), Position=UDim2.new(0.333,0,0,0), BackgroundTransparency=1, BackgroundColor3=Color3.new(1,1,1)})
-creditLbl=Create("TextLabel",main,{Position=UDim2.new(0,0,1,4),Size=UDim2.new(0,100,0,16),BackgroundTransparency=1,TextColor3=Color3.new(1,1,1),Text="by sirelKilla & BallsNDeath",TextScaled=true,TextStrokeTransparency=.8})
+creditLbl=Create("TextLabel",main,{Position=UDim2.new(0,0,1,4),Size=UDim2.new(1,100,0,16),BackgroundTransparency=1,TextColor3=Color3.new(1,1,1),Text="by sirelKilla & BallsNDeath",TextScaled=true,TextStrokeTransparency=.8})
 
 local function toggleButtonColor(button)
-    if button.BackgroundColor3 == Color3.new(0.444,0.444,0.444) then
-        button.BackgroundColor3 = Color3.new(0.888, 0.222, 0.222)
+    if button.BackgroundColor3 == Color3.new(0.555,0.555,0.555) then
+        button.BackgroundColor3 = Color3.new(0.888, 0.333, 0.333)
     else
-        button.BackgroundColor3 = Color3.new(0.444,0.444,0.444)
+        button.BackgroundColor3 = Color3.new(0.555,0.555,0.555)
     end
 end
 
@@ -234,11 +234,11 @@ allOffBtn.InputBegan:Connect(function()
 		if toggleAllSlider.Position.X.Scale<.01 then
 			toggleAllSlider:TweenPosition(UDim2.new(0.45,0,0,-2),nil,"Sine",0.1,true)
 		end
-		cashierBtn.BackgroundColor3 = Color3.new(0.444,0.444,0.444)
-		cookBtn.BackgroundColor3 = Color3.new(0.444,0.444,0.444)
-		boxerBtn.BackgroundColor3 = Color3.new(0.444,0.444,0.444)
-		deliveryBtn.BackgroundColor3 = Color3.new(0.444,0.444,0.444)
-		supplierBtn.BackgroundColor3 = Color3.new(0.444,0.444,0.444)
+			cashierBtn.BackgroundColor3 = Color3.new(0.555,0.555,0.555)
+			cookBtn.BackgroundColor3 = Color3.new(0.555,0.555,0.555)
+			boxerBtn.BackgroundColor3 = Color3.new(0.555,0.555,0.555)
+			deliveryBtn.BackgroundColor3 = Color3.new(0.555,0.555,0.555)
+			supplierBtn.BackgroundColor3 = Color3.new(0.555,0.555,0.555)
 	end
 end)
 allOnBtn.InputBegan:Connect(function()
@@ -253,11 +253,11 @@ allOnBtn.InputBegan:Connect(function()
 		if toggleAllSlider.Position.X.Scale>.88 then
 			toggleAllSlider:TweenPosition(UDim2.new(0.45,0,0,-2),nil,"Sine",0.1,true)
 		end
-		cashierBtn.BackgroundColor3 = Color3.new(0.888, 0.222, 0.222)
-		cookBtn.BackgroundColor3 = Color3.new(0.888, 0.222, 0.222)
-		boxerBtn.BackgroundColor3 = Color3.new(0.888, 0.222, 0.222)
-		deliveryBtn.BackgroundColor3 = Color3.new(0.888, 0.222, 0.222)
-		supplierBtn.BackgroundColor3 = Color3.new(0.888, 0.222, 0.222)
+			cashierBtn.BackgroundColor3 = Color3.new(0.888, 0.333, 0.333)
+			cookBtn.BackgroundColor3 = Color3.new(0.888, 0.333, 0.333)
+			boxerBtn.BackgroundColor3 = Color3.new(0.888, 0.333, 0.333)
+			deliveryBtn.BackgroundColor3 = Color3.new(0.888, 0.333, 0.333)
+			supplierBtn.BackgroundColor3 = Color3.new(0.888, 0.333, 0.333)
 	end
 end)
 local oldRefillAt=refillAtBox.Text
@@ -358,68 +358,19 @@ local function smoothTP(cf)
 end
 
 local function getCustomerOrder(c)
-    if not c then
-        return "MountainDew"
+    local dialog = c.Head.Dialog.Correct.ResponseDialog or ''
+    local order = "MountainDew"
+    if dialog:sub(-8) == "instead." then
+        dialog = dialog:sub(-30)
     end
-
-    if c.Head and c.Head.Dialog and c.Head.Dialog.Correct then
-        local dialog = c.Head.Dialog.Correct.ResponseDialog or ''
-        local order = "MountainDew"
-        if dialog:sub(-8) == "instead." then
-            dialog = dialog:sub(-30)
-        end
-        if dialog:find("pepperoni", 1, true) then
-            order = "PepperoniPizza"
-        elseif dialog:find("sausage", 1, true) then
-            order = "SausagePizza"
-        elseif dialog:find("cheese", 1, true) then
-            order = "CheesePizza"
-        end
-        return order
-    else
-        return "MountainDew"
+    if dialog:find("pepperoni", 1, true) then
+        order = "PepperoniPizza"
+    elseif dialog:find("sausage", 1, true) then
+        order = "SausagePizza"
+    elseif dialog:find("cheese", 1, true) then
+        order = "CheesePizza"
     end
-end
-
-local function RemoveCustomer(c)
-    wait(0.2)
-    if c:FindFirstChild("Head") and c:FindFirstChild("Humanoid") and c.Head.CFrame.Z < 102 and c.Head:FindFirstChild("Dialog") and c.Head.Dialog:FindFirstChild("Correct") and ((c.Humanoid.SeatPart and c.Humanoid.SeatPart.Anchored) or (c.Humanoid.SeatPart == nil and (c.Head.Velocity.Z^2)^.5 < .0001)) then
-        pcall(function()
-            c.HumanoidRootPart.CFrame = CFrame.new(50.30, -10, 83.24)
-        end)
-    else
-        wait(0.2)
-        if c and c:IsDescendantOf(workspace) then
-            return RemoveCustomer(c)
-        else
-            local c = workspace.Customers:GetChildren()[1]
-            return RemoveCustomer(c)
-        end
-    end
-end
-
-local function FindFirstCustomer()
-    local children = workspace.Customers:GetChildren()
-    for i = 1, #children do
-        local c = children[i]
-        if c:FindFirstChild("HumanoidRootPart") then
-            if c:FindFirstChild("Head") and c:FindFirstChild("Humanoid") and c.Head:FindFirstChild("Dialog") and c.Head.Dialog:FindFirstChild("Correct") then
-                local order = getCustomerOrder(c)
-                RemoveCustomer(c)
-                return c, order
-            else
-                continue
-            end
-        else
-            if c:FindFirstChild("Head") and c:FindFirstChild("Humanoid") and c.Head.CFrame.Z < 102 and c.Head:FindFirstChild("Dialog") and c.Head.Dialog:FindFirstChild("Correct") and ((c.Humanoid.SeatPart and c.Humanoid.SeatPart.Anchored) or (c.Humanoid.SeatPart == nil and (c.Head.Velocity.Z^2)^.5 < .0001)) then
-                local order = getCustomerOrder(c)
-                return c, order
-            end
-        end
-    end
-    local c = workspace.Customers:GetChildren()[1]
-    local order = getCustomerOrder(c)
-    return c, order
+    return order
 end
 
 local function FindFirstCustomer()
@@ -429,21 +380,45 @@ local function FindFirstCustomer()
         if c:FindFirstChild("HumanoidRootPart") then
             if ffc(c, "Head") and ffc(c, "Humanoid") and ffc(c.Head, "Dialog") and ffc(c.Head.Dialog, "Correct") then
                 local order = getCustomerOrder(c)
-                RemoveCustomer(c)
-                return c, order
+				return c,order
+				RemoveCustomer(c)
             else
-				continue
-            end
-        else
-            if ffc(c, "Head") and ffc(c, "Humanoid") and c.Head.CFrame.Z < 102 and ffc(c.Head, "Dialog") and ffc(c.Head.Dialog, "Correct") and ((c.Humanoid.SeatPart and c.Humanoid.SeatPart.Anchored) or (c.Humanoid.SeatPart == nil and (c.Head.Velocity.Z^2)^.5 < .0001)) then
-                local order = getCustomerOrder(c)
-                return c, order
+                if ffc(c,"Head") and ffc(c,"Humanoid") and c.Head.CFrame.Z<102 and ffc(c.Head,"Dialog") and ffc(c.Head.Dialog,"Correct") and ((c.Humanoid.SeatPart and c.Humanoid.SeatPart.Anchored) or (c.Humanoid.SeatPart==nil and (c.Head.Velocity.Z^2)^.5<.0001)) then
+                    local order = getCustomerOrder(c)
+                    return c,order
+                end
             end
         end
     end
-    local c = workspace.Customers:GetChildren()[1]
-    local order = getCustomerOrder(c)
-    return c, order
+end
+
+local function RemoveCustomer(c)
+	if ffc(c,"Head") and ffc(c,"Humanoid") and c.Head.CFrame.Z<102 and ffc(c.Head,"Dialog") and ffc(c.Head.Dialog,"Correct") and ((c.Humanoid.SeatPart and c.Humanoid.SeatPart.Anchored) or (c.Humanoid.SeatPart==nil and (c.Head.Velocity.Z^2)^.5<.0001)) then
+		pcall(function()
+			c.HumanoidRootPart.CFrame = CFrame.new(50.30, -10, 83.24)
+		end)
+	else
+		wait(0.1)
+		RemoveCustomer(c)
+	end
+end
+
+while true do
+    local children = workspace.Customers:GetChildren()
+    for i=1,#children do
+        local c = children[i]
+        if not ffc(c.Head, "Dialog") and c.HumanoidRootPart.Velocity.Magnitude < 0.01 then
+            local attempts = 0
+            while attempts < 5 do
+                pcall(function()
+                    c.HumanoidRootPart.CFrame = CFrame.new(50.30, -10, 83.24)
+                end)
+                attempts = attempts + 1
+                wait(2)
+            end
+        end
+    end
+    wait(1)
 end
 
 local boxPtick=0
@@ -765,25 +740,23 @@ while gui.Parent do
 		game:GetService("VirtualInputManager"):SendKeyEvent(false,"Z",false,game)
 	end
 	for zz=1,3 do
-		if doCashier then
-			local c,order = FindFirstCustomer()
-			if c and order then
-				local reg = 3
-				if c.Head.Position.X < 50 then
-					reg = 2
-				elseif c.Head.Position.X < 70 then
-					reg = 1
-				end
-				if (root.Position-Vector3.new(50.30, 3.80, 83.24)).magnitude>9 then smoothTP(CFrame.new(50.30, 3.80, 83.24)) wait(0.02) end
-				local numTimes = math.random(1, 10)
-				for i = 1, numTimes do
-    				network:FireServer("OrderComplete", c, order, workspace["Register"..reg])
-    				wait(0.01)
-				end
-				wait(0.02)
-			else
-				break
+		local c,order = FindFirstCustomer()
+		if doCashier and c and order then
+			local reg = 3
+			if c.Head.Position.X < 50 then
+				reg = 2
+			elseif c.Head.Position.X < 70 then
+				reg = 1
 			end
+			if (root.Position-Vector3.new(50.30, 3.80, 83.24)).magnitude>9 then smoothTP(CFrame.new(50.30, 3.80, 83.24)) wait(0.02) end
+			local numTimes = math.random(1, 10)
+			for i = 1, numTimes do
+    			network:FireServer("OrderComplete", c, order, workspace["Register"..reg])
+    			wait(0.01)
+			end
+			wait(0.02)
+		else
+			break
 		end
 	end
 	tryCook()
@@ -792,6 +765,7 @@ while gui.Parent do
     	local ps = {}
     	local children = parent:GetChildren()
 
+    	-- First, look for the Pizza Slicer in the given parent.
     	for i = 1, #children do
         	local s = children[i]
         	if s:IsA("Tool") and s.Name == "Pizza Slicer" then
@@ -799,133 +773,152 @@ while gui.Parent do
         	end
     	end
 
+    	-- If no Pizza Slicer was found, handle the search logic.
     	if #ps == 0 then
+        	-- Teleport if the player is too far.
         	if (root.Position - Vector3.new(58.74, 3.80, 12.40)).magnitude > 9 then 
             		smoothTP(CFrame.new(58.74, 3.80, 12.40)) 
             		wait(0.02) 
         	end
     
+        	-- Look for the Pizza Slicer in the workspace.
         	local pizzaSlicer = workspace.Drawer:FindFirstChild("Pizza Slicer")
         	local drawerClickDetector = workspace.Drawer:FindFirstChild("ClickDetector")
     
+        	-- Attempt to open the drawer.
         	if drawerClickDetector and drawerClickDetector.Detector then
-            		drawerClickDetector.Detector:FireServer()
+            		drawerClickDetector.Detector:FireServer() -- Open the drawer.
         	else
            		warn("Drawer Open ClickDetector or Detector not found.")
         	end
 			wait(0.02)
-
+        	-- Equip the pizza slicer if found.
         	if pizzaSlicer and pizzaSlicer.ClickDetector and pizzaSlicer.ClickDetector.Detector then
-            		pizzaSlicer.ClickDetector.Detector:FireServer()
-            		ps[#ps + 1] = pizzaSlicer
+            		pizzaSlicer.ClickDetector.Detector:FireServer() -- Equip the pizza slicer.
+            		ps[#ps + 1] = pizzaSlicer -- Add the pizza slicer to the list
         	else
             		warn("Pizza Slicer ClickDetector or Detector not found.")
         	end
 			wait(0.02)
-
+        	-- Start the animation if the event exists.
         	local animationStartedEvent = workspace.Animation:FindFirstChild("AnimationStarted")
         	if animationStartedEvent then
-            		animationStartedEvent:FireServer("ToolHold")
+            		animationStartedEvent:FireServer("ToolHold") -- Trigger the animation.
         	else
             		warn("AnimationStarted Equip Event not found.")
         	end
 			wait(0.02)
-
+        	-- Close the drawer after equipping the slicer.
         	if drawerClickDetector and drawerClickDetector.Detector then
-            		drawerClickDetector.Detector:FireServer()
+            		drawerClickDetector.Detector:FireServer() -- Close the drawer.
         	else
 	        	warn("Drawer Close ClickDetector or Detector not found.")
         	end
     	end
 
+    	-- Check again in the parent if not found in the workspace
     	if #ps == 0 then
         	for _, tool in pairs(parent:GetChildren()) do
-            	if tool:IsA("Tool") and tool.Name == "Pizza Slicer" then
-                	ps[#ps + 1] = tool
-            	end
+            		if tool:IsA("Tool") and tool.Name == "Pizza Slicer" then
+                		ps[#ps + 1] = tool
+            		end
         	end
     	end
 
     	return ps
 	end
 
+    -- Define function to handle pizza slicing
     local function slicePizza(pizza)
+        -- Find the Pizza Slicer in workspace or character
         local pizzaSlicer = FindPizzaSlicer(workspace)[1] or FindPizzaSlicer(character)[1] or FindPizzaSlicer(player.Backpack)[1]
             if pizzaSlicer then
                 if ffc(character, "RightHand") and ffc(character.RightHand, "RightGrip") then
                     character.RightHand.RightGrip:Destroy()
                     wait(0.02)
                 end
+
+               	-- Equip the pizza slicer if not equipped
                 humanoid:EquipTool(pizzaSlicer)
-                wait(0.02)
+                wait(0.02) -- Allow time for equipping
+                -- Use the Pizza Slicer
                 network:FireServer("UseTool", pizzaSlicer, pizza)
-                wait(0.02)
+                wait(0.02) -- Wait for slicing to complete
             end
     	end
 	
 	for zz = 1, 7 do
-    	if doBoxer then
-        	local didSomething = false
-        	local boxP, boxD = FindBoxingFoods()
-        	local closedBox, openBox, fullBox = FindBoxes()
-        	local targetPos = Vector3.new(58.74, 3.80, 12.40)
+    		if doBoxer then
+        		local didSomething = false
+        		local boxP, boxD = FindBoxingFoods()
+        		local closedBox, openBox, fullBox = FindBoxes()
+        
+        		local targetPos = Vector3.new(58.74, 3.80, 12.40)
 
-        	local function handlePosition()
-            	if (root.Position - targetPos).magnitude > 9 then
-                	smoothTP(CFrame.new(targetPos))
-                	wait(0.02)
-                	return true
-            	end
-            	return false
-        	end
+        		-- Helper function to check distance and teleport
+        		local function handlePosition()
+            			if (root.Position - targetPos).magnitude > 9 then
+                			smoothTP(CFrame.new(targetPos))
+                			wait(0.02)
+                			return true
+            			end
+            			return false
+        		end
 
-        	if boxD and tick() - boxDtick > 0.8 then
-            	boxDtick = tick()
-            	didSomething = true
-            	if handlePosition() then continue end
-            	network:FireServer("UpdateProperty", boxD, "CFrame", CFrame.new(63, 4.9, -1, -1, 0, 0, 0, 1, 0, 0, 0, -1))
-        	end
+        		-- Handle dew food (boxD) movement
+        		if boxD and tick() - boxDtick > 0.8 then
+            			boxDtick = tick()
+            			didSomething = true
+            			if handlePosition() then continue end
+            			network:FireServer("UpdateProperty", boxD, "CFrame", CFrame.new(63, 4.9, -1, -1, 0, 0, 0, 1, 0, 0, 0, -1))
+        		end
 
-        	if fullBox then
-            	if fullBox.Name == "BoxOpen" then
-                	didSomething = true
-                	if handlePosition() then continue end
-                	network:FireServer("CloseBox", fullBox)
+        		-- Handle full boxes (fullBox)
+        		if fullBox then
+            			if fullBox.Name == "BoxOpen" then
+                			didSomething = true
+                			if handlePosition() then continue end
+                
+                			network:FireServer("CloseBox", fullBox)
 					wait(0.02)
-                	network:FireServer("UpdateProperty", fullBox, "CFrame", CFrame.new(68.2, 4.4, RNG:NextNumber(-3, -2), -1, 0, 0, 0, 1, 0, 0, 0, -1))
-            		elseif tick() - boxPtick > 0.8 then
-                		didSomething = true
-                		if handlePosition() then continue end
-                		network:FireServer("UpdateProperty", fullBox, "CFrame", CFrame.new(68.2, 4.4, RNG:NextNumber(-3, -2), -1, 0, 0, 0, 1, 0, 0, 0, -1))
-                		boxPtick = tick()
-            		end
-				end
-			end
+                			network:FireServer("UpdateProperty", fullBox, "CFrame", CFrame.new(68.2, 4.4, RNG:NextNumber(-3, -2), -1, 0, 0, 0, 1, 0, 0, 0, -1))
+            			elseif tick() - boxPtick > 0.8 then
+                			didSomething = true
+                			if handlePosition() then continue end
+                			network:FireServer("UpdateProperty", fullBox, "CFrame", CFrame.new(68.2, 4.4, RNG:NextNumber(-3, -2), -1, 0, 0, 0, 1, 0, 0, 0, -1))
+                			boxPtick = tick()
+            			end
+        		end
 
-        	if closedBox and not openBox then
-            	didSomething = true
-            	if handlePosition() then continue end
-            	network:FireServer("UpdateProperty", closedBox, "CFrame", CFrame.new(RNG:NextNumber(62.5, 70.5), 3.5, RNG:NextNumber(11, 25)))
-            	wait()
-            	network:FireServer("OpenBox", closedBox)
-        	end
+        		-- Handle closed boxes (closedBox)
+        		if closedBox and not openBox then
+            			didSomething = true
+            			if handlePosition() then continue end
+            			network:FireServer("UpdateProperty", closedBox, "CFrame", CFrame.new(RNG:NextNumber(62.5, 70.5), 3.5, RNG:NextNumber(11, 25)))
+            			wait()
+            			network:FireServer("OpenBox", closedBox)
+        		end
 
-        	if openBox and boxP then
-            	didSomething = true
-            	if handlePosition() then continue end
-            	network:FireServer("UpdateProperty", boxP, "Anchored", true)
-            	network:FireServer("UpdateProperty", openBox, "Anchored", true)
-            	wait()
-            	network:FireServer("UpdateProperty", boxP, "CFrame", openBox.CFrame + Vector3.new(0, -2, 0))
-            	wait()
-            	network:FireServer("AssignPizzaToBox", openBox, boxP)
+        		-- Add the slicing step when boxing
+        		if openBox and boxP then
+            			didSomething = true
+            			if handlePosition() then continue end
+
+            			network:FireServer("UpdateProperty", boxP, "Anchored", true)
+            			network:FireServer("UpdateProperty", openBox, "Anchored", true)
+            			wait()
+            			network:FireServer("UpdateProperty", boxP, "CFrame", openBox.CFrame + Vector3.new(0, -2, 0))
+            			wait()
+            			network:FireServer("AssignPizzaToBox", openBox, boxP)
 				wait(0.02)
-            	slicePizza(boxP)
-        	end
-        	if didSomething then wait(0.5) else break end
-    	else
-        	break
-    	end
+            			-- Slice the pizza in the box
+            			slicePizza(boxP)
+        		end
+
+        		if didSomething then wait(0.5) else break end
+    		else
+        		break
+    		end
 	end
 	if doDelivery then
 		local wstools = FindAllDeliveryTools(workspace)
