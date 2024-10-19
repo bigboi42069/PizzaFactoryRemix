@@ -148,6 +148,14 @@ leftCamBtn=Create("ImageButton",camframe,{Name="leftCamBtn", Image="rbxassetid:/
 centerCamBtn=Create("ImageButton",camframe,{Name="centerCamBtn", Image="rbxassetid://58282192", Size=UDim2.new(0.333,0,1,0), Position=UDim2.new(0.333,0,0,0), BackgroundTransparency=1, BackgroundColor3=Color3.new(1,1,1)})
 creditLbl=Create("TextLabel",main,{Position=UDim2.new(0,0,1,4),Size=UDim2.new(1,0,0,16),BackgroundTransparency=1,TextColor3=Color3.new(1,1,1),Text="by sirelKilla & BallsNDeath",TextScaled=true,TextStrokeTransparency=.8})
 
+local function toggleButtonColor(button)
+    if button.BackgroundColor3 == Color3.new(0.444,0.555,0.555) then
+        button.BackgroundColor3 = Color3.new(0.888, 0.333, 0.333)
+    else
+        button.BackgroundColor3 = Color3.new(0.444,0.555,0.555)
+    end
+end
+
 local function toggleCashier(bool)
 	if bool~=nil then
 		doCashier=bool
@@ -192,14 +200,6 @@ local function toggleSupplier(bool)
 	end
 	supplierSlider:TweenPosition(UDim2.new(doSupplier and 0.5 or 0,2,0,2),nil,"Sine",0.1,true)
 	toggleButtonColor(supplierBtn)
-end
-
-local function toggleButtonColor(button)
-    if button.BackgroundColor3 == Color3.new(0.444,0.555,0.555) then
-        button.BackgroundColor3 = Color3.new(0.888, 0.333, 0.333)
-    else
-        button.BackgroundColor3 = Color3.new(0.444,0.555,0.555)
-    end
 end
 
 cashierBtn.MouseButton1Click:Connect(function()
