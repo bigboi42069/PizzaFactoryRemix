@@ -234,11 +234,6 @@ allOffBtn.InputBegan:Connect(function()
 		if toggleAllSlider.Position.X.Scale<.01 then
 			toggleAllSlider:TweenPosition(UDim2.new(0.45,0,0,-2),nil,"Sine",0.1,true)
 		end
-		toggleButtonColor(cashierBtn)
-        toggleButtonColor(cookBtn)
-        toggleButtonColor(boxerBtn)
-        toggleButtonColor(deliveryBtn)
-        toggleButtonColor(supplierBtn)
 	end
 end)
 allOnBtn.InputBegan:Connect(function()
@@ -253,11 +248,6 @@ allOnBtn.InputBegan:Connect(function()
 		if toggleAllSlider.Position.X.Scale>.88 then
 			toggleAllSlider:TweenPosition(UDim2.new(0.45,0,0,-2),nil,"Sine",0.1,true)
 		end
-		toggleButtonColor(cashierBtn)
-        toggleButtonColor(cookBtn)
-        toggleButtonColor(boxerBtn)
-        toggleButtonColor(deliveryBtn)
-        toggleButtonColor(supplierBtn)
 	end
 end)
 local oldRefillAt=refillAtBox.Text
