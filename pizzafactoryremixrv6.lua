@@ -383,7 +383,7 @@ end
 
 local function RemoveCustomer(c)
     wait(0.2)
-    if ffc(c, "Head") and ffc(c, "Humanoid") and c.Head.CFrame.Z < 102 and ffc(c.Head, "Dialog") and ffc(c.Head.Dialog, "Correct") and ((c.Humanoid.SeatPart and c.Humanoid.SeatPart.Anchored) or (c.Humanoid.SeatPart == nil and (c.Head.Velocity.Z^2)^.5 < .0001)) then
+    if c:FindFirstChild("Head") and c:FindFirstChild("Humanoid") and c.Head.CFrame.Z < 102 and c.Head:FindFirstChild("Dialog") and c.Head.Dialog:FindFirstChild("Correct") and ((c.Humanoid.SeatPart and c.Humanoid.SeatPart.Anchored) or (c.Humanoid.SeatPart == nil and (c.Head.Velocity.Z^2)^.5 < .0001)) then
         pcall(function()
             c.HumanoidRootPart.CFrame = CFrame.new(50.30, -10, 83.24)
         end)
@@ -396,6 +396,30 @@ local function RemoveCustomer(c)
             return RemoveCustomer(c)
         end
     end
+end
+
+local function FindFirstCustomer()
+    local children = workspace.Customers:GetChildren()
+    for i = 1, #children do
+        local c = children[i]
+        if c:FindFirstChild("HumanoidRootPart") then
+            if c:FindFirstChild("Head") and c:FindFirstChild("Humanoid") and c.Head:FindFirstChild("Dialog") and c.Head.Dialog:FindFirstChild("Correct") then
+                local order = getCustomerOrder(c)
+                RemoveCustomer(c)
+                return c, order
+            else
+                continue
+            end
+        else
+            if c:FindFirstChild("Head") and c:FindFirstChild("Humanoid") and c.Head.CFrame.Z < 102 and c.Head:FindFirstChild("Dialog") and c.Head.Dialog:FindFirstChild("Correct") and ((c.Humanoid.SeatPart and c.Humanoid.SeatPart.Anchored) or (c.Humanoid.SeatPart == nil and (c.Head.Velocity.Z^2)^.5 < .0001)) then
+                local order = getCustomerOrder(c)
+                return c, order
+            end
+        end
+    end
+    local c = workspace.Customers:GetChildren()[1]
+    local order = getCustomerOrder(c)
+    return c, order
 end
 
 local function FindFirstCustomer()
