@@ -376,8 +376,13 @@ local function FindFirstCustomer()
 					order = "CheesePizza"
 				end
 				return c,order
-			elseif ffc(c,"Head") and ffc(c,"Humanoid") and c.Head.CFrame.Z<102 and ((c.Humanoid.SeatPart and c.Humanoid.SeatPart.Anchored) or (c.Humanoid.SeatPart==nil and (c.Head.Velocity.Z^2)^.5<.0001)) then
-				wait(0.02)
+				if c.Head.CFrame.Z<102 then
+					wait(0.02)
+					pcall(function()
+                    	c.HumanoidRootPart.CFrame = CFrame.new(50.30, -10, 83.24)
+                	end)
+			elseif ffc(c,"Head") and ffc(c,"Humanoid") then
+				wait(5)
 				pcall(function()
                     c.HumanoidRootPart.CFrame = CFrame.new(50.30, -10, 83.24)
                 end)
