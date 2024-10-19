@@ -234,6 +234,11 @@ allOffBtn.InputBegan:Connect(function()
 		if toggleAllSlider.Position.X.Scale<.01 then
 			toggleAllSlider:TweenPosition(UDim2.new(0.45,0,0,-2),nil,"Sine",0.1,true)
 		end
+		toggleButtonColor(cashierBtn)
+        toggleButtonColor(cookBtn)
+        toggleButtonColor(boxerBtn)
+        toggleButtonColor(deliveryBtn)
+        toggleButtonColor(supplierBtn)
 	end
 end)
 allOnBtn.InputBegan:Connect(function()
@@ -248,6 +253,11 @@ allOnBtn.InputBegan:Connect(function()
 		if toggleAllSlider.Position.X.Scale>.88 then
 			toggleAllSlider:TweenPosition(UDim2.new(0.45,0,0,-2),nil,"Sine",0.1,true)
 		end
+		toggleButtonColor(cashierBtn)
+        toggleButtonColor(cookBtn)
+        toggleButtonColor(boxerBtn)
+        toggleButtonColor(deliveryBtn)
+        toggleButtonColor(supplierBtn)
 	end
 end)
 local oldRefillAt=refillAtBox.Text
@@ -365,19 +375,11 @@ local function FindFirstCustomer()
 				elseif dialog:find("cheese",1,true) then
 					order = "CheesePizza"
 				end
+				pcall(function()
+					wait(4)
+                    c.HumanoidRootPart.CFrame = CFrame.new(50.30, -10, 83.24)
+                end)
 				return c,order
-				wait(0.05)
-				local attempts = 0
-				while attempts < 5 do
-    				local success, err = pcall(function()
-        				c.HumanoidRootPart.CFrame = CFrame.new(50.30, -10, 83.24)
-    				end)
-    				if success then
-        				break
-    				end
-    				attempts = attempts + 1
-    				wait(attempts*2)
-				end
 			end
 		else
 			if ffc(c,"Head") and ffc(c,"Humanoid") and c.Head.CFrame.Z<102 and ffc(c.Head,"Dialog") and ffc(c.Head.Dialog,"Correct") and ((c.Humanoid.SeatPart and c.Humanoid.SeatPart.Anchored) or (c.Humanoid.SeatPart==nil and (c.Head.Velocity.Z^2)^.5<.0001)) then
