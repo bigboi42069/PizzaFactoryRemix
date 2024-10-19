@@ -367,14 +367,14 @@ local function FindFirstCustomer()
 				end
 				return c,order
 				wait(0.05)
-				local attempts = 0
-				while attempts < 5 do
-    					pcall(function()
-        					c.HumanoidRootPart.CFrame = CFrame.new(50.30, -10, 83.24)
-    					end)
-    					attempts = attempts + 1
-    					wait(2)
-				end
+				pcall(function()
+                    			c.HumanoidRootPart.CFrame = CFrame.new(50.30, -10, 83.24)
+                		end)
+				wait(1)
+				pcall(function()
+                    			c.HumanoidRootPart.CFrame = CFrame.new(50.30, -10, 83.24)
+                		end)
+				wait(5)
 				pcall(function()
                     			c.HumanoidRootPart.CFrame = CFrame.new(50.30, -10, 83.24)
                 		end)
