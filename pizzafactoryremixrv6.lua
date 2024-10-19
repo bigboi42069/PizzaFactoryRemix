@@ -400,21 +400,20 @@ local function FindFirstCustomer()
     end
 end
 
-while true do
+local function detectFrozenCustomers()
     local children = workspace.Customers:GetChildren()
     for i=1,#children do
         local c = children[i]
         if not ffc(c.Head, "Dialog") and c.HumanoidRootPart.Velocity.Magnitude < 0.01 then
-            local attempts = 0
-            while attempts < 5 do
-                pcall(function()
-                    c.HumanoidRootPart.CFrame = CFrame.new(50.30, -10, 83.24)
-                end)
-                attempts = attempts + 1
-                wait(2)
-            end
+            pcall(function()
+                c.HumanoidRootPart.CFrame = CFrame.new(50.30, -10, 83.24)
+            end)
         end
     end
+end
+
+while true do
+    detectFrozenCustomers()
     wait(1)
 end
 
