@@ -148,55 +148,58 @@ leftCamBtn=Create("ImageButton",camframe,{Name="leftCamBtn", Image="rbxassetid:/
 centerCamBtn=Create("ImageButton",camframe,{Name="centerCamBtn", Image="rbxassetid://58282192", Size=UDim2.new(0.333,0,1,0), Position=UDim2.new(0.333,0,0,0), BackgroundTransparency=1, BackgroundColor3=Color3.new(1,1,1)})
 creditLbl=Create("TextLabel",main,{Position=UDim2.new(0,0,1,4),Size=UDim2.new(1,0,0,16),BackgroundTransparency=1,TextColor3=Color3.new(1,1,1),Text="by sirelKilla & BallsNDeath",TextScaled=true,TextStrokeTransparency=.8})
 
+local function toggleButtonColor(button)
+    if button.BackgroundColor3 == Color3.new(0.444,0.555,0.444) then
+        button.BackgroundColor3 = Color3.new(0.666, 0.333, 0.333)
+    else
+        button.BackgroundColor3 = Color3.new(0.444,0.555,0.444)
+    end
+end
+
 local function toggleCashier(bool)
-	cashierBtn.BackgroundColor3 = Color3.new(0.444,0.555,0.444)
 	if bool~=nil then
 		doCashier=bool
-		cashierBtn.BackgroundColor3 = Color3.new(0.666, 0.333, 0.333)
 	else
 		doCashier = not doCashier
 	end
 	cashierSlider:TweenPosition(UDim2.new(doCashier and 0.5 or 0,2,0,2),nil,"Sine",0.1,true)
+	toggleButtonColor(cashierBtn)
 end
 local function toggleCook(bool)
-	cookBtn.BackgroundColor3 = Color3.new(0.444,0.555,0.444)
 	if bool~=nil then
 		doCook=bool
-		cookBtn.BackgroundColor3 = Color3.new(0.666, 0.333, 0.333)
 	else
 		doCook = not doCook
 	end
 	cookSlider:TweenPosition(UDim2.new(doCook and 0.5 or 0,2,0,2),nil,"Sine",0.1,true)
+	toggleButtonColor(cookBtn)
 end
 local function toggleBoxer(bool)
-	boxerBtn.BackgroundColor3 = Color3.new(0.444,0.555,0.444)
 	if bool~=nil then
 		doBoxer=bool
-		boxerBtn.BackgroundColor3 = Color3.new(0.666, 0.333, 0.333)
 	else
 		doBoxer = not doBoxer
 	end
 	boxerSlider:TweenPosition(UDim2.new(doBoxer and 0.5 or 0,2,0,2),nil,"Sine",0.1,true)
+	toggleButtonColor(boxerBtn)
 end
 local function toggleDelivery(bool)
-	deliveryBtn.BackgroundColor3 = Color3.new(0.444,0.555,0.444)
 	if bool~=nil then
 		doDelivery=bool
-		deliveryBtn.BackgroundColor3 = Color3.new(0.666, 0.333, 0.333)
 	else
 		doDelivery = not doDelivery
 	end
 	deliverySlider:TweenPosition(UDim2.new(doDelivery and 0.5 or 0,2,0,2),nil,"Sine",0.1,true)
+	toggleButtonColor(deliveryBtn)
 end
 local function toggleSupplier(bool)
-	supplierBtn.BackgroundColor3 = Color3.new(0.444,0.555,0.444)
 	if bool~=nil then
 		doSupplier=bool
-		supplierBtn.BackgroundColor3 = Color3.new(0.666, 0.333, 0.333)
 	else
 		doSupplier = not doSupplier
 	end
 	supplierSlider:TweenPosition(UDim2.new(doSupplier and 0.5 or 0,2,0,2),nil,"Sine",0.1,true)
+	toggleButtonColor(supplierBtn)
 end
 
 cashierBtn.MouseButton1Click:Connect(function()
