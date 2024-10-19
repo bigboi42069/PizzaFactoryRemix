@@ -148,14 +148,6 @@ leftCamBtn=Create("ImageButton",camframe,{Name="leftCamBtn", Image="rbxassetid:/
 centerCamBtn=Create("ImageButton",camframe,{Name="centerCamBtn", Image="rbxassetid://58282192", Size=UDim2.new(0.333,0,1,0), Position=UDim2.new(0.333,0,0,0), BackgroundTransparency=1, BackgroundColor3=Color3.new(1,1,1)})
 creditLbl=Create("TextLabel",main,{Position=UDim2.new(0,0,1,4),Size=UDim2.new(1,0,0,16),BackgroundTransparency=1,TextColor3=Color3.new(1,1,1),Text="by sirelKilla & BallsNDeath",TextScaled=true,TextStrokeTransparency=.8})
 
-local function toggleButtonColor(button)
-    if button.BackgroundColor3 == Color3.new(0.444,0.555,0.555) then
-        button.BackgroundColor3 = Color3.new(0.888, 0.333, 0.333)
-    else
-        button.BackgroundColor3 = Color3.new(0.444,0.555,0.555)
-    end
-end
-
 local function toggleCashier(bool)
 	if bool~=nil then
 		doCashier=bool
@@ -200,6 +192,14 @@ local function toggleSupplier(bool)
 	end
 	supplierSlider:TweenPosition(UDim2.new(doSupplier and 0.5 or 0,2,0,2),nil,"Sine",0.1,true)
 	toggleButtonColor(supplierBtn)
+end
+
+local function toggleButtonColor(button)
+    if button.BackgroundColor3 == Color3.new(0.444,0.555,0.555) then
+        button.BackgroundColor3 = Color3.new(0.888, 0.333, 0.333)
+    else
+        button.BackgroundColor3 = Color3.new(0.444,0.555,0.555)
+    end
 end
 
 cashierBtn.MouseButton1Click:Connect(function()
@@ -351,6 +351,13 @@ local function FindFirstCustomer()
 	local children = workspace.Customers:GetChildren()
 	for i=1,#children do
 		local c = children[i]
+		print(c)
+		print("Child:", c.Name)
+		print("Class:", c.ClassName)
+		print("Children:")
+    	for _, grandchild in pairs(c:GetChildren()) do
+        	print("  ", grandchild.Name)
+		end
 		if c:FindFirstChild("HumanoidRootPart") then
 			if ffc(c,"Head") and ffc(c,"Humanoid") and ffc(c.Head,"Dialog") and ffc(c.Head.Dialog,"Correct") then
 				local dialog = c.Head.Dialog.Correct.ResponseDialog or ''
@@ -367,17 +374,17 @@ local function FindFirstCustomer()
 				end
 				return c,order
 				wait(0.05)
-				pcall(function()
-                    			c.HumanoidRootPart.CFrame = CFrame.new(50.30, -10, 83.24)
-                		end)
-				wait(1)
-				pcall(function()
-                    			c.HumanoidRootPart.CFrame = CFrame.new(50.30, -10, 83.24)
-                		end)
-				wait(5)
-				pcall(function()
-                    			c.HumanoidRootPart.CFrame = CFrame.new(50.30, -10, 83.24)
-                		end)
+				local attempts = 0
+				while attempts < 5 do
+    				local success, err = pcall(function()
+        				c.HumanoidRootPart.CFrame = CFrame.new(50.30, -10, 83.24)
+    				end)
+    				if success then
+        				break
+    				end
+    				attempts = attempts + 1
+    				wait(attempts*2)
+				end
 			end
 		else
 			if ffc(c,"Head") and ffc(c,"Humanoid") and c.Head.CFrame.Z<102 and ffc(c.Head,"Dialog") and ffc(c.Head.Dialog,"Correct") and ((c.Humanoid.SeatPart and c.Humanoid.SeatPart.Anchored) or (c.Humanoid.SeatPart==nil and (c.Head.Velocity.Z^2)^.5<.0001)) then
