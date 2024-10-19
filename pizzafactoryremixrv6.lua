@@ -155,6 +155,7 @@ local function toggleCashier(bool)
 		doCashier = not doCashier
 	end
 	cashierSlider:TweenPosition(UDim2.new(doCashier and 0.5 or 0,2,0,2),nil,"Sine",0.1,true)
+	toggleButtonColor(cashierBtn)
 end
 local function toggleCook(bool)
 	if bool~=nil then
@@ -163,6 +164,7 @@ local function toggleCook(bool)
 		doCook = not doCook
 	end
 	cookSlider:TweenPosition(UDim2.new(doCook and 0.5 or 0,2,0,2),nil,"Sine",0.1,true)
+	toggleButtonColor(cookBtn)
 end
 local function toggleBoxer(bool)
 	if bool~=nil then
@@ -171,6 +173,7 @@ local function toggleBoxer(bool)
 		doBoxer = not doBoxer
 	end
 	boxerSlider:TweenPosition(UDim2.new(doBoxer and 0.5 or 0,2,0,2),nil,"Sine",0.1,true)
+	toggleButtonColor(boxerBtn)
 end
 local function toggleDelivery(bool)
 	if bool~=nil then
@@ -179,6 +182,7 @@ local function toggleDelivery(bool)
 		doDelivery = not doDelivery
 	end
 	deliverySlider:TweenPosition(UDim2.new(doDelivery and 0.5 or 0,2,0,2),nil,"Sine",0.1,true)
+	toggleButtonColor(deliveryBtn)
 end
 local function toggleSupplier(bool)
 	if bool~=nil then
@@ -187,6 +191,7 @@ local function toggleSupplier(bool)
 		doSupplier = not doSupplier
 	end
 	supplierSlider:TweenPosition(UDim2.new(doSupplier and 0.5 or 0,2,0,2),nil,"Sine",0.1,true)
+	toggleButtonColor(supplierBtn)
 end
 
 local function toggleButtonColor(button)
@@ -199,27 +204,22 @@ end
 
 cashierBtn.MouseButton1Click:Connect(function()
     toggleCashier()
-    toggleButtonColor(cashierBtn)
 end)
 
 cookBtn.MouseButton1Click:Connect(function()
     toggleCook()
-    toggleButtonColor(cookBtn)
 end)
 
 boxerBtn.MouseButton1Click:Connect(function()
     toggleBoxer()
-    toggleButtonColor(boxerBtn)
 end)
 
 deliveryBtn.MouseButton1Click:Connect(function()
     toggleDelivery()
-    toggleButtonColor(deliveryBtn)
 end)
 
 supplierBtn.MouseButton1Click:Connect(function()
     toggleSupplier()
-    toggleButtonColor(supplierBtn)
 end)
 
 allOffBtn.InputBegan:Connect(function()
@@ -234,11 +234,6 @@ allOffBtn.InputBegan:Connect(function()
 		if toggleAllSlider.Position.X.Scale<.01 then
 			toggleAllSlider:TweenPosition(UDim2.new(0.45,0,0,-2),nil,"Sine",0.1,true)
 		end
-		toggleButtonColor(cashierBtn)
-        toggleButtonColor(cookBtn)
-        toggleButtonColor(boxerBtn)
-        toggleButtonColor(deliveryBtn)
-        toggleButtonColor(supplierBtn)
 	end
 end)
 allOnBtn.InputBegan:Connect(function()
@@ -253,11 +248,6 @@ allOnBtn.InputBegan:Connect(function()
 		if toggleAllSlider.Position.X.Scale>.88 then
 			toggleAllSlider:TweenPosition(UDim2.new(0.45,0,0,-2),nil,"Sine",0.1,true)
 		end
-		toggleButtonColor(cashierBtn)
-        toggleButtonColor(cookBtn)
-        toggleButtonColor(boxerBtn)
-        toggleButtonColor(deliveryBtn)
-        toggleButtonColor(supplierBtn)
 	end
 end)
 local oldRefillAt=refillAtBox.Text
@@ -382,11 +372,19 @@ local function FindFirstCustomer()
 				elseif dialog:find("cheese",1,true) then
 					order = "CheesePizza"
 				end
-				pcall(function()
-					wait(4)
-                    c.HumanoidRootPart.CFrame = CFrame.new(50.30, -10, 83.24)
-                end)
 				return c,order
+				wait(0.05)
+				local attempts = 0
+				while attempts < 5 do
+    				local success, err = pcall(function()
+        				c.HumanoidRootPart.CFrame = CFrame.new(50.30, -10, 83.24)
+    				end)
+    				if success then
+        				break
+    				end
+    				attempts = attempts + 1
+    				wait(attempts*2)
+				end
 			end
 		else
 			if ffc(c,"Head") and ffc(c,"Humanoid") and c.Head.CFrame.Z<102 and ffc(c.Head,"Dialog") and ffc(c.Head.Dialog,"Correct") and ((c.Humanoid.SeatPart and c.Humanoid.SeatPart.Anchored) or (c.Humanoid.SeatPart==nil and (c.Head.Velocity.Z^2)^.5<.0001)) then
