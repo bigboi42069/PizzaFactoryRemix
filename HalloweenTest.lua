@@ -1,19 +1,11 @@
--- Function to find the relevant house part (e.g., to teleport to or interact with)
-local function ffc(obj, child, recursive)
-    return recursive and obj:FindFirstChildWhichIsA(child) or obj:FindFirstChild(child)
-end
-
--- Function to retrieve the 'GiveCandy' or similar part from the house by address
-local function getHousePart(address)
-    local houses = workspace.Houses:GetChildren()
-    for i = 1, #houses do
-        local h = houses[i]
-        -- Check if the house has an 'Address' value and matches the given address
-        if ffc(h, "Address") and h.Address.Value == address and ffc(h, "Medium", true) then
-            return h.Medium  -- Return the 'Medium' part where the front door is located
-        end
+-- Function to find the relevant house front door's ClickDetector
+local function getFrontDoorDetector(address)
+    local house = workspace.Houses:FindFirstChild(address)
+    if house and house:FindFirstChild("Doors") and house.Doors:FindFirstChild("FrontDoorMain") then
+        return house.Doors.FrontDoorMain:FindFirstChild("ClickDetector")
+    else
+        return nil
     end
-    return nil  -- Return nil if no match found
 end
 
 -- Function to teleport smoothly using a CFrame position
@@ -29,11 +21,11 @@ end
 
 -- Function to process a single house for trick-or-treating
 local function processHouse(address)
-    local housePart = getHousePart(address)
+    local frontDoorDetector = getFrontDoorDetector(address)
 
-    -- Error check: If 'Medium' part is not found
-    if not housePart then
-        warn("Error: No 'Medium' part found for house address: " .. address)
+    -- Error check: If the front door's ClickDetector is not found
+    if not frontDoorDetector then
+        warn("Error: No ClickDetector found for house address: " .. address)
         return
     end
 
@@ -46,28 +38,23 @@ local function processHouse(address)
         return
     end
 
-    -- Calculate the distance between the player and the house
-    local distance = (housePart.Position - root.Position).Magnitude
+    -- Teleport to the front door position
+    local doorPosition = frontDoorDetector.Parent.Position  -- Get position of the door
+    smoothTP(doorPosition + Vector3.new(0, 7, 0))  -- Offset by 7 on Y-axis to avoid clipping
+    wait(1)  -- Small wait after teleporting
 
-    -- If the distance is greater than 9 studs, teleport the player to the house's 'Medium' part
+    -- Check the distance to ensure proper teleportation
+    local distance = (doorPosition - root.Position).Magnitude
+
     if distance > 9 then
-        smoothTP(housePart.CFrame + Vector3.new(0, 7, 0))  -- Offset by 7 on Y-axis to avoid clipping
-        wait(1)  -- Small wait after teleporting
+        print("Player is too far from the door. Teleported to house address: " .. address)
     else
         print("Already close enough to house with address: " .. address)
     end
 
     -- Fire the front door's click detector (triggering trick-or-treat event)
-    local frontDoor = housePart.Doors:FindFirstChild("FrontDoorMain") and housePart.Doors.FrontDoorMain:FindFirstChild("ClickDetector")
-
-    -- Error check: If FrontDoorMain or ClickDetector is missing
-    if not frontDoor then
-        warn("Error: FrontDoorMain or ClickDetector not found for house address: " .. address)
-        return
-    end
-
     local success, err = pcall(function()
-        frontDoor.Detector:FireServer()
+        frontDoorDetector.Detector:FireServer()
     end)
 
     if not success then
