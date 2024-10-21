@@ -1,67 +1,99 @@
--- Function to smoothly teleport to a given CFrame position
+if getconnections then
+	for _,c in next, getconnections(game:GetService("ScriptContext").Error) do
+		c:Disable()
+	end
+end
+
+local player = game:GetService("Players").LocalPlayer
+local ffc = game.FindFirstChild
+local character, root, humanoid
+
+local function getHousePart(address)
+	local houses = workspace.Houses:GetChildren()
+	for i = 1, #houses do
+		local h = houses[i]
+		if ffc(h, "Address") and h.Address.Value == address and ffc(h, "GivePizza", true) then
+			return ffc(h, "GivePizza", true)
+		end
+	end
+end
+
+local function onCharacterAdded(char)
+	if not char then return end
+	character = char
+	root = character:WaitForChild("HumanoidRootPart")
+	humanoid = character:WaitForChild("Humanoid")
+	humanoid:SetStateEnabled("FallingDown", false)
+end
+
+onCharacterAdded(player.Character or player.CharacterAdded:Wait())
+player.CharacterAdded:Connect(onCharacterAdded)
+
+local function smoothTP2(cf)
+	local cf0 = (cf - cf.p) + root.Position + Vector3.new(0, 4, 0)
+	local diff = cf.p - root.Position
+	local oldg = workspace.Gravity
+	workspace.Gravity = 0
+	for i = 0, diff.Magnitude, 0.9 do
+		humanoid.Sit = false
+		root.CFrame = cf0 + diff.Unit * i
+		root.Velocity, root.RotVelocity = Vector3.new(), Vector3.new()
+		wait()
+	end
+	root.CFrame = cf
+	workspace.Gravity = oldg
+end
+
 local function smoothTP(cf)
-    local success, err = pcall(function()
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = cf
-    end)
-
-    if not success then
-        warn("Teleportation failed: " .. tostring(err))
-    end
+	if (cf.p - root.Position).Magnitude > 95 then
+		local btns = workspace.JobButtons:GetChildren()
+		if player:FindFirstChild("House") and player.House.Value then
+			btns[#btns + 1] = player.House.Value:FindFirstChild("Marker")
+		end
+		table.sort(btns, function(a, b) 
+			return (a.Position - cf.p).Magnitude < (b.Position - cf.p).Magnitude 
+		end)
+		if (btns[1].Position - cf.p).Magnitude < (cf.p - root.Position).Magnitude then
+			game:GetService("ReplicatedStorage").PlayerChannel:FireServer("TeleportToJob", ((btns[1].Name == "Marker") and "House" or btns[1].Name))
+			wait(0.7)
+			if (cf.p - root.Position).Magnitude < 8 then
+				return
+			end
+		end
+	end
+	smoothTP2(cf)
 end
 
--- Main function to loop through all house addresses (House1 to House12)
 local function main()
-    for i = 1, 12 do
-        local houseAddress = "House" .. i  -- Generate house address (e.g., "House1", "House2", etc.)
-        local house = workspace.Houses:FindFirstChild(houseAddress)
-
-        -- Error check: If the house is not found
-        if not house then
-            warn("Error: House " .. houseAddress .. " not found!")
-            continue  -- Skip to the next house
-        end
-
-        -- Find the first child (house type) within the house
-        local houseType = house:FindFirstChildOfClass("Model")  -- Get the first child that is a Model (the type of house)
-        
-        -- Check if a valid house type was found
-        if not houseType then
-            warn("Error: No valid house type found in " .. houseAddress)
-            continue  -- Skip to the next house
-        end
-
-        -- Get the front door's ClickDetector
-        local frontDoor = houseType:FindFirstChild("Doors") and houseType.Doors:FindFirstChild("FrontDoorMain")
-        local clickDetector = frontDoor and frontDoor:FindFirstChild("ClickDetector")
-
-        -- Error check: If the ClickDetector is not found
-        if not clickDetector then
-            warn("Error: ClickDetector not found for house address: " .. houseAddress)
-            continue  -- Skip to the next house
-        end
-
-        -- Teleport to the porch (adjusting the height to be on the porch)
-        local doorPosition = frontDoor.Position  -- Get position of the door
-        smoothTP(doorPosition + Vector3.new(0, 7, 0))  -- Offset by 7 on Y-axis to be above the porch
-        wait(1)  -- Small wait after teleporting
-
-        -- Fire the ClickDetector to trigger the trick-or-treat event
-        local success, err = pcall(function()
-            clickDetector.Detector:FireServer()
-        end)
-
-        if not success then
-            warn("Failed to fire ClickDetector for house address: " .. houseAddress .. ": " .. tostring(err))
-        else
-            print("ClickDetector fired for house address: " .. houseAddress)
-        end
-
-        -- Wait 5 seconds before moving to the next house
-        wait(5)
-    end
-
-    print("Finished processing all houses.")
+	local fatass = false
+	for i = 1, 12 do
+		humanoid.Sit = false
+		local tool = bptools[i]
+		local giver = getHousePart("House"..i)
+		local ogp = giver.Position
+		if giver then
+			if (giver.Position - root.Position).Magnitude > 9 then
+				smoothTP(giver.CFrame + Vector3.new(0, 7, 0))
+				if giver.Parent == nil or (giver.Position - ogp).Magnitude > 1 then
+					giver = getHousePart("House"..i) or giver
+					smoothTP(giver.CFrame + Vector3.new(0, 7, 0))
+				end
+				pcall(function() tool.Parent = character end)
+				wait(10)
+				fatass = false
+			else
+				if fatass then
+					wait(0.2)
+				else
+					wait(0.7)
+				end
+				pcall(function() tool.Parent = character end)
+				wait()
+				fatass = true
+			end
+		end
+	end
+	delTick = tick()
 end
 
--- Start the main process
 main()
