@@ -68,7 +68,6 @@ local function main()
 	local fatass = false
 	for i = 1, 12 do
 		humanoid.Sit = false
-		local tool = bptools[i]
 		local giver = getHousePart("House"..i)
 		local ogp = giver.Position
 		if giver then
@@ -78,7 +77,6 @@ local function main()
 					giver = getHousePart("House"..i) or giver
 					smoothTP(giver.CFrame + Vector3.new(0, 7, 0))
 				end
-				pcall(function() tool.Parent = character end)
 				wait(10)
 				fatass = false
 			else
@@ -87,7 +85,6 @@ local function main()
 				else
 					wait(0.7)
 				end
-				pcall(function() tool.Parent = character end)
 				wait()
 				fatass = true
 			end
