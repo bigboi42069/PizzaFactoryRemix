@@ -69,8 +69,8 @@ local function main()
 	for i = 1, 12 do
 		humanoid.Sit = false
 		local giver = getHousePart("House"..i)
-		local ogp = giver.Position
 		if giver then
+			local ogp = giver.Position
 			if (giver.Position - root.Position).Magnitude > 9 then
 				smoothTP(giver.CFrame + Vector3.new(0, 7, 0))
 				if giver.Parent == nil or (giver.Position - ogp).Magnitude > 1 then
