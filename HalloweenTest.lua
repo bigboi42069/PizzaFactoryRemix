@@ -161,8 +161,8 @@ local function getHousePart(address)
 	local houses = workspace.Houses:GetChildren()
 	for i=1,#houses do
 		local h = houses[i]
-		if ffc(h,"Address") and h.Address.Value==address and ffc(h,"GivePizza",true) then
-			return ffc(h,"GivePizza",true)
+		if ffc(h,"Address") and h.Address.Value==address then
+			return h
 		end
 	end
 end
