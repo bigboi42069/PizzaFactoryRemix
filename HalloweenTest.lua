@@ -238,13 +238,6 @@ while gui.Parent do
 		game:GetService("VirtualInputManager"):SendKeyEvent(false,"Z",false,game)
 	end
 	if doDelivery then
-		table.sort(bptools,function(a,b)
-			a,b=tostring(a),tostring(b)
-			if (a:sub(1,1)=="B" and b:sub(1,1)=="B") then
-				return a < b
-			end
-			return a > b
-		end)
 		local fatass=false
 		for i = 1, 12 do
 			if not doDelivery then
