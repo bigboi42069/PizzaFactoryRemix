@@ -385,11 +385,11 @@ local function FindFirstCustomer()
 					order = "CheesePizza"
 				end
 				return c,order
-			elseif ffc(c,"Head") and ffc(c,"Humanoid") and c.Head.CFrame.Z<125 and ((c.Humanoid.SeatPart and c.Humanoid.SeatPart.Anchored) or (c.Humanoid.SeatPart==nil and (c.Head.Velocity.Z^2)^.5<.0001)) then
-				wait(0.025)
+			elseif ffc(c,"Head") and ffc(c,"Humanoid") and c.Head.CFrame.Z<130 and ((c.Humanoid.SeatPart and c.Humanoid.SeatPart.Anchored) or (c.Humanoid.SeatPart==nil and (c.Head.Velocity.Z^2)^.5<.0001)) then
+				wait(0.05)
 				pcall(function()
-		    if (root.Position-Vector3.new(48.30, 3.80, 91.24)).magnitude>4 then smoothTP(CFrame.new(48.30, 3.80, 91.24)) wait(0.02) end
-                    c.HumanoidRootPart.CFrame = CFrame.new(48.30, -20, 91.24)
+		    		if (root.Position-Vector3.new(48.30, 3.80, 90.84)).magnitude>2 then smoothTP(CFrame.new(48.30, 3.80, 90.84)) wait(0.02) end
+                    		c.HumanoidRootPart.CFrame = CFrame.new(48.30, -20, 91.24)
                 end)
 			end
 		else
@@ -743,7 +743,7 @@ while gui.Parent do
 				local numTimes = math.random(1, 10)
 				for i = 1, numTimes do
     					network:FireServer("OrderComplete", c, order, workspace["Register"..reg])
-    					wait(math.random(0.01, 0.03))
+    					wait(math.random(0.04, 0.16))
 				end
 				wait(0.02)
 			else
