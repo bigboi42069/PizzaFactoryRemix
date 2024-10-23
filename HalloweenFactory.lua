@@ -23,9 +23,14 @@ local houses = {
 }
 
 local function typeofHouse(houseId)
-    local houseObj = workspace.Houses:FindFirstChild(houseId) -- Assuming house names like "House1", "House2", etc.
-    if houseObj then
-        return houseObj
+    local houseObj1 = workspace.Houses:FindFirstChild(houseId) -- Assuming house names like "House1", "House2", etc.
+    if houseObj1 then
+        local houseObj2 = houseObj1:FindFirstChild(houseObj1)
+        if houseObj2 then
+            return houseObj1, houseObj2
+        else
+            return nil
+        end
     else
         return nil
     end
@@ -46,10 +51,10 @@ local function teleportToHouses()
 
     for h, houseCFrame in ipairs(houses) do
         character.HumanoidRootPart.CFrame = houseCFrame
-        local house = typeofHouse("House" .. h)
+        local houseObj1, houseObj2 = typeofHouse("House" .. h) 
         
         if house then
-            house.Doors.FrontDoorMain.ClickDetector.Detector:FireServer()
+            houseObj2.Doors.FrontDoorMain.ClickDetector.Detector:FireServer()
         else
             warn("House not found: House" .. h)
         end
