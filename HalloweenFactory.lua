@@ -27,25 +27,35 @@ local function typeofHouse(houses[h], num)
     return t
 end
 
--- Iterate over each house
 local function teleportToHouses()
     local args1 = {
         [1] = game:GetService("Players").LocalPlayer.Character.Head.face,
-        [2] = "http://www.roblox.com/asset/?id=144080495 "
+        [2] = "http://www.roblox.com/asset/?id=144080495"
     }
     workspace.Main.ChangeFace:FireServer(unpack(args1))
     wait(0.1)
+    
     local args2 = {
         [1] = "ToolHold"
     }
     workspace.Animation.AnimationStarted:FireServer(unpack(args2))
     wait(0.1)
+    
     local num = 0
-    for h, houseCFrame in ipairs(houses) do
+    for h, houseCFrame in pairs(houses) do -- Use pairs instead of ipairs
         character.HumanoidRootPart.CFrame = houseCFrame
-        num = num+1
-        local t = typeofHouse(houses[h], num)
-        workspace.Houses.houses[h].t.Doors.FrontDoorMain.ClickDetector.Detector:FireServer()
+        num = num + 1
+        
+        local t = typeofHouse(h, num)
+        
+        -- Check if all properties exist before calling FireServer
+        local door = workspace.Houses.houses[h]
+        if door and door.t and door.Doors and door.Doors.FrontDoorMain and door.Doors.FrontDoorMain.ClickDetector then
+            door.Doors.FrontDoorMain.ClickDetector.Detector:FireServer()
+        else
+            warn("One of the properties does not exist for house: " .. h)
+        end
+        
         wait(8) -- Wait for 8 seconds
     end
 end
