@@ -33,10 +33,10 @@ while true do
     game:GetService("VirtualInputManager"):SendKeyEvent(false, "D", false, game)
     wait(0.5)
     game:GetService("VirtualInputManager"):SendKeyEvent(true, "W", false, game)
-    wait(0.3)
+    wait(0.5)
     game:GetService("VirtualInputManager"):SendKeyEvent(false, "W", false, game)
     game:GetService("VirtualInputManager"):SendKeyEvent(true, "S", false, game)
-    wait(0.6)
+    wait(0.65)
     game:GetService("VirtualInputManager"):SendKeyEvent(false, "S", false, game)
     
     -- Move to the next house index, and loop back if necessary
@@ -46,5 +46,5 @@ while true do
     end
     
     -- Wait for 12 seconds
-    wait(13)
+    wait(13.5)
 end
