@@ -45,6 +45,7 @@ local positions = {
 TeleportTab:AddButton({
     Title = 'Start Teleporting',
     Callback = function()
+        teleporting = true
         for _, position in ipairs(positions) do
             teleportTo(position)
             wait(0.02)
