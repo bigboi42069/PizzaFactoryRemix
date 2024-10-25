@@ -363,11 +363,12 @@ for name in pairs(supplyCounts) do
 end
 
 local function smoothTP2(cf)
-	local cf0 = (cf-cf.p) + root.Position + Vector3.new(0,4,0)
+	local cf0 = (cf-cf.p) + root.Position + Vector3.new(0,3.8,0)
 	local diff = cf.p - root.Position
 	local oldg = workspace.Gravity
+	wait()
 	workspace.Gravity = 0
-	for i=0,diff.Magnitude,0.9 do
+	for i=0,diff.Magnitude,0.6 do
 		humanoid.Sit=false
 		root.CFrame = cf0 + diff.Unit * i
 		root.Velocity,root.RotVelocity=Vector3.new(),Vector3.new()
@@ -768,6 +769,7 @@ while gui.Parent do
 				elseif c.Head.Position.X < 70 then
 					reg = 1
 				end
+				if (root.Position-Vector3.new(50.30, 3.80, 83.24)).magnitude>9 then smoothTP(CFrame.new(50.30, 3.80, 83.24)) wait(0.2) end
 				local numTimes = math.random(1, 10)
 				for i = 1, numTimes do
     					network:FireServer("OrderComplete", c, order, workspace["Register"..reg])
