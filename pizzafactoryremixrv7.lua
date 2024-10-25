@@ -363,19 +363,20 @@ for name in pairs(supplyCounts) do
 end
 
 local function smoothTP2(cf)
-	local cf0 = (cf-cf.p) + root.Position + Vector3.new(0,3.8,0)
+	local cf0 = (cf-cf.p) + root.Position + Vector3.new(0,3,0)
 	local diff = cf.p - root.Position
 	local oldg = workspace.Gravity
 	wait()
 	workspace.Gravity = 0
-	for i=0,diff.Magnitude,0.6 do
+	for i=0,diff.Magnitude,0.5 do
+		workspace.Gravity = 0
 		humanoid.Sit=false
 		root.CFrame = cf0 + diff.Unit * i
 		root.Velocity,root.RotVelocity=Vector3.new(),Vector3.new()
+		workspace.Gravity = oldg
 		wait()
 	end
 	root.CFrame = cf
-	workspace.Gravity = oldg
 end
 local function smoothTP(cf)
 	if (cf.p-root.Position).Magnitude > 95 then
