@@ -363,13 +363,13 @@ for name in pairs(supplyCounts) do
 end
 
 local function smoothTP2(cf)
-	local cf0 = (cf-cf.p) + root.Position + Vector3.new(0,3.6,0)
+	local cf0 = (cf-cf.p) + root.Position + Vector3.new(0,4,0)
 	local diff = cf.p - root.Position
 	local oldg = workspace.Gravity
 	workspace.Gravity = 0
 	for i=0,diff.Magnitude,0.9 do
 		humanoid.Sit=false
-		root.CFrame = cf0 + diff.Unit * 0.8
+		root.CFrame = cf0 + diff.Unit * i
 		root.Velocity,root.RotVelocity=Vector3.new(),Vector3.new()
 		wait()
 	end
@@ -385,7 +385,7 @@ local function smoothTP(cf)
 		table.sort(btns,function(a,b) return (a.Position-cf.p).Magnitude < (b.Position-cf.p).Magnitude end)
 		if (btns[1].Position-cf.p).Magnitude < (cf.p-root.Position).Magnitude then
 			game:GetService("ReplicatedStorage").PlayerChannel:FireServer("TeleportToJob", ((btns[1].Name == "Marker") and "House" or btns[1].Name))
-			wait(2)
+			wait(1)
 			if (cf.p-root.Position).Magnitude < 8 then
 				return
 			end
