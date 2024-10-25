@@ -690,7 +690,7 @@ local function tryCook()
 						network:FireServer("UpdateProperty", raw, "CFrame", CFrame.new(RNG:NextNumber(29.6,44.6),3.7,RNG:NextNumber(42.5,48.5)))
 						wait()
 						network:FireServer("SquishDough", raw)
-						wait(0.2)
+						wait(0.1)
 					else
 						local oven
 						for _,o in ipairs(ovens) do
@@ -712,11 +712,11 @@ local function tryCook()
 							if (root.Position-Vector3.new(36.64, 3.80, 54.11)).magnitude>9 then  smoothTP(CFrame.new(36.64, 3.80, 54.11)) wait(0.05) end
 							didsomething=true
 							network:FireServer("AddIngredientToPizza", raw,"TomatoSauce")
-							wait(0.35)
+							wait(0.45)
 							network:FireServer("AddIngredientToPizza", raw,"Cheese")
 							wait(0.6)
 							network:FireServer("AddIngredientToPizza", raw,topping)
-							wait(0.65)
+							wait(0.7)
 							network:FireServer("UpdateProperty", raw, "CFrame", oven.Bottom.CFrame+Vector3.new(0,0.7,0))
 							wait()
 							oven.Door.ClickDetector.Detector:FireServer()
@@ -770,7 +770,7 @@ end
 wait(0.5)
 
 while gui.Parent do
-	wait(1.8)
+	wait(1.25)
 	humanoid.Sit=false
 	if RNG:NextInteger(1,50)==1 then
 		game:GetService("VirtualInputManager"):SendKeyEvent(true,"Z",false,game)
@@ -788,7 +788,7 @@ while gui.Parent do
 					reg = 1
 				end
 				if (root.Position-Vector3.new(50.30, 3.80, 83.24)).magnitude>9 then smoothTP(CFrame.new(50.30, 3.80, 83.24)) wait(0.2) end
-				local numTimes = math.random(1, 10)
+				local numTimes = math.random(1, 8)
 				for i = 1, numTimes do
     					network:FireServer("OrderComplete", c, order, workspace["Register"..reg])
     					wait(math.random(0.2, 0.6))
@@ -800,6 +800,11 @@ while gui.Parent do
 		end
 	end
 	tryCook()
+	
+	if ffc(character, "RightHand") and ffc(character.RightHand, "RightGrip") then
+                character.RightHand.RightGrip:Destroy()
+                wait(0.2)
+        end
 
 	local function FindPizzaSlicer(parent)
     	local ps = {}
@@ -881,13 +886,8 @@ while gui.Parent do
                 	wait(0.2) -- Wait for slicing to complete
         	end
     	end
-
-	if ffc(character, "RightHand") and ffc(character.RightHand, "RightGrip") then
-                character.RightHand.RightGrip:Destroy()
-                wait(0.2)
-        end
 	
-	for zz = 1, 7 do
+	for zz = 1, 9 do
     		if doBoxer then
         		local didSomething = false
         		local boxP, boxD = FindBoxingFoods()
