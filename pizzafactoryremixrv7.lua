@@ -363,18 +363,17 @@ for name in pairs(supplyCounts) do
 end
 
 local function smoothTP2(cf)
-	local cf0 = (cf-cf.p) + root.Position + Vector3.new(0,3,0)
+	local cf0 = (cf-cf.p) + root.Position + Vector3.new(0,2.8,0)
 	local diff = cf.p - root.Position
 	local oldg = workspace.Gravity
 	wait()
-	workspace.Gravity = 0
 	for i=0,diff.Magnitude,0.5 do
 		workspace.Gravity = 0
 		humanoid.Sit=false
 		root.CFrame = cf0 + diff.Unit * i
 		root.Velocity,root.RotVelocity=Vector3.new(),Vector3.new()
-		workspace.Gravity = oldg
 		wait()
+		workspace.Gravity = oldg
 	end
 	root.CFrame = cf
 end
@@ -694,13 +693,13 @@ local function tryCook()
 							wait()
 							didsomething=true
 							network:FireServer("AddIngredientToPizza", raw,"TomatoSauce")
-							wait(0.2)
+							wait(0.25)
 							network:FireServer("AddIngredientToPizza", raw,"Cheese")
-							wait(0.2)
+							wait(0.3)
 							network:FireServer("AddIngredientToPizza", raw,topping)
-							wait(0.2)
+							wait(0.35)
 							network:FireServer("UpdateProperty", raw, "CFrame", oven.Bottom.CFrame+Vector3.new(0,0.7,0))
-							wait(0.05)
+							wait(0.2)
 							oven.Door.ClickDetector.Detector:FireServer()
 							cookingDict[order]=cookingDict[order]+1
 							local revoked=false
@@ -727,7 +726,7 @@ local function tryCook()
 					didsomething=true
 					if (root.Position-Vector3.new(36.64, 3.80, 54.11)).magnitude>9 then  smoothTP(CFrame.new(36.64, 3.80, 54.11)) wait(0.2) end
 					wait()
-					wait(math.random(0.1, 0.5))
+					wait(math.random(0.1, 0.4))
 					o.Door.ClickDetector.Detector:FireServer()
 					break
 				end
@@ -893,6 +892,7 @@ while gui.Parent do
             			boxDtick = tick()
             			didSomething = true
             			if handlePosition() then continue end
+				wait(math.random(0.1, 0.3))
             			network:FireServer("UpdateProperty", boxD, "CFrame", CFrame.new(63, 4.9, -1, -1, 0, 0, 0, 1, 0, 0, 0, -1))
         		end
 
