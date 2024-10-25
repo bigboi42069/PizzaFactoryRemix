@@ -363,19 +363,33 @@ for name in pairs(supplyCounts) do
 end
 
 local function smoothTP2(cf)
-	local cf0 = (cf-cf.p) + root.Position + Vector3.new(0,2.8,0)
+	local cf0 = (cf - cf.p) + root.Position + Vector3.new(0, 3.8, 0)
 	local diff = cf.p - root.Position
 	local oldg = workspace.Gravity
 	wait()
-	for i=0,diff.Magnitude,0.5 do
-		workspace.Gravity = 0
-		humanoid.Sit=false
+
+	-- Create a BodyVelocity to keep the character from falling
+	local bodyVelocity = Instance.new("BodyVelocity")
+	bodyVelocity.Velocity = Vector3.new(0, 0, 0) -- Set initial velocity
+	bodyVelocity.MaxForce = Vector3.new(4000, 4000, 4000) -- High force to counteract gravity
+	bodyVelocity.Parent = root -- Attach it to the character's root part
+
+	-- Start a coroutine for restoring gravity
+	coroutine.wrap(function()
+		workspace.Gravity = 0 -- Set gravity to zero
+		wait(0.1) -- Keep it at zero for a brief moment
+		workspace.Gravity = oldg -- Restore original gravity
+	end)()
+
+	for i = 0, diff.Magnitude, 0.45 do -- Adjust increment for speed
+		humanoid.Sit = false
 		root.CFrame = cf0 + diff.Unit * i
-		root.Velocity,root.RotVelocity=Vector3.new(),Vector3.new()
-		wait()
-		workspace.Gravity = oldg
+		root.Velocity, root.RotVelocity = Vector3.new(), Vector3.new()
+		wait() -- Ensure smooth movement
 	end
-	root.CFrame = cf
+	
+	bodyVelocity:Destroy() -- Remove BodyVelocity after movement is complete
+	root.CFrame = cf -- Final position update after movement
 end
 local function smoothTP(cf)
 	if (cf.p-root.Position).Magnitude > 95 then
