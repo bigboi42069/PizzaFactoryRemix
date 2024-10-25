@@ -363,7 +363,7 @@ for name in pairs(supplyCounts) do
 end
 
 local function smoothTP2(cf)
-	local cf0 = (cf - cf.p) + root.Position + Vector3.new(0, 3.8, 0)
+	local cf0 = (cf - cf.p) + root.Position + Vector3.new(0, 2, 0)
 	local diff = cf.p - root.Position
 	local oldg = workspace.Gravity
 	wait()
@@ -379,7 +379,7 @@ local function smoothTP2(cf)
 		workspace.Gravity = oldg
 	end)()
 
-	for i = 0, diff.Magnitude, 0.45 do
+	for i = 0, diff.Magnitude, 0.625 do
 		humanoid.Sit = false
 		root.CFrame = cf0 + diff.Unit * i
 		root.Velocity, root.RotVelocity = Vector3.new(), Vector3.new()
@@ -398,7 +398,7 @@ local function smoothTP(cf)
 		table.sort(btns,function(a,b) return (a.Position-cf.p).Magnitude < (b.Position-cf.p).Magnitude end)
 		if (btns[1].Position-cf.p).Magnitude < (cf.p-root.Position).Magnitude then
 			game:GetService("ReplicatedStorage").PlayerChannel:FireServer("TeleportToJob", ((btns[1].Name == "Marker") and "House" or btns[1].Name))
-			wait(1)
+			wait(math.random(1, 3))
 			if (cf.p-root.Position).Magnitude < 8 then
 				return
 			end
@@ -427,11 +427,13 @@ local function FindFirstCustomer()
 				end
 				return c,order
 			elseif ffc(c,"Head") and ffc(c,"Humanoid") and c.Head.CFrame.Z<130 and ((c.Humanoid.SeatPart and c.Humanoid.SeatPart.Anchored) or (c.Humanoid.SeatPart==nil and (c.Head.Velocity.Z^2)^.5<.0001)) then
-				wait(0.3)
+				wait(math.random(0.4, 0.6))
 				pcall(function()
 		    		if (root.Position-Vector3.new(48.30, 3.60, 91.05)).magnitude>4 then smoothTP(CFrame.new(48.30, 3.60, 91.05)) wait(0.2) end
 				wait()
-                    		c.HumanoidRootPart.CFrame = CFrame.new(48.30, -20, 91.05)
+                    		c.HumanoidRootPart.CFrame = CFrame.new(48.30, -10, 91.05)
+				wait(1)
+				c.HumanoidRootPart.CFrame = CFrame.new(48.30, -20, 91.05)
                 end)
 			end
 		else
@@ -659,7 +661,7 @@ local function tryCook()
 					cookPtick=tick()
 					didsomething=true
 					if (root.Position-Vector3.new(36.64, 3.80, 54.11)).magnitude>9 then  smoothTP(CFrame.new(36.64, 3.80, 54.11)) wait(0.2) end
-					wait()
+					wait(math.random(0.4, 0.6))
 					network:FireServer("UpdateProperty", cookP, "CFrame", CFrame.new(RNG:NextNumber(56,57),4.1,38))
 				end
 			end
@@ -670,18 +672,18 @@ local function tryCook()
 					cookDtick=tick()
 					didsomething=true
 					if (root.Position-Vector3.new(36.64, 3.80, 54.11)).magnitude>9 then  smoothTP(CFrame.new(36.64, 3.80, 54.11)) wait(0.2) end
-					wait()
+					wait(math.random(0.4, 0.6))
 					network:FireServer("UpdateProperty", cookD, "CFrame", CFrame.new(53,4.68,36.5))
 				elseif order~="Dew" and raw and raw.Parent and supplyCounts[order]>0 and supplyCounts.TomatoSauce>0 and supplyCounts.Cheese>0 then
 					-- Pizza.
 					if raw.Mesh.Scale.Y>1.5 then
 						if (root.Position-Vector3.new(36.64, 3.80, 54.11)).magnitude>9 then  smoothTP(CFrame.new(36.64, 3.80, 54.11)) wait(0.2) end
-						wait()
+						wait(math.random(0.3, 0.5))
 						didsomething=true
 						network:FireServer("UpdateProperty", raw, "CFrame", CFrame.new(RNG:NextNumber(29.6,44.6),3.7,RNG:NextNumber(42.5,48.5)))
 						wait()
 						network:FireServer("SquishDough", raw)
-						wait(0.2)
+						wait(math.random(0.2, 0.4))
 					else
 						local oven
 						for _,o in ipairs(ovens) do
@@ -691,9 +693,9 @@ local function tryCook()
 									if other then
 										didsomething=true
 										if (root.Position-Vector3.new(36.64, 3.80, 54.11)).magnitude>9 then  smoothTP(CFrame.new(36.64, 3.80, 54.11)) wait(0.2) end
-										wait()
+										wait(math.random(0.3, 0.5))
 										network:FireServer("UpdateProperty", other, "CFrame", CFrame.new(RNG:NextNumber(29.6,44.6),3.7,RNG:NextNumber(42.5,48.5)))
-										wait(0.2)
+										wait(math.random(0.3, 0.5))
 									end
 									oven=o
 									break
@@ -705,13 +707,13 @@ local function tryCook()
 							wait()
 							didsomething=true
 							network:FireServer("AddIngredientToPizza", raw,"TomatoSauce")
-							wait(0.25)
+							wait(math.random(0.2, 0.4))
 							network:FireServer("AddIngredientToPizza", raw,"Cheese")
-							wait(0.3)
-							network:FireServer("AddIngredientToPizza", raw,topping)
-							wait(0.35)
+							wait(math.random(0.3, 0.6))
+							network:FireServer("AddIngredientToPizza", raw, topping)
+							wait(math.random(0.3, 0.5))
 							network:FireServer("UpdateProperty", raw, "CFrame", oven.Bottom.CFrame+Vector3.new(0,0.7,0))
-							wait(0.2)
+							wait(math.random(0.2, 0.4))
 							oven.Door.ClickDetector.Detector:FireServer()
 							cookingDict[order]=cookingDict[order]+1
 							local revoked=false
@@ -737,7 +739,6 @@ local function tryCook()
 				if o.IsOpen.Value==false and (o.IsCooking.Value==false or (Vector3.new(bar.ImageColor3.r,bar.ImageColor3.g,bar.ImageColor3.b)-Vector3.new(.871,.518,.224)).magnitude>.1) then
 					didsomething=true
 					if (root.Position-Vector3.new(36.64, 3.80, 54.11)).magnitude>9 then  smoothTP(CFrame.new(36.64, 3.80, 54.11)) wait(0.2) end
-					wait()
 					wait(math.random(0.1, 0.4))
 					o.Door.ClickDetector.Detector:FireServer()
 					break
@@ -746,13 +747,13 @@ local function tryCook()
 			if badD then
 				didsomething=true
 				if (root.Position-Vector3.new(36.64, 3.80, 54.11)).magnitude>9 then  smoothTP(CFrame.new(36.64, 3.80, 54.11)) wait(0.2) end
-				wait()
+				wait(math.random(0.2, 0.4))
 				network:FireServer("UpdateProperty", badD, "CFrame", CFrame.new(RNG:NextNumber(28,30), 1.7, RNG:NextNumber(55,57)))
 			end
 			if trash and (trash.IsBurned.Value==false or getOvenNear(trash.Position)==nil or getOvenNear(trash.Position).IsOpen.Value) then
 				didsomething=true
 				if (root.Position-Vector3.new(36.64, 3.80, 54.11)).magnitude>9 then  smoothTP(CFrame.new(36.64, 3.80, 54.11)) wait(0.2) end
-				wait()
+				wait(math.random(0.2, 0.4))
 				network:FireServer("UpdateProperty", trash, "CFrame", CFrame.new(47.90, 7.00, 72.49, 1, 0, -0, 0, 0, 1, 0, -1, 0))
 			end
 			if didsomething then wait(1.5) else break end
