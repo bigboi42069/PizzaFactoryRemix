@@ -363,33 +363,30 @@ for name in pairs(supplyCounts) do
 end
 
 local function smoothTP2(cf)
-	local cf0 = (cf - cf.p) + root.Position + Vector3.new(0, 3.8, 0)
+	local cf0 = (cf - cf.p) + root.Position + Vector3.new(0, 2, 0)
 	local diff = cf.p - root.Position
 	local oldg = workspace.Gravity
 	wait()
 
-	-- Create a BodyVelocity to keep the character from falling
 	local bodyVelocity = Instance.new("BodyVelocity")
-	bodyVelocity.Velocity = Vector3.new(0, 0, 0) -- Set initial velocity
-	bodyVelocity.MaxForce = Vector3.new(4000, 4000, 4000) -- High force to counteract gravity
-	bodyVelocity.Parent = root -- Attach it to the character's root part
+	bodyVelocity.Velocity = Vector3.new(0, 0, 0)
+	bodyVelocity.MaxForce = Vector3.new(0, 9999, 0)
+	bodyVelocity.Parent = root
 
-	-- Start a coroutine for restoring gravity
 	coroutine.wrap(function()
-		workspace.Gravity = 0 -- Set gravity to zero
-		wait(0.1) -- Keep it at zero for a brief moment
-		workspace.Gravity = oldg -- Restore original gravity
+		workspace.Gravity = 0
+		wait(0.1)
+		workspace.Gravity = oldg
 	end)()
 
-	for i = 0, diff.Magnitude, 0.45 do -- Adjust increment for speed
+	for i = 0, diff.Magnitude, 0.5 do
 		humanoid.Sit = false
 		root.CFrame = cf0 + diff.Unit * i
 		root.Velocity, root.RotVelocity = Vector3.new(), Vector3.new()
-		wait() -- Ensure smooth movement
+		wait() 
 	end
-	
-	bodyVelocity:Destroy() -- Remove BodyVelocity after movement is complete
-	root.CFrame = cf -- Final position update after movement
+	bodyVelocity:Destroy()
+	root.CFrame = cf
 end
 local function smoothTP(cf)
 	if (cf.p-root.Position).Magnitude > 95 then
@@ -400,13 +397,22 @@ local function smoothTP(cf)
 		table.sort(btns,function(a,b) return (a.Position-cf.p).Magnitude < (b.Position-cf.p).Magnitude end)
 		if (btns[1].Position-cf.p).Magnitude < (cf.p-root.Position).Magnitude then
 			game:GetService("ReplicatedStorage").PlayerChannel:FireServer("TeleportToJob", ((btns[1].Name == "Marker") and "House" or btns[1].Name))
-			wait(1)
+			wait(2)
 			if (cf.p-root.Position).Magnitude < 8 then
 				return
 			end
 		end
 	end
 	smoothTP2(cf)
+end
+
+local function handlePosition(targetPos)
+	if (root.Position - targetPos).magnitude > 9 then
+                smoothTP(CFrame.new(targetPos))
+                wait(0.2)
+                return true
+        end
+        return false
 end
 
 local function FindFirstCustomer()
@@ -431,7 +437,7 @@ local function FindFirstCustomer()
 			elseif ffc(c,"Head") and ffc(c,"Humanoid") and c.Head.CFrame.Z<130 and ((c.Humanoid.SeatPart and c.Humanoid.SeatPart.Anchored) or (c.Humanoid.SeatPart==nil and (c.Head.Velocity.Z^2)^.5<.0001)) then
 				wait(0.3)
 				pcall(function()
-		    		if (root.Position-Vector3.new(48.30, 3.60, 91.05)).magnitude>4 then smoothTP(CFrame.new(48.30, 3.60, 91.05)) wait(0.2) end
+				if (root.Position-Vector3.new(48.30, 3.60, 91.05)).magnitude>4 then smoothTP(CFrame.new(48.30, 3.60, 91.05)) wait(0.2) end
 				wait()
                     		c.HumanoidRootPart.CFrame = CFrame.new(48.30, -20, 91.05)
                 end)
@@ -630,6 +636,7 @@ for _,o in ipairs(workspace.Ovens:GetChildren()) do
 		o.Bottom.CanTouch = false
 	end
 end
+
 local function tryCook()
 	for zz=1,18 do
 		local order = getOrders()[1]
@@ -660,7 +667,7 @@ local function tryCook()
 				if oven==nil or oven.IsOpen.Value then
 					cookPtick=tick()
 					didsomething=true
-					if (root.Position-Vector3.new(36.64, 3.80, 54.11)).magnitude>9 then  smoothTP(CFrame.new(36.64, 3.80, 54.11)) wait(0.2) end
+					if handlePosition(Vector3.new(36.64, 3.80, 54.11)) then continue end
 					wait()
 					network:FireServer("UpdateProperty", cookP, "CFrame", CFrame.new(RNG:NextNumber(56,57),4.1,38))
 				end
@@ -671,13 +678,13 @@ local function tryCook()
 					-- Dew.
 					cookDtick=tick()
 					didsomething=true
-					if (root.Position-Vector3.new(36.64, 3.80, 54.11)).magnitude>9 then  smoothTP(CFrame.new(36.64, 3.80, 54.11)) wait(0.2) end
+					if handlePosition(Vector3.new(36.64, 3.80, 54.11)) then continue end
 					wait()
 					network:FireServer("UpdateProperty", cookD, "CFrame", CFrame.new(53,4.68,36.5))
 				elseif order~="Dew" and raw and raw.Parent and supplyCounts[order]>0 and supplyCounts.TomatoSauce>0 and supplyCounts.Cheese>0 then
 					-- Pizza.
 					if raw.Mesh.Scale.Y>1.5 then
-						if (root.Position-Vector3.new(36.64, 3.80, 54.11)).magnitude>9 then  smoothTP(CFrame.new(36.64, 3.80, 54.11)) wait(0.2) end
+						if handlePosition(Vector3.new(36.64, 3.80, 54.11)) then continue end
 						wait()
 						didsomething=true
 						network:FireServer("UpdateProperty", raw, "CFrame", CFrame.new(RNG:NextNumber(29.6,44.6),3.7,RNG:NextNumber(42.5,48.5)))
@@ -692,7 +699,7 @@ local function tryCook()
 								if other==nil or not (other.BrickColor.Name=="Bright orange" and ffc(other.SG.Frame,"TomatoSauce") and ffc(other.SG.Frame,"MeltedCheese")) then
 									if other then
 										didsomething=true
-										if (root.Position-Vector3.new(36.64, 3.80, 54.11)).magnitude>9 then  smoothTP(CFrame.new(36.64, 3.80, 54.11)) wait(0.2) end
+										if handlePosition(Vector3.new(36.64, 3.80, 54.11)) then continue end
 										wait()
 										network:FireServer("UpdateProperty", other, "CFrame", CFrame.new(RNG:NextNumber(29.6,44.6),3.7,RNG:NextNumber(42.5,48.5)))
 										wait(0.2)
@@ -703,17 +710,17 @@ local function tryCook()
 							end
 						end
 						if oven and raw.Parent==workspace.AllDough then
-							if (root.Position-Vector3.new(36.64, 3.80, 54.11)).magnitude>9 then  smoothTP(CFrame.new(36.64, 3.80, 54.11)) wait(0.2) end
+							if handlePosition(Vector3.new(36.64, 3.80, 54.11)) then continue end
 							wait()
 							didsomething=true
 							network:FireServer("AddIngredientToPizza", raw,"TomatoSauce")
-							wait(0.25)
+							wait(math.random(0.2, 0.4))
 							network:FireServer("AddIngredientToPizza", raw,"Cheese")
-							wait(0.3)
+							wait(math.random(0.2, 0.4))
 							network:FireServer("AddIngredientToPizza", raw,topping)
-							wait(0.35)
+							wait(math.random(0.4, 0.7))
 							network:FireServer("UpdateProperty", raw, "CFrame", oven.Bottom.CFrame+Vector3.new(0,0.7,0))
-							wait(0.2)
+							wait(math.random(0.1, 0.4))
 							oven.Door.ClickDetector.Detector:FireServer()
 							cookingDict[order]=cookingDict[order]+1
 							local revoked=false
@@ -739,7 +746,6 @@ local function tryCook()
 				if o.IsOpen.Value==false and (o.IsCooking.Value==false or (Vector3.new(bar.ImageColor3.r,bar.ImageColor3.g,bar.ImageColor3.b)-Vector3.new(.871,.518,.224)).magnitude>.1) then
 					didsomething=true
 					if (root.Position-Vector3.new(36.64, 3.80, 54.11)).magnitude>9 then  smoothTP(CFrame.new(36.64, 3.80, 54.11)) wait(0.2) end
-					wait()
 					wait(math.random(0.1, 0.4))
 					o.Door.ClickDetector.Detector:FireServer()
 					break
@@ -747,17 +753,17 @@ local function tryCook()
 			end
 			if badD then
 				didsomething=true
-				if (root.Position-Vector3.new(36.64, 3.80, 54.11)).magnitude>9 then  smoothTP(CFrame.new(36.64, 3.80, 54.11)) wait(0.2) end
+				if handlePosition(Vector3.new(36.64, 3.80, 54.11)) then continue end
 				wait()
 				network:FireServer("UpdateProperty", badD, "CFrame", CFrame.new(RNG:NextNumber(28,30), 1.7, RNG:NextNumber(55,57)))
 			end
 			if trash and (trash.IsBurned.Value==false or getOvenNear(trash.Position)==nil or getOvenNear(trash.Position).IsOpen.Value) then
 				didsomething=true
-				if (root.Position-Vector3.new(36.64, 3.80, 54.11)).magnitude>9 then  smoothTP(CFrame.new(36.64, 3.80, 54.11)) wait(0.2) end
+				if handlePosition(Vector3.new(36.64, 3.80, 54.11)) then continue end
 				wait()
 				network:FireServer("UpdateProperty", trash, "CFrame", CFrame.new(47.90, 7.00, 72.49, 1, 0, -0, 0, 0, 1, 0, -1, 0))
 			end
-			if didsomething then wait(1.5) else break end
+			if didsomething then wait(math.random(1, 2)) else break end
 		else
 			break
 		end
@@ -783,13 +789,13 @@ while gui.Parent do
 				elseif c.Head.Position.X < 70 then
 					reg = 1
 				end
-				if (root.Position-Vector3.new(50.30, 3.80, 83.24)).magnitude>9 then smoothTP(CFrame.new(50.30, 3.80, 83.24)) wait(0.2) end
+				if handlePosition(Vector3.new(50.30, 3.80, 83.24)) then continue end
 				local numTimes = math.random(1, 10)
 				for i = 1, numTimes do
     					network:FireServer("OrderComplete", c, order, workspace["Register"..reg])
     					wait(math.random(0.2, 0.6))
 				end
-				wait(0.2)
+				wait(math.random(0.2, 0.4))
 			else
 				break
 			end
@@ -798,89 +804,77 @@ while gui.Parent do
 	tryCook()
 
 	local function FindPizzaSlicer(parent)
-    	local ps = {}
-    	local children = parent:GetChildren()
+    		local ps = {}
+    		local children = parent:GetChildren()
 
-    	-- First, look for the Pizza Slicer in the given parent.
-    	for i = 1, #children do
-        	local s = children[i]
-        	if s:IsA("Tool") and s.Name == "Pizza Slicer" then
-           		ps[#ps + 1] = s
-        	end
-    	end
+    		for i = 1, #children do
+        		local s = children[i]
+        		if s:IsA("Tool") and s.Name == "Pizza Slicer" then
+           			ps[#ps + 1] = s
+        		end
+    		end
 
-    	-- If no Pizza Slicer was found, handle the search logic.
-    	if #ps == 0 then
-        	-- Teleport if the player is too far.
-        	if (root.Position - Vector3.new(58.74, 3.80, 12.40)).magnitude > 9 then 
-            		smoothTP(CFrame.new(58.74, 3.80, 12.40)) 
-            		wait(0.2) 
-        	end
+    		if #ps == 0 then
+			if handlePosition(Vector3.new(58.74, 3.80, 12.40)) then continue end	
+            			wait(math.random(0.2, 0.5))
+        		end
     
-        	-- Look for the Pizza Slicer in the workspace.
-        	local pizzaSlicer = workspace.Drawer:FindFirstChild("Pizza Slicer")
-        	local drawerClickDetector = workspace.Drawer:FindFirstChild("ClickDetector")
-    
-        	-- Attempt to open the drawer.
-        	if drawerClickDetector and drawerClickDetector.Detector then
-            		drawerClickDetector.Detector:FireServer() -- Open the drawer.
-        	else
-           		warn("Drawer Open ClickDetector or Detector not found.")
-        	end
-			    wait(0.2)
-        	-- Equip the pizza slicer if found.
-        	if pizzaSlicer and pizzaSlicer.ClickDetector and pizzaSlicer.ClickDetector.Detector then
-            		pizzaSlicer.ClickDetector.Detector:FireServer() -- Equip the pizza slicer.
-            		ps[#ps + 1] = pizzaSlicer -- Add the pizza slicer to the list
-        	else
-            		warn("Pizza Slicer ClickDetector or Detector not found.")
-        	end
-			    wait(0.2)
-        	-- Start the animation if the event exists.
-        	local animationStartedEvent = workspace.Animation:FindFirstChild("AnimationStarted")
-        	if animationStartedEvent then
-            		animationStartedEvent:FireServer("ToolHold") -- Trigger the animation.
-        	else
-            		warn("AnimationStarted Equip Event not found.")
-        	end
-			    wait(0.2)
-        	-- Close the drawer after equipping the slicer.
-        	if drawerClickDetector and drawerClickDetector.Detector then
-            		drawerClickDetector.Detector:FireServer() -- Close the drawer.
-        	else
-	        	warn("Drawer Close ClickDetector or Detector not found.")
-        	end
-    	end
+        		local pizzaSlicer = workspace.Drawer:FindFirstChild("Pizza Slicer")
+        		local drawerClickDetector = workspace.Drawer:FindFirstChild("ClickDetector")
+			
+        		if drawerClickDetector and drawerClickDetector.Detector then
+            			drawerClickDetector.Detector:FireServer()
+        		else
+           			warn("Drawer Open ClickDetector or Detector not found.")
+        		end
+			    	wait(math.random(0.2, 0.5))
+			
+        		if pizzaSlicer and pizzaSlicer.ClickDetector and pizzaSlicer.ClickDetector.Detector then
+            			pizzaSlicer.ClickDetector.Detector:FireServer()
+            			ps[#ps + 1] = pizzaSlicer
+        		else
+            			warn("Pizza Slicer ClickDetector or Detector not found.")
+        		end
+			    	wait(math.random(0.2, 0.5))
+			
+        		local animationStartedEvent = workspace.Animation:FindFirstChild("AnimationStarted")
+        		if animationStartedEvent then
+            			animationStartedEvent:FireServer("ToolHold")
+        		else
+            			warn("AnimationStarted Equip Event not found.")
+        		end
+			    	wait(math.random(0.2, 0.5))
+			
+        		if drawerClickDetector and drawerClickDetector.Detector then
+            			drawerClickDetector.Detector:FireServer()
+        		else
+	        		warn("Drawer Close ClickDetector or Detector not found.")
+        		end
+    		end
 
-    	-- Check again in the parent if not found in the workspace
-    	if #ps == 0 then
-        	for _, tool in pairs(parent:GetChildren()) do
-            		if tool:IsA("Tool") and tool.Name == "Pizza Slicer" then
-                		ps[#ps + 1] = tool
-            		end
-        	end
-    	end
+    		if #ps == 0 then
+        		for _, tool in pairs(parent:GetChildren()) do
+            			if tool:IsA("Tool") and tool.Name == "Pizza Slicer" then
+                			ps[#ps + 1] = tool
+            			end
+        		end
+    		end
 
-    	return ps
+    		return ps
 	end
 
-    -- Define function to handle pizza slicing
-    local function slicePizza(pizza)
-        -- Find the Pizza Slicer in workspace or character
-        local pizzaSlicer = FindPizzaSlicer(workspace)[1] or FindPizzaSlicer(character)[1] or FindPizzaSlicer(player.Backpack)[1]
-            if pizzaSlicer then
-                if ffc(character, "RightHand") and ffc(character.RightHand, "RightGrip") then
-                    character.RightHand.RightGrip:Destroy()
-                    wait(0.2)
-                end
-
-               	-- Equip the pizza slicer if not equipped
-                humanoid:EquipTool(pizzaSlicer)
-                wait(0.2) -- Allow time for equipping
-                -- Use the Pizza Slicer
-                network:FireServer("UseTool", pizzaSlicer, pizza)
-                wait(0.2) -- Wait for slicing to complete
-            end
+   	local function slicePizza(pizza)
+        	local pizzaSlicer = FindPizzaSlicer(workspace)[1] or FindPizzaSlicer(character)[1] or FindPizzaSlicer(player.Backpack)[1]
+            	if pizzaSlicer then
+                	if ffc(character, "RightHand") and ffc(character.RightHand, "RightGrip") then
+                    		character.RightHand.RightGrip:Destroy()
+                    		wait(math.random(0.2, 0.5))
+                	end
+                	humanoid:EquipTool(pizzaSlicer)
+               		wait(math.random(0.2, 0.5))
+                	network:FireServer("UseTool", pizzaSlicer, pizza)
+                	wait(math.random(0.2, 0.5))
+            	end
     	end
 	
 	for zz = 1, 7 do
@@ -888,33 +882,19 @@ while gui.Parent do
         		local didSomething = false
         		local boxP, boxD = FindBoxingFoods()
         		local closedBox, openBox, fullBox = FindBoxes()
-        
-        		local targetPos = Vector3.new(58.74, 3.80, 12.40)
 
-        		-- Helper function to check distance and teleport
-        		local function handlePosition()
-            			if (root.Position - targetPos).magnitude > 9 then
-                			smoothTP(CFrame.new(targetPos))
-                			wait(0.2)
-                			return true
-            			end
-            			return false
-        		end
-
-        		-- Handle dew food (boxD) movement
         		if boxD and tick() - boxDtick > 0.8 then
             			boxDtick = tick()
             			didSomething = true
-            			if handlePosition() then continue end
+            			if handlePosition(Vector3.new(58.74, 3.80, 12.40)) then continue end
 				wait(math.random(0.1, 0.3))
             			network:FireServer("UpdateProperty", boxD, "CFrame", CFrame.new(63, 4.9, -1, -1, 0, 0, 0, 1, 0, 0, 0, -1))
         		end
 
-        		-- Handle full boxes (fullBox)
         		if fullBox then
             			if fullBox.Name == "BoxOpen" then
                 			didSomething = true
-                			if handlePosition() then continue end
+                			if handlePosition(Vector3.new(58.74, 3.80, 12.40)) then continue end
                 			wait(math.random(0.1, 0.3))
                 			network:FireServer("CloseBox", fullBox)
 					wait(math.random(0.1, 0.3))
@@ -929,19 +909,17 @@ while gui.Parent do
             			end
         		end
 
-        		-- Handle closed boxes (closedBox)
         		if closedBox and not openBox then
             			didSomething = true
-            			if handlePosition() then continue end
+            			if handlePosition(Vector3.new(58.74, 3.80, 12.40)) then continue end
             			network:FireServer("UpdateProperty", closedBox, "CFrame", CFrame.new(RNG:NextNumber(62.5, 70.5), 3.5, RNG:NextNumber(11, 25)))
             			wait(math.random(0.1, 0.3))
             			network:FireServer("OpenBox", closedBox)
         		end
 
-        		-- Add the slicing step when boxing
         		if openBox and boxP then
             			didSomething = true
-            			if handlePosition() then continue end
+            			if handlePosition(Vector3.new(58.74, 3.80, 12.40)) then continue end
 
             			network:FireServer("UpdateProperty", boxP, "Anchored", true)
             			network:FireServer("UpdateProperty", openBox, "Anchored", true)
@@ -950,11 +928,10 @@ while gui.Parent do
             			wait(math.random(0.1, 0.3))
             			network:FireServer("AssignPizzaToBox", openBox, boxP)
 				wait(math.random(0.1, 0.3))
-            			-- Slice the pizza in the box
             			slicePizza(boxP)
         		end
 
-        		if didSomething then wait(1.5) else break end
+        		if didSomething then wait(math.random(1, 2)) else break end
     		else
         		break
     		end
@@ -962,8 +939,7 @@ while gui.Parent do
 	if doDelivery then
 		local wstools = FindAllDeliveryTools(workspace)
 		if #wstools > 1 or (wstools[1] and ffc(wstools[1].Handle,"X10")) then
-			-- Table Pickup.
-			if (root.Position-Vector3.new(54.45, 4.02, -15)).magnitude>9 then smoothTP(CFrame.new(54.45, 4.02, -15)) wait(0.2) end
+			if handlePosition(Vector3.new(54.45, 4.02, -15)) then continue end
 			wait()
 			for i=1,#wstools do
 				if wstools[i].Parent == workspace then
@@ -976,14 +952,13 @@ while gui.Parent do
 			for i=1,#t do
 				t[i].Parent = player.Backpack
 			end
-			wait(0.25)
+			wait(math.random(0.3, 0.5))
 			if ffc(character,"RightHand") and ffc(character.RightHand,"RightGrip") then
 				character.RightHand.RightGrip:Destroy()
 			end
 		end
 		local bptools = FindAllDeliveryTools(player.Backpack)
 		if #bptools >= settings.deliver_at and #bptools > 0 and tick()-delTick > 30 then
-			-- Delivery.
 			table.sort(bptools,function(a,b)
 				a,b=tostring(a),tostring(b)
 				if (a:sub(1,1)=="B" and b:sub(1,1)=="B") then
@@ -1010,20 +985,20 @@ while gui.Parent do
 							wait()
 						end
 						pcall(function() tool.Parent = character end)
-						wait(2)
+						wait(math.random(2, 2.5))
 						local t = FindAllDeliveryTools(character)
 						for i=1,#t do
 							if t[i] ~= tool then
 								t[i].Parent = player.Backpack
 							end
 						end
-						wait(3)
+						wait(math.random(3, 4))
 						fatass=false
 					else
 						if fatass then
-							wait(0.6)
+							wait(math.random(0.5, 0.8))
 						else
-							wait(1.2)
+							wait(math.random(1, 1.5))
 						end
 						pcall(function() tool.Parent = character end)
 						wait()
@@ -1049,7 +1024,6 @@ while gui.Parent do
 			local waitingTick = 0
 			local lastBox
 			while doSupplier do
-				-- Supplier Selection.
 				local fulfilled=true
 				local boxes = workspace.AllSupplyBoxes:GetChildren()
 				for yy=1,2 do
@@ -1071,19 +1045,19 @@ while gui.Parent do
 								if needtp then
 									needtp=false
 									smoothTP(btn.CFrame + Vector3.new(0,3,2.5))
-									wait(0.3)
+									wait(math.random(0.3, 0.6))
 								end
 								if not doSupplier then break end
 								root.CFrame = btn.CFrame + Vector3.new(0,3,0)
-								wait(0.3)
+								wait(math.random(0.3, 0.6))
 								realc=realc+1
 							end
 							fulfilled=false
 						end
 					end
-					wait(0.5)
+					wait(math.random(0.5, 0.8))
 					if yy == 1 and realc < 3 then
-						wait(1)
+						wait(math.random(1, 2))
 					end
 				end
 				if fulfilled or not (doSupplier) then
@@ -1092,13 +1066,11 @@ while gui.Parent do
 				smoothTP(CFrame.new(8,12.4,-1020))
 				wait()
 				if not doSupplier then break end
-				-- Supply Wait.
 				if waiting and (lastBox.Position.X>42 or tick()-waitingTick>6) then
 					waiting=false
 					if lastBox.Position.X<42 then
-						-- Fix Broken Supplier Boxes.
 						smoothTP(CFrame.new(20.5,8,-35))
-						wait(0.2)
+						wait(math.random(0.2, 0.5))
 						local boxes = workspace.AllSupplyBoxes:GetChildren()
 						for i=1,#boxes do
 							local box = boxes[i]
@@ -1107,13 +1079,12 @@ while gui.Parent do
 								wait()
 							end
 						end
-						wait(0.5)
+						wait(math.random(0.5, 1))
 					end
 				end
 				if not waiting then
-					-- Supply Drop-off.
 					if root.Position.Z > -900 then smoothTP(CFrame.new(8,12.4,-1020)) end
-					wait(0.2)
+					wait(math.random(0.2, 0.5))
 					lastBox=nil
 					local j=0
 					local boxes = workspace.AllSupplyBoxes:GetChildren()
@@ -1121,15 +1092,15 @@ while gui.Parent do
 						local box = boxes[i]
 						if box.Anchored==false and box.Position.Z < -940 and bcolorToSupply[box.BrickColor.Name] and supplyCounts[bcolorToSupply[box.BrickColor.Name]]<settings.refill_end then
 							box.CFrame = CFrame.new(38-4.3*math.floor(j/2),5,-7-5*(j%2))
-							wait(0.2)
+							wait(math.random(0.2, 0.5))
 							network:FireServer("UpdateProperty", box, "CFrame", box.CFrame)
 							lastBox=box
 							j=j+1
 							if j>13 then break end
 						end
-						wait(0.2)
+						wait(math.random(0.2, 0.5))
 						box.CFrame = CFrame.new(38-4.3*math.floor(j/2),5,-7-5*(j%2))
-						wait(0.1)
+						wait(math.random(0.2, 0.5))
 						network:FireServer("UpdateProperty", box, "CFrame", box.CFrame)
 						lastBox=box
 						j=j+1
