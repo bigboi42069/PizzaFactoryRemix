@@ -658,6 +658,7 @@ local function tryCook()
 				if o.IsOpen.Value==false and (o.IsCooking.Value==false or (Vector3.new(bar.ImageColor3.r,bar.ImageColor3.g,bar.ImageColor3.b)-Vector3.new(.871,.518,.224)).magnitude>.1) then
 					didsomething=true
 					if (root.Position-Vector3.new(36.64, 3.80, 54.11)).magnitude>9 then  smoothTP(CFrame.new(36.64, 3.80, 54.11)) wait(0.05) end
+					wait(0.35)
 					o.Door.ClickDetector.Detector:FireServer()
 					break
 				end
@@ -669,6 +670,7 @@ local function tryCook()
 					cookPtick=tick()
 					didsomething=true
 					if (root.Position-Vector3.new(36.64, 3.80, 54.11)).magnitude>9 then  smoothTP(CFrame.new(36.64, 3.80, 54.11)) wait(0.05) end
+					wait(0.25)
 					network:FireServer("UpdateProperty", cookP, "CFrame", CFrame.new(RNG:NextNumber(56,57),4.1,38))
 				end
 			end
@@ -866,24 +868,24 @@ while gui.Parent do
     	return ps
 	end
 
-    -- Define function to handle pizza slicing
-    local function slicePizza(pizza)
-        -- Find the Pizza Slicer in workspace or character
-        local pizzaSlicer = FindPizzaSlicer(workspace)[1] or FindPizzaSlicer(character)[1] or FindPizzaSlicer(player.Backpack)[1]
-            if pizzaSlicer then
-                if ffc(character, "RightHand") and ffc(character.RightHand, "RightGrip") then
-                    character.RightHand.RightGrip:Destroy()
-                    wait(0.2)
-                end
-
-               	-- Equip the pizza slicer if not equipped
-                humanoid:EquipTool(pizzaSlicer)
-                wait(0.2) -- Allow time for equipping
-                -- Use the Pizza Slicer
-                network:FireServer("UseTool", pizzaSlicer, pizza)
-                wait(0.2) -- Wait for slicing to complete
-            end
+    	-- Define function to handle pizza slicing
+    	local function slicePizza(pizza)
+        	-- Find the Pizza Slicer in workspace or character
+        	local pizzaSlicer = FindPizzaSlicer(workspace)[1] or FindPizzaSlicer(character)[1] or FindPizzaSlicer(player.Backpack)[1]
+        	if pizzaSlicer then
+        		-- Equip the pizza slicer if not equipped
+                	humanoid:EquipTool(pizzaSlicer)
+                	wait(0.2) -- Allow time for equipping
+                	-- Use the Pizza Slicer
+                	network:FireServer("UseTool", pizzaSlicer, pizza)
+                	wait(0.2) -- Wait for slicing to complete
+        	end
     	end
+
+	if ffc(character, "RightHand") and ffc(character.RightHand, "RightGrip") then
+                character.RightHand.RightGrip:Destroy()
+                wait(0.2)
+        end
 	
 	for zz = 1, 7 do
     		if doBoxer then
@@ -935,6 +937,7 @@ while gui.Parent do
         		if closedBox and not openBox then
             			didSomething = true
             			if handlePosition() then continue end
+				wait(0.35)
             			network:FireServer("UpdateProperty", closedBox, "CFrame", CFrame.new(RNG:NextNumber(62.5, 70.5), 3.5, RNG:NextNumber(11, 25)))
             			wait()
             			network:FireServer("OpenBox", closedBox)
