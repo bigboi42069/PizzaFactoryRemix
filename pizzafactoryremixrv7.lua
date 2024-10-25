@@ -426,14 +426,14 @@ local function FindFirstCustomer()
 					order = "CheesePizza"
 				end
 				return c,order
-			elseif ffc(c,"Head") and ffc(c,"Humanoid") and c.Head.CFrame.Z<130 and ((c.Humanoid.SeatPart and c.Humanoid.SeatPart.Anchored) or (c.Humanoid.SeatPart==nil and (c.Head.Velocity.Z^2)^.5<.0001)) then
+			elseif ffc(c,"Head") and ffc(c,"Humanoid") and c.Head.CFrame.Z<125 and ((c.Humanoid.SeatPart and c.Humanoid.SeatPart.Anchored) or (c.Humanoid.SeatPart==nil and (c.Head.Velocity.Z^2)^.5<.0001)) then
 				wait(math.random(0.4, 0.6))
 				pcall(function()
-		    		if (root.Position-Vector3.new(48.30, 3.60, 91.05)).magnitude>4 then smoothTP(CFrame.new(48.30, 3.60, 91.05)) wait(0.2) end
+		    		if (root.Position-Vector3.new(48.30, 3.60, 91.05)).magnitude>3.5 then smoothTP(CFrame.new(48.30, 3.60, 91.05)) wait(0.2) end
 				wait()
-                    		c.HumanoidRootPart.CFrame = CFrame.new(48.30, -10, 91.05)
+                    		c.HumanoidRootPart.CFrame = CFrame.new(48.30, -20, 91.05)
 				wait(1)
-				c.HumanoidRootPart.CFrame = CFrame.new(48.30, -20, 91.05)
+				c.HumanoidRootPart.CFrame = CFrame.new(48.30, -25, 91.05)
                 end)
 			end
 		else
@@ -704,16 +704,16 @@ local function tryCook()
 						end
 						if oven and raw.Parent==workspace.AllDough then
 							if (root.Position-Vector3.new(36.64, 3.80, 54.11)).magnitude>9 then  smoothTP(CFrame.new(36.64, 3.80, 54.11)) wait(0.2) end
-							wait(math.random(0.2, 0.4))
+							wait(math.random(0.4, 0.8))
 							didsomething=true
 							network:FireServer("AddIngredientToPizza", raw,"TomatoSauce")
-							wait(math.random(0.3, 0.6))
+							wait(math.random(0.4, 0.8))
 							network:FireServer("AddIngredientToPizza", raw,"Cheese")
 							wait(math.random(0.3, 0.6))
 							network:FireServer("AddIngredientToPizza", raw, topping)
 							wait(math.random(0.4, 0.8))
 							network:FireServer("UpdateProperty", raw, "CFrame", oven.Bottom.CFrame+Vector3.new(0,0.7,0))
-							wait(math.random(0.2, 0.4))
+							wait(math.random(0.3, 0.6))
 							oven.Door.ClickDetector.Detector:FireServer()
 							cookingDict[order]=cookingDict[order]+1
 							local revoked=false
