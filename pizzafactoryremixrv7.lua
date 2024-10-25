@@ -363,7 +363,7 @@ for name in pairs(supplyCounts) do
 end
 
 local function smoothTP2(cf)
-	local cf0 = (cf-cf.p) + root.Position + Vector3.new(0,2.5,0)
+	local cf0 = (cf-cf.p) + root.Position + Vector3.new(0,3.6,0)
 	local diff = cf.p - root.Position
 	local oldg = workspace.Gravity
 	workspace.Gravity = 0
