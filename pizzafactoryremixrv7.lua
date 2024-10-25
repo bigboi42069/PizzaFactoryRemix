@@ -1070,7 +1070,7 @@ while gui.Parent do
 								if needtp then
 									needtp=false
 									smoothTP(btn.CFrame + Vector3.new(0,3,2.5))
-									wait(math.random(0.3, 0.6))
+									wait(0.3 + math.random(0, 0.3))
 								end
 								if not doSupplier then break end
 								root.CFrame = btn.CFrame + Vector3.new(0,3,0)
