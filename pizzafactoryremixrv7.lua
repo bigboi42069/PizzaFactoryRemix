@@ -363,7 +363,7 @@ for name in pairs(supplyCounts) do
 end
 
 local function smoothTP2(cf)
-	local cf0 = (cf - cf.p) + root.Position + Vector3.new(0, 2, 0)
+	local cf0 = (cf - cf.p) + root.Position + Vector3.new(0, 2.125, 0)
 	local diff = cf.p - root.Position
 	local oldg = workspace.Gravity
 	wait()
@@ -379,7 +379,7 @@ local function smoothTP2(cf)
 		workspace.Gravity = oldg
 	end)()
 
-	for i = 0, diff.Magnitude, 0.625 do
+	for i = 0, diff.Magnitude, 0.725 do
 		humanoid.Sit = false
 		root.CFrame = cf0 + diff.Unit * i
 		root.Velocity, root.RotVelocity = Vector3.new(), Vector3.new()
@@ -428,12 +428,11 @@ local function FindFirstCustomer()
 				return c,order
 			elseif ffc(c,"Head") and ffc(c,"Humanoid") and c.Head.CFrame.Z<125 and ((c.Humanoid.SeatPart and c.Humanoid.SeatPart.Anchored) or (c.Humanoid.SeatPart==nil and (c.Head.Velocity.Z^2)^.5<.0001)) then
 				wait(math.random(0.4, 0.6))
+				wait(0.25)
 				pcall(function()
 		    		if (root.Position-Vector3.new(48.30, 3.60, 91.05)).magnitude>3.5 then smoothTP(CFrame.new(48.30, 3.60, 91.05)) wait(0.2) end
 				wait()
                     		c.HumanoidRootPart.CFrame = CFrame.new(48.30, -20, 91.05)
-				wait(1)
-				c.HumanoidRootPart.CFrame = CFrame.new(48.30, -25, 91.05)
                 end)
 			end
 		else
@@ -654,6 +653,15 @@ local function tryCook()
 			ovens[j], ovens[i] = ovens[i], ovens[j]
 		end
 		if doCook then
+			for _,o in ipairs(ovens) do
+				local bar = o.Door.Meter.SurfaceGui.ProgressBar.Bar
+				if o.IsOpen.Value==false and (o.IsCooking.Value==false or (Vector3.new(bar.ImageColor3.r,bar.ImageColor3.g,bar.ImageColor3.b)-Vector3.new(.871,.518,.224)).magnitude>.1) then
+					didsomething=true
+					if (root.Position-Vector3.new(36.64, 3.80, 54.11)).magnitude>9 then  smoothTP(CFrame.new(36.64, 3.80, 54.11)) wait(0.05) end
+					o.Door.ClickDetector.Detector:FireServer()
+					break
+				end
+			end
 			local didsomething=false
 			if cookP and tick()-cookPtick>0.8 then
 				local oven = getOvenNear(cookP.Position)
@@ -690,9 +698,8 @@ local function tryCook()
 									if other then
 										didsomething=true
 										if (root.Position-Vector3.new(36.64, 3.80, 54.11)).magnitude>9 then  smoothTP(CFrame.new(36.64, 3.80, 54.11)) wait(0.05) end
-										wait(0.4)
 										network:FireServer("UpdateProperty", other, "CFrame", CFrame.new(RNG:NextNumber(29.6,44.6),3.7,RNG:NextNumber(42.5,48.5)))
-										wait(0.05)
+										wait(0.08)
 									end
 									oven=o
 									break
@@ -702,13 +709,12 @@ local function tryCook()
 						if oven and raw.Parent==workspace.AllDough then
 							if (root.Position-Vector3.new(36.64, 3.80, 54.11)).magnitude>9 then  smoothTP(CFrame.new(36.64, 3.80, 54.11)) wait(0.05) end
 							didsomething=true
-							wait(0.35)
 							network:FireServer("AddIngredientToPizza", raw,"TomatoSauce")
 							wait(0.35)
 							network:FireServer("AddIngredientToPizza", raw,"Cheese")
-							wait(0.5)
-							network:FireServer("AddIngredientToPizza", raw,topping)
 							wait(0.6)
+							network:FireServer("AddIngredientToPizza", raw,topping)
+							wait(0.65)
 							network:FireServer("UpdateProperty", raw, "CFrame", oven.Bottom.CFrame+Vector3.new(0,0.7,0))
 							wait()
 							oven.Door.ClickDetector.Detector:FireServer()
@@ -748,11 +754,11 @@ local function tryCook()
 			end
 			if trash and (trash.IsBurned.Value==false or getOvenNear(trash.Position)==nil or getOvenNear(trash.Position).IsOpen.Value) then
 				didsomething=true
-				if (root.Position-Vector3.new(36.64, 3.80, 54.11)).magnitude>9 then  smoothTP(CFrame.new(36.64, 3.80, 54.11)) wait(0.05) end
+				if (root.Position-Vector3.new(36.64, 3.80, 54.11)).magnitude>9 then  smoothTP(CFrame.new(36.64, 3.80, 54.11)) wait(0.1) end
 				wait()
 				network:FireServer("UpdateProperty", trash, "CFrame", CFrame.new(47.90, 7.00, 72.49, 1, 0, -0, 0, 0, 1, 0, -1, 0))
 			end
-			if didsomething then wait(1) else break end
+			if didsomething then wait(1.2) else break end
 		else
 			break
 		end
@@ -1075,8 +1081,8 @@ while gui.Parent do
 							end
 							fulfilled=false
 						end
-						wait(math.random(0.3, 0.5))
-						wait(0.15)
+						wait(math.random(0.2, 0.4))
+						wait(0.1)
 					end
 					wait(math.random(0.6, 1.2))
 					if yy == 1 and realc < 3 then
