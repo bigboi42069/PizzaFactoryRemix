@@ -63,15 +63,19 @@ ScriptTab:AddButton({
                 game:GetService("VirtualInputManager"):SendKeyEvent(false, "S", false, game)
                 wait(0.02)
                 game:GetService("VirtualInputManager"):SendKeyEvent(true, "D", false, game)
-                wait(0.1)
+                wait(0.15)
                 game:GetService("VirtualInputManager"):SendKeyEvent(false, "D", false, game)
                 wait(0.02)
                 game:GetService("VirtualInputManager"):SendKeyEvent(true, "W", false, game)
                 wait(0.1)
                 game:GetService("VirtualInputManager"):SendKeyEvent(false, "W", false, game)
-                wait(0.1)
+                wait(0.02)
+                game:GetService("VirtualInputManager"):SendKeyEvent(true, "A", false, game)
+                wait(0.05)
+                game:GetService("VirtualInputManager"):SendKeyEvent(false, "A", false, game)
+                wait(0.15)
                 teleportTo(position)
-                wait(11.8)
+                wait(13.5)
                 if not teleporting then
                     break
                 end
