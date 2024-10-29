@@ -3,7 +3,7 @@ local Library = loadstring(game:HttpGetAsync('https://raw.githubusercontent.com/
 --Library.Theme:Houston()
 
 local Window = Library:CreateWindow({
-    Title = 'Work at a Pizza Place Scripts -'..Library.TextEffect:AddColor('by BallsNDeath and mikeeyahh', Color3.fromRGB(0, 255, 238)),
+    Title = 'Work at a Pizza Place Scripts - '..Library.TextEffect:AddColor('by BallsNDeath and Mikeeyahh', Color3.fromRGB(0, 220, 250)),
     Logo = "rbxassetid://7733920644",
 })
 
@@ -40,8 +40,8 @@ local positions = {
     CFrame.new(206.14032, 6.99841309, -824.088867, 0.0126518616, -7.83695739e-08, -0.999919951, -5.66316096e-08, 1, -7.9092402e-08, 0.999919951, 5.76277408e-08, 0.0126518616), --A3
 }
 
-ScriptTab:AddButton({
-    Title = 'Start HalloweenFactory',
+ScriptTab:AddToggle({
+    Title = 'Run HalloweenFactory',
     Callback = function()
         teleporting = true
         for _, position in ipairs(positions) do
@@ -53,7 +53,7 @@ ScriptTab:AddButton({
             game:GetService("VirtualInputManager"):SendKeyEvent(true, "D", false, game)
             wait(0.32)
             game:GetService("VirtualInputManager"):SendKeyEvent(false, "D", false, game)
-            wait(12)
+            wait(11)
             if not teleporting then
                 break
             end
@@ -62,21 +62,21 @@ ScriptTab:AddButton({
 })
 
 ScriptTab:AddButton({
-    Title = 'Stop HalloweenFactory',
+    Title = 'Force-Stop HalloweenFactory',
     Callback = function()
         teleporting = false
     end,
 })
 
 ScriptTab:AddButton({
-    Title = 'Load TP Autofarm',
+    Title = 'Load TP Autofarm (Level 7+)',
     Callback = function()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/bigboi42069/PizzaFactoryRemix/refs/heads/main/pizzafactoryremixrv6.lua"))()
     end,
 })
 
 ScriptTab:AddButton({
-    Title = 'Load Fly Autofarm',
+    Title = 'Load Fly Autofarm (Level 7+)',
     Callback = function()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/bigboi42069/PizzaFactoryRemix/refs/heads/main/pizzafactoryremixrv7.lua"))()
     end,
@@ -88,7 +88,7 @@ local SettingsTab = Window:AddTab({
     Icon = 'settings',
 })
 
-SettingsTab:AddBlock('Settings - Fsploit / Shittyware UI')
+SettingsTab:AddBlock('Settings')
 
 SettingsTab:AddToggle({
     Title = 'Enable Performance Mode',
@@ -104,5 +104,14 @@ SettingsTab:AddButton({
     Title = "Destroy UI",
     Callback = function()
         Window:Destroy()
+    end,
+})
+
+SettingsTab:AddBlock('UI Made By Fsploit - Shittyware UI')
+
+SettingsTab:AddButton({
+    Title = "View UI Repository",
+    Callback = function()
+        os.execute('echo "https://github.com/Fsploit/Shittyware" | pbcopy')
     end,
 })
