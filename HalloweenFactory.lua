@@ -3,16 +3,16 @@ local Library = loadstring(game:HttpGetAsync('https://raw.githubusercontent.com/
 --Library.Theme:Houston()
 
 local Window = Library:CreateWindow({
-    Title = 'Halloween Factory - Work at a Pizza Place '..Library.TextEffect:AddColor('by BallsNDeath and mikeeyahh', Color3.fromRGB(0, 255, 238)),
+    Title = 'Work at a Pizza Place Scripts -'..Library.TextEffect:AddColor('by BallsNDeath and mikeeyahh', Color3.fromRGB(0, 255, 238)),
     Logo = "rbxassetid://7733920644",
 })
 
-local TeleportTab = Window:AddTab({
+local ScriptTab = Window:AddTab({
     Title = 'Scripts',
     Icon = 'home',
 })
 
-TeleportTab:AddBlock('Teleport Locations')
+ScriptTab:AddBlock('PizzaFactory Scripts')
 
 local function teleportTo(cframe)
     local player = game.Players.LocalPlayer
@@ -40,7 +40,7 @@ local positions = {
     CFrame.new(206.14032, 6.99841309, -824.088867, 0.0126518616, -7.83695739e-08, -0.999919951, -5.66316096e-08, 1, -7.9092402e-08, 0.999919951, 5.76277408e-08, 0.0126518616), --A3
 }
 
-TeleportTab:AddButton({
+ScriptTab:AddButton({
     Title = 'Start HalloweenFactory',
     Callback = function()
         teleporting = true
@@ -50,9 +50,9 @@ TeleportTab:AddButton({
             wait(0.3)
             game:GetService("VirtualInputManager"):SendKeyEvent(false, "W", false, game)
             wait(0.1)
-            game:GetService("VirtualInputManager"):SendKeyEvent(true, "W", false, game)
-            wait(0.3)
-            game:GetService("VirtualInputManager"):SendKeyEvent(false, "W", false, game)
+            game:GetService("VirtualInputManager"):SendKeyEvent(true, "D", false, game)
+            wait(0.32)
+            game:GetService("VirtualInputManager"):SendKeyEvent(false, "D", false, game)
             wait(12)
             if not teleporting then
                 break
@@ -61,12 +61,27 @@ TeleportTab:AddButton({
     end,
 })
 
-TeleportTab:AddButton({
+ScriptTab:AddButton({
     Title = 'Stop HalloweenFactory',
     Callback = function()
         teleporting = false
     end,
 })
+
+ScriptTab:AddButton({
+    Title = 'Load TP Autofarm',
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/bigboi42069/PizzaFactoryRemix/refs/heads/main/pizzafactoryremixrv6.lua"))()
+    end,
+})
+
+ScriptTab:AddButton({
+    Title = 'Load Fly Autofarm',
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/bigboi42069/PizzaFactoryRemix/refs/heads/main/pizzafactoryremixrv7.lua"))()
+    end,
+})
+
 
 local SettingsTab = Window:AddTab({
     Title = 'Settings',
