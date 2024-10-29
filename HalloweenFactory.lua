@@ -3,7 +3,7 @@ local Library = loadstring(game:HttpGetAsync('https://raw.githubusercontent.com/
 --Library.Theme:Houston()
 
 local Window = Library:CreateWindow({
-    Title = 'Work at a Pizza Place Scripts - '..Library.TextEffect:AddColor('by BallsNDeath and Mikeeyahh', Color3.fromRGB(0, 220, 250)),
+    Title = 'Work at a Pizza Place Scripts - '..Library.TextEffect:AddColor('by BallsNDeath and Mikeeyahh', Color3.fromRGB(0, 200, 255)),
     Logo = "rbxassetid://7733920644",
 })
 
@@ -26,6 +26,9 @@ end
 local teleporting = false
 
 local positions = {
+    CFrame.new(204.874084, 6.99836588, -463.874329, 0.0203506313, 2.88098501e-09, -0.999792933, 8.01123221e-08, 1, 4.51225546e-09, 0.999792933, -8.01875544e-08, 0.0203506313), --A1
+    CFrame.new(206.120117, 6.99841881, -644.280762, 0.0370132886, -2.06297361e-08, -0.999314785, -8.09895369e-08, 1, -2.36436275e-08, 0.999314785, 8.18091692e-08, 0.0370132886), --A2
+    CFrame.new(206.14032, 6.99841309, -824.088867, 0.0126518616, -7.83695739e-08, -0.999919951, -5.66316096e-08, 1, -7.9092402e-08, 0.999919951, 5.76277408e-08, 0.0126518616), --A3
     CFrame.new(-36.9847107, 6.99817228, -440.079742, -0.00575464545, 1.21660793e-09, 0.99998343, 7.13655055e-08, 1, -8.0593815e-10, -0.99998343, 7.13596862e-08, -0.00575464545), --B1
     CFrame.new(42.4900322, 7.00028086, -476.031647, 0.00260952138, -2.45901735e-08, -0.999996603, 1.34128642e-09, 1, -2.45867575e-08, 0.999996603, -1.27712219e-09, 0.00260952138), --B2
     CFrame.new(-36.4410324, 6.99810791, -620.097107, -0.02220935, -1.12574099e-07, 0.999753356, 3.5375225e-09, 1, 1.12680461e-07, -0.999753356, 6.03920958e-09, -0.02220935), --B3
@@ -35,25 +38,32 @@ local positions = {
     CFrame.new(-201.962616, 6.99999523, -439.81665, -0.0194240212, -4.70079868e-08, 0.999811351, -7.07224768e-09, 1, 4.68794603e-08, -0.999811351, -6.16032603e-09, -0.0194240212), --C1
     CFrame.new(-201.460602, 6.99807119, -619.961487, -0.00856394973, 2.1210484e-08, 0.999963343, -7.60221308e-09, 1, -2.12763691e-08, -0.999963343, -7.78414488e-09, -0.00856394973), --C2
     CFrame.new(-201.461685, 6.99814034, -799.934998, -0.0234158263, -8.86191671e-08, 0.999725819, -4.91467631e-08, 1, 8.74923458e-08, -0.999725819, -4.70845833e-08, -0.0234158263), --C3
-    CFrame.new(204.874084, 6.99836588, -463.874329, 0.0203506313, 2.88098501e-09, -0.999792933, 8.01123221e-08, 1, 4.51225546e-09, 0.999792933, -8.01875544e-08, 0.0203506313), --A1
-    CFrame.new(206.120117, 6.99841881, -644.280762, 0.0370132886, -2.06297361e-08, -0.999314785, -8.09895369e-08, 1, -2.36436275e-08, 0.999314785, 8.18091692e-08, 0.0370132886), --A2
-    CFrame.new(206.14032, 6.99841309, -824.088867, 0.0126518616, -7.83695739e-08, -0.999919951, -5.66316096e-08, 1, -7.9092402e-08, 0.999919951, 5.76277408e-08, 0.0126518616), --A3
 }
 
-ScriptTab:AddToggle({
-    Title = 'Run HalloweenFactory',
+ScriptTab:AddButton({
+    Title = 'Start HalloweenFactory',
     Callback = function()
         teleporting = true
         for _, position in ipairs(positions) do
             teleportTo(position)
             game:GetService("VirtualInputManager"):SendKeyEvent(true, "W", false, game)
-            wait(0.3)
+            wait(0.25)
             game:GetService("VirtualInputManager"):SendKeyEvent(false, "W", false, game)
-            wait(0.1)
+            wait(0.05)
+            game:GetService("VirtualInputManager"):SendKeyEvent(true, "A", false, game)
+            wait(0.25)
+            game:GetService("VirtualInputManager"):SendKeyEvent(false, "A", false, game)
+            wait(0.05)
+            game:GetService("VirtualInputManager"):SendKeyEvent(true, "S", false, game)
+            wait(0.25)
+            game:GetService("VirtualInputManager"):SendKeyEvent(false, "S", false, game)
+            wait(0.05)
             game:GetService("VirtualInputManager"):SendKeyEvent(true, "D", false, game)
-            wait(0.32)
+            wait(0.25)
             game:GetService("VirtualInputManager"):SendKeyEvent(false, "D", false, game)
-            wait(11)
+            wait(0.1)
+            teleportTo(position)
+            wait(10.5)
             if not teleporting then
                 break
             end
@@ -62,7 +72,7 @@ ScriptTab:AddToggle({
 })
 
 ScriptTab:AddButton({
-    Title = 'Force-Stop HalloweenFactory',
+    Title = 'Stop HalloweenFactory',
     Callback = function()
         teleporting = false
     end,
@@ -98,8 +108,6 @@ SettingsTab:AddToggle({
     end,
 })
 
-SettingsTab:AddBlock("")
-
 SettingsTab:AddButton({
     Title = "Destroy UI",
     Callback = function()
@@ -107,11 +115,13 @@ SettingsTab:AddButton({
     end,
 })
 
+SettingsTab:AddBlock("")
+
 SettingsTab:AddBlock('UI Made By Fsploit - Shittyware UI')
 
 SettingsTab:AddButton({
-    Title = "View UI Repository",
+    Title = "Copy UI Repository Link",
     Callback = function()
-        os.execute('echo "https://github.com/Fsploit/Shittyware" | pbcopy')
+        io.popen("xclip -selection clipboard", "w"):write("https://github.com/Fsploit/Shittyware"):close()
     end,
 })
