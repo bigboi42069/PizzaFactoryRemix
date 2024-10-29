@@ -47,29 +47,32 @@ ScriptTab:AddButton({
     Title = 'Start HalloweenFactory',
     Callback = function()
         teleporting = true
-        for _, position in ipairs(positions) do
-            teleportTo(position)
-            game:GetService("VirtualInputManager"):SendKeyEvent(true, "W", false, game)
-            wait(0.2)
-            game:GetService("VirtualInputManager"):SendKeyEvent(false, "W", false, game)
-            wait(0.02)
-            game:GetService("VirtualInputManager"):SendKeyEvent(true, "A", false, game)
-            wait(0.2)
-            game:GetService("VirtualInputManager"):SendKeyEvent(false, "A", false, game)
-            wait(0.02)
-            game:GetService("VirtualInputManager"):SendKeyEvent(true, "S", false, game)
-            wait(0.2)
-            game:GetService("VirtualInputManager"):SendKeyEvent(false, "S", false, game)
-            wait(0.02)
-            game:GetService("VirtualInputManager"):SendKeyEvent(true, "D", false, game)
-            wait(0.2)
-            game:GetService("VirtualInputManager"):SendKeyEvent(false, "D", false, game)
-            wait(0.05)
-            teleportTo(position)
-            wait(10.5)
-            if not teleporting then
-                break
+        while teleporting do
+            for _, position in ipairs(positions) do
+                teleportTo(position)
+                game:GetService("VirtualInputManager"):SendKeyEvent(true, "W", false, game)
+                wait(0.1)
+                game:GetService("VirtualInputManager"):SendKeyEvent(false, "W", false, game)
+                wait(0.02)
+                game:GetService("VirtualInputManager"):SendKeyEvent(true, "A", false, game)
+                wait(0.1)
+                game:GetService("VirtualInputManager"):SendKeyEvent(false, "A", false, game)
+                wait(0.02)
+                game:GetService("VirtualInputManager"):SendKeyEvent(true, "S", false, game)
+                wait(0.1)
+                game:GetService("VirtualInputManager"):SendKeyEvent(false, "S", false, game)
+                wait(0.02)
+                game:GetService("VirtualInputManager"):SendKeyEvent(true, "D", false, game)
+                wait(0.1)
+                game:GetService("VirtualInputManager"):SendKeyEvent(false, "D", false, game)
+                wait(0.05)
+                teleportTo(position)
+                wait(11.8)
+                if not teleporting then
+                    break
+                end
             end
+            wait(15)
         end
     end,
 })
@@ -112,7 +115,14 @@ SettingsTab:AddToggle({
 })
 
 SettingsTab:AddButton({
-    Title = "Destroy UI",
+    Title = "Reset Window Size",
+    Callback = function()
+        Window:Resize(Library.SizeLibrary.Default)
+    end,
+})
+
+SettingsTab:AddButton({
+    Title = "Destroy UI Window",
     Callback = function()
         Window:Destroy()
     end,
