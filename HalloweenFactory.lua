@@ -92,21 +92,6 @@ ScriptTab:AddButton({
     end,
 })
 
-ScriptTab:AddButton({
-    Title = 'Load TP Autofarm (Level 7+)',
-    Callback = function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/bigboi42069/PizzaFactoryRemix/refs/heads/main/pizzafactoryremixrv6.lua"))()
-    end,
-})
-
-ScriptTab:AddButton({
-    Title = 'Load Fly Autofarm (Level 7+)',
-    Callback = function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/bigboi42069/PizzaFactoryRemix/refs/heads/main/pizzafactoryremixrv7.lua"))()
-    end,
-})
-
-
 local SettingsTab = Window:AddTab({
     Title = 'Settings',
     Icon = 'settings',
