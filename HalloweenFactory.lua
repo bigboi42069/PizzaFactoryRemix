@@ -4,7 +4,7 @@ local Library = loadstring(game:HttpGetAsync('https://raw.githubusercontent.com/
 --Library.Theme:Houston()
 
 local Window = Library:CreateWindow({
-    Title = 'Work at a Pizza Place Scripts - '..Library.TextEffect:AddColor('by BallsNDeath and Mikeeyahh', Color3.fromRGB(0, 200, 255)),
+    Title = 'Work at a Pizza Place | 🎃 Halloween 🎃 - '..Library.TextEffect:AddColor('by BallsNDeath and Mikeeyahh', Color3.fromRGB(0, 200, 255)),
     Logo = "rbxassetid://7733920644",
 })
 
