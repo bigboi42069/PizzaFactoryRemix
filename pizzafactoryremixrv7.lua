@@ -437,7 +437,7 @@ local function FindFirstCustomer()
 				wait(math.random(0.4, 0.6))
 				wait(0.3)
 				pcall(function()
-		    		if (root.Position-Vector3.new(48.30, 3.25, 91.20)).magnitude>3.25 then smoothTP(CFrame.new(48.30, 3.25, 91.20)) wait(0.2) end
+		    		if (root.Position-Vector3.new(48.30, 3.10, 91.20)).magnitude>3.3 then smoothTP(CFrame.new(48.30, 3.10, 91.20)) wait(0.2) end
 				wait()
                     		c.HumanoidRootPart.CFrame = CFrame.new(48.30, -20, 91.05)
                 end)
