@@ -395,8 +395,8 @@ local function FindFirstCustomer()
 			elseif ffc(c,"Head") and ffc(c,"Humanoid") and c.Head.CFrame.Z<130 and ((c.Humanoid.SeatPart and c.Humanoid.SeatPart.Anchored) or (c.Humanoid.SeatPart==nil and (c.Head.Velocity.Z^2)^.5<.0001)) then
 				wait(0.05)
 				pcall(function()
-		    		if (root.Position-Vector3.new(48.30, 3.60, 91.15)).magnitude>3.1 then smoothTP(CFrame.new(48.30, 3.60, 91.15)) wait(0.05) end
-                    		c.HumanoidRootPart.CFrame = CFrame.new(48.30, -20, 91.05)
+		    		if (root.Position-Vector3.new(49.00, 7.20, 91.00)).magnitude>1 then smoothTP(CFrame.new(49.00, 3.55, 91.00)) wait(0.05) end
+                    		c.HumanoidRootPart.CFrame = CFrame.new(49.00, -20, 91.00)
                 end)
 			end
 		else
