@@ -437,7 +437,7 @@ local function FindFirstCustomer()
 				wait(math.random(0.4, 0.6))
 				wait(0.3)
 				pcall(function()
-		    		if (root.Position-Vector3.new(48.30, 3.60, 91.15)).magnitude>3.1 then smoothTP(CFrame.new(48.30, 3.60, 91.15)) wait(0.2) end
+		    		if (root.Position-Vector3.new(48.30, 3.50, 91.15)).magnitude>3.2 then smoothTP(CFrame.new(48.30, 3.50, 91.15)) wait(0.2) end
 				wait()
                     		c.HumanoidRootPart.CFrame = CFrame.new(48.30, -20, 91.05)
                 end)
@@ -794,7 +794,7 @@ while gui.Parent do
 				elseif c.Head.Position.X < 70 then
 					reg = 1
 				end
-				if (root.Position-Vector3.new(50.30, 3.80, 83.24)).magnitude>8 then smoothTP(CFrame.new(50.30, 3.80, 83.24)) wait(0.2) end
+				if (root.Position-Vector3.new(50.30, 3.80, 83.24)).magnitude>9 then smoothTP(CFrame.new(50.30, 3.80, 83.24)) wait(0.2) end
 				local numTimes = math.random(1, 8)
 				for i = 1, numTimes do
     					network:FireServer("OrderComplete", c, order, workspace["Register"..reg])
