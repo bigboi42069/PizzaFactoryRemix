@@ -95,7 +95,7 @@ main=Create("Frame",gui,{Name="main", Draggable=true, Active=true, Size=UDim2.ne
 topbar=Create("Frame",main,{Name="topbar", Size=UDim2.new(1,0,0.15,0), BackgroundColor3=Color3.new(0.255,0.255,0.255)})
 closeBtn=Create("TextButton",topbar,{Name="closeBtn", TextWrapped=true, Size=UDim2.new(0.03,0,1,0), TextColor3=Color3.new(1,1,1), Text="X", BackgroundTransparency=1, 
 	Font="GothamSemibold", Position=UDim2.new(0.96,0,0,0), TextSize=14, TextScaled=true, BackgroundColor3=Color3.new(1,1,1)})
-titleLbl=Create("TextLabel",topbar,{Name="titleLbl", TextWrapped=true, Size=UDim2.new(0.5,0,1,0), Text="Pizza Factory Remix V8", TextSize=14, Font="GothamSemibold", 
+titleLbl=Create("TextLabel",topbar,{Name="titleLbl", TextWrapped=true, Size=UDim2.new(0.5,0,1,0), Text="Pizza Factory Remix V7", TextSize=14, Font="GothamSemibold", 
 	BackgroundTransparency=1, Position=UDim2.new(0.25,0,0,0), TextColor3=Color3.new(1,1,1), BackgroundColor3=Color3.new(1,1,1)})
 saveBtn=Create("ImageButton",topbar,{Name="saveBtn", Image="rbxassetid://55687833", Size=UDim2.new(0.05,0,1,0), Position=UDim2.new(0.01,0,0,0), BackgroundTransparency=1, BackgroundColor3=Color3.new(), Visible=writefile~=nil})
 settings_1=Create("Frame",main,{Name="settings", BackgroundTransparency=1, Size=UDim2.new(0.97,0,0.75,0), Position=UDim2.new(0.025,0,0.2,0), BackgroundColor3=Color3.new(1,1,1)})
@@ -435,11 +435,11 @@ local function FindFirstCustomer()
 				return c,order
 			elseif ffc(c,"Head") and ffc(c,"Humanoid") and c.Head.CFrame.Z<125 and ((c.Humanoid.SeatPart and c.Humanoid.SeatPart.Anchored) or (c.Humanoid.SeatPart==nil and (c.Head.Velocity.Z^2)^.5<.0001)) then
 				wait(math.random(0.4, 0.6))
-				wait(0.3)
+				wait(0.25)
 				pcall(function()
-		    		if (root.Position-Vector3.new(49.00, 7.20, 91.00)).magnitude>1 then smoothTP(CFrame.new(49.00, 3.5, 91.00)) wait(0.2) end
+		    		if (root.Position-Vector3.new(49.00, 7.20, 91.00)).magnitude>1 then smoothTP(CFrame.new(49.00, 3.55, 91.00)) wait(0.2) end
 				wait()
-                    		c.HumanoidRootPart.CFrame = CFrame.new(48.30, -20, 91.05)
+                    		c.HumanoidRootPart.CFrame = CFrame.new(49.00, -20, 91.00)
                 end)
 			end
 		else
